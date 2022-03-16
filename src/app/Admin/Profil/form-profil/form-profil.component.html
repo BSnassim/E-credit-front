@@ -1,0 +1,32 @@
+<div class="grid justify-content-center">
+    <div class="col-12 md:col-6">
+        <div class="card">
+            <h5>Ajouter un profil</h5>
+            <div class="p-fluid">
+                <div class="field">
+                    <label for="firstname1">Libellé du profil</label>
+                    <input id="firstname1" type="text" pInputText>
+                </div>
+                <h5>Liste des habilitations</h5>
+                <p-multiSelect [options]="habs" [(ngModel)]="selectedMulti" defaultLabel="Select a Country"
+                    optionLabel="name" class="multiselect-custom">
+                    <ng-template let-value pTemplate="selectedItems">
+                        <div class="country-item country-item-value" *ngFor="let option of selectedMulti">
+                            <img src="assets/demo/flags/flag_placeholder.png"
+                                [class]="'flag flag-' + option.code.toLowerCase()" />
+                            <div>{{option.libelle}}</div>
+                        </div>
+                        <div *ngIf="!selectedMulti || selectedMulti.length === 0" class="country-placeholder">
+                            Select Countries
+                        </div>
+                    </ng-template>
+                    <ng-template let-country pTemplate="item">
+                        <div class="country-item">
+                            <img src="assets/demo/flags/flag_placeholder.png"
+                                [class]="'flag flag-' + country.code.toLowerCase()" />
+                            <div>{{country.libelle}}</div>
+                        </div>
+                    </ng-template>
+                </p-multiSelect>
+            </div>
+        </div>

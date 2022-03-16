@@ -1,0 +1,38 @@
+{
+    "user": {
+        "email": "Adresse mail",
+        "username": "Matricule",
+        "password": "Mot de passe"
+    },
+    "loginForm": {
+        "forgot_password": "Mot de passe oublié ?",
+        "login": "Se connecter"
+    },
+    "msgs":{
+        "required": " obligatoire !",
+        "invalid_credentials": " Matricule ou mot de passe invalide !",
+        "error": " Erreur survenue , veuillez réessayer !"
+    },
+    "menu": {
+        "administration_menu":"Administration",
+        "gestion_utilisateurs_menu":"Gestion des utilisateurs",
+        "gestion_factures":"Gestion des factures",
+        "gestion_parametre_menu":"Gestion des param\u00E8tres",
+        "nomenclatures_definition_menu":"D\u00E9finition des nomenclatures",
+        "nomenclatures_habilitation_menu":"Habilitation des nomenclatures",
+        "nomenclatures_parametre_menu":"Parametrage des nomenclatures",
+        "nomenclatures_gestion_menu":"Gestion des nomenclatures",
+        "nomenclatures_traduction_menu":"Traduction",
+        "gestion_etapes_menu": "Gestion des \u00E9tapes",
+        "gestion_scenarios_menu":  "Gestion des scenarios",
+        "workflow_menu":  "Workflow",
+        "nomenclatures_menu":  "Gestion des nomenclatures",
+        "gest_business_units_menu":  "Gestion des unit\u00E9s de gestion",
+        "gestion_profils_menu":  "Gestion des profils",
+        "gest_acces_menu" : "Gestion des acc\u00E8s",
+        "gest_notif_menu": "Gestion des notifications",
+        "gest_consult_report_menu": "Consultation du rapport",
+        "gest_deleg_menu": "Gestion des d\u00E9l\u00E9gations",
+        "organigramme_menu": "Organigrammes"
+    }
+}

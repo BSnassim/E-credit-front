@@ -1,0 +1,16 @@
+{
+    "user": {
+        "email": "Mail address",
+        "username": "Registration number",
+        "password": "Password"
+    },
+    "login": {
+        "forgot_password": "Forgot your password ?",
+        "login": "Login"
+    },
+    "msgs":{
+        "required": " required !",
+        "invalid_credentials": " Invalid credentials !",
+        "error": " Erreur occured , please try again !"
+    }
+}
