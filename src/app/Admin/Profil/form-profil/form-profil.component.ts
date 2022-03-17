@@ -18,8 +18,6 @@ export class FormProfilComponent implements OnInit {
 
   profil : Profil = new Profil;
 
-  libelle : string;
-
   constructor(private habService : HabilitationService, private profilService : ProfilService ) { }
 
   ngOnInit(): void {
@@ -27,7 +25,7 @@ export class FormProfilComponent implements OnInit {
       this.habs = data;
       console.log(data);
     });
-    this.profil.habilitation = [];
+    this.profil.habilitations = [];
   }
 
   filterHab(event) {
@@ -43,10 +41,7 @@ export class FormProfilComponent implements OnInit {
 }
 
 onSubmit(){
-  this.profil.libelle = this.libelle;
-  this.selectedMulti.forEach(e => { 
-    this.profil.habilitation.push(e.id);
-  });
+  this.profil.habilitations = this.selectedMulti;
   this.profilService.addProfil(this.profil).subscribe();
   console.log(this.profil);
 }

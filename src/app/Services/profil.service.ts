@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Profil } from '../models/profil';
@@ -21,7 +21,8 @@ export class ProfilService {
   }
 
   addProfil(Profil:Profil): Observable<Profil>{
-    return this.http.post<Profil>(URL, {"libelle": Profil.libelle,"habilitation": Profil.habilitation});
+    
+    return this.http.post<Profil>(URL, Profil);
   }
 
   deleteProfil(id:number){
