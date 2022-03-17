@@ -5,28 +5,25 @@
             <div class="p-fluid">
                 <div class="field">
                     <label for="firstname1">Libellé du profil</label>
-                    <input id="firstname1" type="text" pInputText>
+                    <input id="firstname1" type="text" [(ngModel)]="libelle" pInputText>
                 </div>
-                <h5>Liste des habilitations</h5>
+                <p>Liste des habilitations</p>
                 <p-multiSelect [options]="habs" [(ngModel)]="selectedMulti" defaultLabel="Select a Country"
-                    optionLabel="name" class="multiselect-custom">
+                    optionLabel="libelle" class="multiselect-custom">
                     <ng-template let-value pTemplate="selectedItems">
                         <div class="country-item country-item-value" *ngFor="let option of selectedMulti">
-                            <img src="assets/demo/flags/flag_placeholder.png"
-                                [class]="'flag flag-' + option.code.toLowerCase()" />
                             <div>{{option.libelle}}</div>
                         </div>
                         <div *ngIf="!selectedMulti || selectedMulti.length === 0" class="country-placeholder">
-                            Select Countries
+                            Choisir les habilitations
                         </div>
                     </ng-template>
-                    <ng-template let-country pTemplate="item">
+                    <ng-template let-option pTemplate="item">
                         <div class="country-item">
-                            <img src="assets/demo/flags/flag_placeholder.png"
-                                [class]="'flag flag-' + country.code.toLowerCase()" />
-                            <div>{{country.libelle}}</div>
+                            <div>{{option.libelle}}</div>
                         </div>
                     </ng-template>
                 </p-multiSelect>
             </div>
         </div>
+        <p-button label="Confirmer" (onClick)="onSubmit()" class="mr-2 mb-2"></p-button>
