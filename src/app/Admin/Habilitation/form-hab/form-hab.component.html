@@ -1,1 +1,12 @@
-<p>form-hab works!</p>
+<div class="grid justify-content-center">
+    <div class="col-12 md:col-6">
+        <div class="card">
+            <h5>Ajouter une habilitation</h5>
+            <div class="p-fluid">
+                <div class="field">
+                    <label for="firstname1">Libellé d'habilitation</label>
+                    <input id="firstname1" type="text" [(ngModel)]="hab.libelle" pInputText>
+                </div>
+            </div>
+        </div>
+        <p-button label="Confirmer" (onClick)="onSubmit()" class="mr-2 mb-2"></p-button>

@@ -1,3 +1,4 @@
+import { FormHabComponent } from './../Admin/Habilitation/form-hab/form-hab.component';
 import { FormProfilComponent } from './../Admin/Profil/form-profil/form-profil.component';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from '../auth/login/login.component';
@@ -39,6 +40,7 @@ import {AuthGuardService} from '../auth/guards/auth-guard.service';
 
 const templateRoutes: Routes = [
     {path: 'Admin/Profil/Form', component: FormProfilComponent},
+    {path: 'Admin/Habilitation/Form', component: FormHabComponent},
     {path: 'uikit/formlayout', component: FormLayoutDemoComponent},
     {path: 'uikit/floatlabel', component: FloatLabelDemoComponent},
     {path: 'uikit/invalidstate', component: InvalidStateDemoComponent},

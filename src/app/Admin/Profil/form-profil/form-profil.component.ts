@@ -23,7 +23,6 @@ export class FormProfilComponent implements OnInit {
   ngOnInit(): void {
     this.habService.getHabilitations().subscribe(data => {
       this.habs = data;
-      console.log(data);
     });
     this.profil.habilitations = [];
   }
@@ -43,7 +42,7 @@ export class FormProfilComponent implements OnInit {
 onSubmit(){
   this.profil.habilitations = this.selectedMulti;
   this.profilService.addProfil(this.profil).subscribe();
-  console.log(this.profil);
+
 }
 
 }

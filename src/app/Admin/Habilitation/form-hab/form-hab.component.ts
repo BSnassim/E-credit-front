@@ -1,4 +1,6 @@
+import { Habilitation } from 'src/app/models/habilitation';
 import { Component, OnInit } from '@angular/core';
+import { HabilitationService } from 'src/app/Services/habilitation.service';
 
 @Component({
   selector: 'app-form-hab',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormHabComponent implements OnInit {
 
-  constructor() { }
+  hab : Habilitation = new Habilitation();
+
+  constructor(private habService : HabilitationService) { }
 
   ngOnInit(): void {
+  }
+
+  onSubmit(){
+    this.habService.addHabilitation(this.hab).subscribe();
   }
 
 }
