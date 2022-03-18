@@ -1,8 +1,9 @@
 import { ProfilService } from './../../../Services/profil.service';
 import { HabilitationService } from './../../../Services/habilitation.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Habilitation } from 'src/app/models/habilitation';
 import { Profil } from './../../../models/profil';
+import { AppBreadcrumbService } from 'src/app/main/app-breadcrumb/app.breadcrumb.service';
 
 @Component({
   selector: 'app-form-profil',
@@ -10,6 +11,8 @@ import { Profil } from './../../../models/profil';
   styleUrls: ['./form-profil.component.scss']
 })
 export class FormProfilComponent implements OnInit {
+  @Output() profileDialog = new EventEmitter<boolean>();
+
   habs: Habilitation[];
 
   selectedMulti: Habilitation[] = [];
@@ -18,7 +21,11 @@ export class FormProfilComponent implements OnInit {
 
   profil : Profil = new Profil;
 
-  constructor(private habService : HabilitationService, private profilService : ProfilService ) { }
+  constructor(private habService : HabilitationService, private profilService : ProfilService, private breadcrumbService: AppBreadcrumbService) {
+    this.breadcrumbService.setItems([
+        { label: 'Gestion des profils', routerLink: ['administration/profils'] },
+        { label: 'Formulaire Profil' }
+    ]); }
 
   ngOnInit(): void {
     this.habService.getHabilitations().subscribe(data => {
@@ -42,7 +49,7 @@ export class FormProfilComponent implements OnInit {
 onSubmit(){
   this.profil.habilitations = this.selectedMulti;
   this.profilService.addProfil(this.profil).subscribe();
-
+  this.profileDialog.emit(false);
 }
 
 }

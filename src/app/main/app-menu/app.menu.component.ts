@@ -26,10 +26,10 @@ export class AppMenuComponent implements OnInit {
                      ]
                  },
                  {
-                     label: 'Administration', icon: 'pi pi-fw pi-id-card', routerLink: ['/Admin'],
+                     label: 'Administration', icon: 'pi pi-fw pi-id-card', routerLink: ['/administration'],
                      items: [
-                         {label: 'Gestion des profils', icon: 'pi pi-fw pi-id-card', routerLink: ['/Admin/Profil/Form']},
-                         {label: 'Gestion des habilitation', icon: 'pi pi-fw pi-id-card', routerLink:['/Admin/Habilitation/Form']}
+                         {label: 'Gestion des profils', icon: 'pi pi-fw pi-id-card', routerLink: ['/administration/profils']},
+                         {label: 'Gestion des habilitation', icon: 'pi pi-fw pi-id-card', routerLink:['/administration/habilitations']}
                      ]
                  },
                  {

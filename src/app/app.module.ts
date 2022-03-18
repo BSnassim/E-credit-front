@@ -161,6 +161,7 @@ import {NgxPermissionsModule, NgxPermissionsService} from "ngx-permissions";
 import {TokenInterceptorService} from "./interceptors/token-interceptor.service";
 import { FormProfilComponent } from './Admin/Profil/form-profil/form-profil.component';
 import { FormHabComponent } from './Admin/Habilitation/form-hab/form-hab.component';
+import { ListProfilComponent } from './Admin/Profil/list-profil/list-profil.component';
 
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
@@ -322,6 +323,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         AppAccessdeniedComponent,
         FormProfilComponent,
         FormHabComponent,
+        ListProfilComponent,
     ],
     providers: [
     {

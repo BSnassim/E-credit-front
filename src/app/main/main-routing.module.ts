@@ -1,3 +1,4 @@
+import { ListProfilComponent } from './../Admin/Profil/list-profil/list-profil.component';
 import { FormHabComponent } from './../Admin/Habilitation/form-hab/form-hab.component';
 import { FormProfilComponent } from './../Admin/Profil/form-profil/form-profil.component';
 import {RouterModule, Routes} from '@angular/router';
@@ -37,10 +38,9 @@ import {AppHelpComponent} from '../pages/app.help.component';
 import {EmptyDemoComponent} from '../demo/view/emptydemo.component';
 import {DocumentationComponent} from '../demo/view/documentation.component';
 import {AuthGuardService} from '../auth/guards/auth-guard.service';
+import { AdminModule } from '../Admin/admin.module';
 
 const templateRoutes: Routes = [
-    {path: 'Admin/Profil/Form', component: FormProfilComponent},
-    {path: 'Admin/Habilitation/Form', component: FormHabComponent},
     {path: 'uikit/formlayout', component: FormLayoutDemoComponent},
     {path: 'uikit/floatlabel', component: FloatLabelDemoComponent},
     {path: 'uikit/invalidstate', component: InvalidStateDemoComponent},
@@ -83,6 +83,7 @@ export const mainRoutes: Routes = [
         path: 'administration',
         loadChildren: () => import('../administration/administration.module').then(m => m.AdministrationModule)
     },*/
+    {path: 'administration', loadChildren:()=> AdminModule},
     ...templateRoutes
 ];
 
