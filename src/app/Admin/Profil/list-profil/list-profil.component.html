@@ -58,7 +58,9 @@
                             {{profil.libelle}}
                         </td>
                         <td><span class="p-column-title">Habilitations</span>
-                            {{profil.habilitations| json}}
+                            <span *ngFor="let h of profil.habilitations">
+                                <p-tag styleClass="mr-2" value="{{h.libelle}}"></p-tag>
+                            </span>
                         </td>
                         <td class="flex justify-content-end">
                             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
@@ -76,17 +78,12 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="profilDialog" [style]="{width: '500px', height:'500px'}" header="Profil Details" [modal]="true"
-            styleClass="p-fluid">
+        <p-dialog [(visible)]="profilDialog" [style]="{width: '500px', height:'500px'}" header="Détails Profil"
+            [modal]="true" styleClass="p-fluid">
             <ng-template pTemplate="content">
-                <app-form-profil (profilDialog)="profilDialog"></app-form-profil>
+                <app-form-profil (closeDialog)="closeDialog($event)"></app-form-profil>
             </ng-template>
-
             <ng-template pTemplate="footer">
-                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
-                    (click)="hideDialog()"></button>
-                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
-                    (click)="saveProfil()"></button>
             </ng-template>
         </p-dialog>
 

@@ -19,6 +19,7 @@
         </div>
     </ng-template>
 </p-multiSelect>
-<div class="mt-5">
-<p-button label="Confirmer" (onClick)="onSubmit()" class="" [style]="{width: '100px'}"></p-button>
+<div class="footer">
+<button pButton pRipple label="Confirmer" icon="pi pi-check" class="p-button-text" (click)="onSubmit()"></button>
+<button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="terminateDialog()"></button>
 </div>

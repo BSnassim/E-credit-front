@@ -24,6 +24,8 @@ export class ListProfilComponent implements OnInit {
 
   submitted: boolean;
 
+  interval : any;
+
   constructor(private breadcrumbService: AppBreadcrumbService, private profilService: ProfilService,
     private messageService: MessageService, private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
@@ -33,19 +35,28 @@ export class ListProfilComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.profilService.getProfils().subscribe(data => {
-      this.profilList = data;
-    });
     this.cols = [
       { field: 'libelle', header: 'Libelle' },
       { field: 'habilitations', header: 'Habilitations' },
     ];
+    this.getData();
+    this.interval = setInterval(()=>{
+      this.getData();
+    },500);
+  }
+
+  getData() {
+    this.profilService.getProfils().subscribe(data => {
+      this.profilList = data;
+    });
   }
 
   openNew() {
-    this.profil = {};
-    this.submitted = false;
     this.profilDialog = true;
+  }
+
+  closeDialog($event) {
+    this.profilDialog = false;
   }
 
   deleteProfil(profil: Profil) {
@@ -59,5 +70,20 @@ export class ListProfilComponent implements OnInit {
       }
     });
   }
+
+  deleteSelectedProfils() {
+    this.confirmationService.confirm({
+        message: 'Voulez-vous vraiment supprimer les profils selectionées ?',
+        header: 'Confirmer',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.selectedProfils.forEach(e => {
+            this.profilService.deleteProfil(e.id).subscribe();
+          });
+            this.selectedProfils = null;
+            this.messageService.add({severity: 'réussi', summary: 'Réussi', detail: 'Profils supprimés', life: 3000});
+        }
+    });
+}
 
 }

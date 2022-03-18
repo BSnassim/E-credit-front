@@ -11,7 +11,7 @@ import { AppBreadcrumbService } from 'src/app/main/app-breadcrumb/app.breadcrumb
   styleUrls: ['./form-profil.component.scss']
 })
 export class FormProfilComponent implements OnInit {
-  @Output() profileDialog = new EventEmitter<boolean>();
+  @Output() closeDialog = new EventEmitter<boolean>();
 
   habs: Habilitation[];
 
@@ -49,7 +49,11 @@ export class FormProfilComponent implements OnInit {
 onSubmit(){
   this.profil.habilitations = this.selectedMulti;
   this.profilService.addProfil(this.profil).subscribe();
-  this.profileDialog.emit(false);
+  this.closeDialog.emit(false);
+}
+
+terminateDialog(){
+  this.closeDialog.emit(false);
 }
 
 }
