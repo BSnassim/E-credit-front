@@ -42,7 +42,7 @@ export class ListProfilComponent implements OnInit {
     this.getData();
     this.interval = setInterval(()=>{
       this.getData();
-    },500);
+    },1000);
   }
 
   getData() {
