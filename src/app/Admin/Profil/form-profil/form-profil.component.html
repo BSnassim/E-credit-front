@@ -1,6 +1,6 @@
 <div class="field">
     <label for="firstname1">Libellé du profil</label>
-    <input id="firstname1" type="text" [(ngModel)]="profil.libelle" pInputText>
+    <input id="firstname1" type="text" [(ngModel)]="libelle" pKeyFilter="alpha" autofocus maxlength="30" pInputText>
 </div>
 <p>Liste des habilitations</p>
 <p-multiSelect [options]="habs" [(ngModel)]="selectedMulti" defaultLabel="Select a Country" optionLabel="libelle"
@@ -20,6 +20,6 @@
     </ng-template>
 </p-multiSelect>
 <div class="footer">
-<button pButton pRipple label="Confirmer" icon="pi pi-check" class="p-button-text" (click)="onSubmit()"></button>
+<button pButton pRipple label="Confirmer" icon="pi pi-check" class="p-button-text" (click)="onSubmit()" [disabled]="!libelle || selectedMulti.length === 0"></button>
 <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="terminateDialog()"></button>
 </div>

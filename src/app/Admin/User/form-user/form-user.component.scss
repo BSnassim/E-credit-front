@@ -1,0 +1,10 @@
+.footer{
+    position:absolute;
+    bottom:10px;
+    display: inline-flex;
+    flex-direction: row;
+    align-self: flex-end;
+    justify-content: flex-start;
+    gap:5px;
+    margin:10px;
+}

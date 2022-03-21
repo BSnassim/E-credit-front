@@ -26,8 +26,10 @@ export class ListProfilComponent implements OnInit {
 
   interval: any;
 
-  constructor(private breadcrumbService: AppBreadcrumbService, private profilService: ProfilService,
-    private messageService: MessageService, private confirmationService: ConfirmationService) {
+  constructor(private breadcrumbService: AppBreadcrumbService, 
+    private profilService: ProfilService,
+    private messageService: MessageService, 
+    private confirmationService: ConfirmationService) {
     this.breadcrumbService.setItems([
       { label: 'Gestion des profils' },
       { label: 'Liste des Profils', routerLink: ['/administration/profils'] }

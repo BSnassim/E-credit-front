@@ -22,6 +22,10 @@ export class FormProfilComponent implements OnInit {
 
   profil: Profil = new Profil;
 
+  libelle : string;
+
+  validated: boolean;
+
   constructor(private habService: HabilitationService, private profilService: ProfilService, private breadcrumbService: AppBreadcrumbService) {
     this.breadcrumbService.setItems([
       { label: 'Gestion des profils', routerLink: ['administration/profils'] },
@@ -35,7 +39,7 @@ export class FormProfilComponent implements OnInit {
     });
     if (this.profilToEdit != null) {
       this.profil.id = this.profilToEdit.id;
-      this.profil.libelle = this.profilToEdit.libelle;
+      this.libelle = this.profilToEdit.libelle;
       this.selectedMulti = this.profilToEdit.habilitations;
     };
   }
@@ -54,6 +58,7 @@ export class FormProfilComponent implements OnInit {
 
   onSubmit() {
     if (this.profilToEdit == null) {
+      this.profil.libelle = this.libelle;
       this.profil.habilitations = this.selectedMulti;
       this.profilService.addProfil(this.profil).subscribe();
     }

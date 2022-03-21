@@ -85,6 +85,7 @@ import {TooltipModule} from 'primeng/tooltip';
 import {TreeModule} from 'primeng/tree';
 import {TreeTableModule} from 'primeng/treetable';
 import {VirtualScrollerModule} from 'primeng/virtualscroller';
+import {KeyFilterModule} from 'primeng/keyfilter';
 
 // Application Components
 import {AppCodeModule} from './main/app-code/app.code.component';
@@ -162,6 +163,8 @@ import {TokenInterceptorService} from "./interceptors/token-interceptor.service"
 import { FormProfilComponent } from './Admin/Profil/form-profil/form-profil.component';
 import { FormHabComponent } from './Admin/Habilitation/form-hab/form-hab.component';
 import { ListProfilComponent } from './Admin/Profil/list-profil/list-profil.component';
+import { FormUserComponent } from './Admin/User/form-user/form-user.component';
+import { ListUserComponent } from './Admin/User/list-user/list-user.component';
 
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
@@ -176,6 +179,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 
 @NgModule({
     imports: [
+        KeyFilterModule,
         AuthModule,
         BrowserModule,
         FormsModule,
@@ -321,9 +325,12 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         AppNotfoundComponent,
         AppErrorComponent,
         AppAccessdeniedComponent,
+        FormUserComponent,
+        ListUserComponent,
         FormProfilComponent,
         FormHabComponent,
         ListProfilComponent,
+
     ],
     providers: [
     {
