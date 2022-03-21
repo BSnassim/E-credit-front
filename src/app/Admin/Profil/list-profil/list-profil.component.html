@@ -14,8 +14,6 @@
                 </ng-template>
 
                 <ng-template pTemplate="right">
-                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import"
-                        chooseLabel="Import" class="mr-2 mb-2 inline-block"></p-fileUpload>
                     <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help mb-2"
                         (click)="dt.exportCSV()"></button>
                 </ng-template>
@@ -81,7 +79,7 @@
         <p-dialog [(visible)]="profilDialog" [style]="{width: '500px', height:'500px'}" header="Détails Profil"
             [modal]="true" styleClass="p-fluid">
             <ng-template pTemplate="content">
-                <app-form-profil (closeDialog)="closeDialog($event)"></app-form-profil>
+                <app-form-profil (closeDialog)="closeDialog($event)" [profilToEdit]="profil"></app-form-profil>
             </ng-template>
             <ng-template pTemplate="footer">
             </ng-template>

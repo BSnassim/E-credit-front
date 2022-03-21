@@ -24,7 +24,7 @@ export class ListProfilComponent implements OnInit {
 
   submitted: boolean;
 
-  interval : any;
+  interval: any;
 
   constructor(private breadcrumbService: AppBreadcrumbService, private profilService: ProfilService,
     private messageService: MessageService, private confirmationService: ConfirmationService) {
@@ -40,9 +40,9 @@ export class ListProfilComponent implements OnInit {
       { field: 'habilitations', header: 'Habilitations' },
     ];
     this.getData();
-    this.interval = setInterval(()=>{
+    this.interval = setInterval(() => {
       this.getData();
-    },1000);
+    }, 1000);
   }
 
   getData() {
@@ -52,6 +52,7 @@ export class ListProfilComponent implements OnInit {
   }
 
   openNew() {
+    this.profil = null;
     this.profilDialog = true;
   }
 
@@ -73,17 +74,24 @@ export class ListProfilComponent implements OnInit {
 
   deleteSelectedProfils() {
     this.confirmationService.confirm({
-        message: 'Voulez-vous vraiment supprimer les profils selectionées ?',
-        header: 'Confirmer',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-          this.selectedProfils.forEach(e => {
-            this.profilService.deleteProfil(e.id).subscribe();
-          });
-            this.selectedProfils = null;
-            this.messageService.add({severity: 'réussi', summary: 'Réussi', detail: 'Profils supprimés', life: 3000});
-        }
+      message: 'Voulez-vous vraiment supprimer les profils selectionées ?',
+      header: 'Confirmer',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        let idList : number[] = [];
+        this.selectedProfils.forEach(e => {
+          idList.push(e.id);
+        });
+        this.profilService.deleteProfils(idList).subscribe();
+        this.selectedProfils = null;
+        this.messageService.add({ severity: 'réussi', summary: 'Réussi', detail: 'Profils supprimés', life: 3000 });
+      }
     });
-}
+  }
+
+  editProfil(profil: Profil) {
+    this.profil = profil;
+    this.profilDialog = true;
+  }
 
 }

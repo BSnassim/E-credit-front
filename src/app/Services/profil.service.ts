@@ -29,6 +29,10 @@ export class ProfilService {
     return this.http.delete(URL+"/"+id);
   }
 
+  deleteProfils(ids:number[]){
+    return this.http.delete(URL+"/deleteAll/"+ids);
+  }
+
   EditProfil(id:number, Profil:Profil): Observable<Profil>{
     return this.http.put<Profil>(URL+"/"+id, Profil);
   }
