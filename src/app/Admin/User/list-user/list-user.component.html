@@ -40,8 +40,19 @@
                         </th>
                         <th pSortableColumn="nom">Nom <p-sortIcon field="nom"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="prenom">Prenom <p-sortIcon field="prenom">
-                            </p-sortIcon>
+                        <th pSortableColumn="prenom">Prenom <p-sortIcon field="prenom"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="email">E-mail <p-sortIcon field="email"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="tel">Telephone <p-sortIcon field="tel"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="dateN">Date de naissance <p-sortIcon field="dateN"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="cin">CIN <p-sortIcon field="cin"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="password">Mot de passe <p-sortIcon field="password"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="profil">Profil <p-sortIcon field="profil"></p-sortIcon>
                         </th>
                         <th></th>
                     </tr>
@@ -56,6 +67,24 @@
                         </td>
                         <td><span class="p-column-title">Prenom</span>
                             {{user.prenom}}
+                        </td>
+                        <td><span class="p-column-title">E-mail</span>
+                            {{user.email}}
+                        </td>
+                        <td><span class="p-column-title">Telephone</span>
+                            {{user.tel}}
+                        </td>
+                        <td><span class="p-column-title">Date de naissance</span>
+                            {{user.dateN}}
+                        </td>
+                        <td><span class="p-column-title">CIN</span>
+                            {{user.cin}}
+                        </td>
+                        <td><span class="p-column-title">Mot de passe</span>
+                            {{user.password}}
+                        </td>
+                        <td><span class="p-column-title">Profil</span>
+                            {{user.profil}}
                         </td>
                         <td class="flex justify-content-end">
                             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"

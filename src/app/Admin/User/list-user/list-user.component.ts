@@ -37,8 +37,14 @@ export class ListUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.cols = [
-      { field: 'libelle', header: 'Libelle' },
-      { field: 'habilitations', header: 'Habilitations' },
+      { field: 'nom', header: 'Nom' },
+      { field: 'prenom', header: 'Prenom' },
+      { field: 'email', header: 'E-mail'},
+      { field: 'tel', header: 'Telephone'},
+      { field: 'dateN', header: 'Date de naissance'},
+      { field: 'cin', header: 'CIN'},
+      { field: 'password', header: 'Mot de passe'},
+      { field: 'profil', header: 'Profil'},
     ];
     this.getData();
     this.interval = setInterval(() => {
@@ -61,7 +67,7 @@ export class ListUserComponent implements OnInit {
     this.userDialog = false;
   }
 
-  deleteuser(user: User) {
+  deleteUser(user: User) {
     this.confirmationService.confirm({
       message: 'Voulez-vous vraiment supprimer ' + user.nom + ' ' + user.prenom + '?',
       header: 'Confirmer',
@@ -73,7 +79,7 @@ export class ListUserComponent implements OnInit {
     });
   }
 
-  deleteSelectedusers() {
+  deleteSelectedUsers() {
     this.confirmationService.confirm({
       message: 'Voulez-vous vraiment supprimer les users selectionées ?',
       header: 'Confirmer',
@@ -90,7 +96,7 @@ export class ListUserComponent implements OnInit {
     });
   }
 
-  edituser(user: User) {
+  editUser(user: User) {
     this.user = user;
     this.userDialog = true;
   }

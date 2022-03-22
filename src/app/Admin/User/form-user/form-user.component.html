@@ -1,45 +1,32 @@
-<div class="field">
-    <label for="nom">Nom</label>
-    <input type="text" pInputText id="nom" required autofocus />
-    <!-- <small class="p-invalid" *ngIf="submitted && !user.nom">Un Nom est nécessair.</small> -->
-</div>
-<div class="field">
-    <label for="nom">Prénom</label>
-    <input type="text" pInputText id="prenom" required autofocus />
-    <!-- <small class="p-invalid" *ngIf="submitted && !user.prenom">Un Prénom est nécessaire.</small> -->
-</div>
-
-<div class="field">
-    <label for="nom">Date de naissance</label>
-    <p-calendar id="dateNaissance" name="dateNaissance" [showIcon]="true" inputId="icon"></p-calendar>
-    <label for="nom">Adresse mail</label>
-    <input type="text" pInputText id="mail" required autofocus />
-    <!-- <small class="p-invalid" *ngIf="submitted && !user.mail">Une Adresse mail est nécessair.</small> -->
-</div>
-<div class="field">
-    <label class="mb-3">Profil</label>
-    <div class="formgrid grid">
-        <div class="field-radiobutton col-6">
-            <p-radioButton id="profil1" name="profil" value="admin"></p-radioButton>
-            <label for="profil1">ADMIN</label>
-        </div>
-        <div class="field-radiobutton col-6">
-            <p-radioButton id="profil2" name="profil" value="Chargé de l'agence">
-            </p-radioButton>
-            <label for="profil2">Chargé de l'agence</label>
-        </div>
-        <div class="field-radiobutton col-6">
-            <p-radioButton id="profil3" name="profil" value="Chef d'agence"></p-radioButton>
-            <label for="profil3">Chef d'agence</label>
-        </div>
-        <div class="field-radiobutton col-6">
-            <p-radioButton id="profil4" name="profil" value="Client"></p-radioButton>
-            <label for="profil4">Client</label>
-        </div>
+<div class="p-fluid formgrid grid">
+    <div class="field col">
+        <label for="nom">Nom</label>
+        <input type="text" pInputText id="nom" required autofocus />
+    </div>
+    <div class="field col">
+        <label for="prenom">Prénom</label>
+        <input type="text" pInputText id="prenom" required />
     </div>
 </div>
 
-<div class="formgrid grid">
+<div class="p-fluid formgrid grid">
+    <div class="field col">
+        <label for="mail">E-mail</label>
+        <input type="text" pInputText id="mail" required />
+    </div>
+    <div class="field col">
+        <label>Profil</label>
+        <p-dropdown [options]="profils" [(ngModel)]="selectedProfil" placeholder="Choisir un profil" [showClear]="true">
+        </p-dropdown>
+    </div>
+</div>
+
+<div class="field">
+    <label for="dateNaissance">Date de naissance</label>
+    <p-calendar id="dateNaissance" name="dateNaissance" [showIcon]="true" inputId="icon"></p-calendar>
+</div>
+
+<div class="p-fluid formgrid grid">
     <div class="field col">
         <label for="numTel">Numéro Téléphone</label>
         <p-inputNumber id="numTel"></p-inputNumber>
@@ -49,6 +36,19 @@
         <p-inputNumber id="numCin"></p-inputNumber>
     </div>
 </div>
+
+<div class="p-fluid formgrid grid">
+    <div class="field col">
+        <label for="pass">Mot de passe</label>
+        <p-inputNumber id="pass"></p-inputNumber>
+    </div>
+    <div class="field col">
+        <label for="passR">Répéter le mot de passe</label>
+        <p-inputNumber id="passR"></p-inputNumber>
+    </div>
+</div>
+<small class="p-invalid" *ngIf="">Vérifier le mot de passe !</small>
+
 <div class="footer">
     <button pButton pRipple label="Confirmer" icon="pi pi-check" class="p-button-text"></button>
     <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text"></button>

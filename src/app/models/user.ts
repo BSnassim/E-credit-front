@@ -1,3 +1,5 @@
+import { Profil } from "./profil";
+
 export class User {
     id : number;
     nom : string;
@@ -7,4 +9,5 @@ export class User {
     tel : number;
     cin : number;
     dateN : Date;
+    profil : Profil;
 }
