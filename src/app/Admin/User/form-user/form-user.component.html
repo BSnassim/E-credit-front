@@ -11,19 +11,19 @@
 
 <div class="p-fluid formgrid grid">
     <div class="field col">
-        <label for="mail">E-mail</label>
-        <input type="text" pInputText id="mail" required />
+        <label for="dateNaissance">Date de naissance</label>
+        <p-calendar id="dateNaissance" name="dateNaissance" [showIcon]="true" inputId="icon" ></p-calendar>
     </div>
     <div class="field col">
         <label>Profil</label>
-        <p-dropdown [options]="profils" [(ngModel)]="selectedProfil" placeholder="Choisir un profil" [showClear]="true">
+        <p-dropdown [options]="profils" dateFormat="y.mm.dd" optionLabel="libelle"[(ngModel)]="selectedProfil" placeholder="Choisir un profil" [showClear]="true">
         </p-dropdown>
     </div>
 </div>
 
 <div class="field">
-    <label for="dateNaissance">Date de naissance</label>
-    <p-calendar id="dateNaissance" name="dateNaissance" [showIcon]="true" inputId="icon"></p-calendar>
+    <label for="mail">E-mail</label>
+    <input type="text" pInputText id="mail" required />
 </div>
 
 <div class="p-fluid formgrid grid">

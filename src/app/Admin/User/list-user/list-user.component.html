@@ -102,7 +102,7 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="userDialog" [style]="{width: '500px', height:'700px'}" header="Détails User"
+        <p-dialog [(visible)]="userDialog" [style]="{width: '500px', height:'600px'}" header="Détails User"
             [modal]="true" styleClass="p-fluid">
             <ng-template pTemplate="content">
                 <app-form-user (closeDialog)="closeDialog($event)" [userToEdit]="user"></app-form-user>
