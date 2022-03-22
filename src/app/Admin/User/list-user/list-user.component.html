@@ -75,7 +75,7 @@
                             {{user.tel}}
                         </td>
                         <td><span class="p-column-title">Date de naissance</span>
-                            {{user.dateN}}
+                            {{user.dateNais | date:'dd/MM/yyyy':'GMT+1:00' }}
                         </td>
                         <td><span class="p-column-title">CIN</span>
                             {{user.cin}}
@@ -84,7 +84,7 @@
                             {{user.password}}
                         </td>
                         <td><span class="p-column-title">Profil</span>
-                            {{user.profil}}
+                            {{user.profil.libelle}}
                         </td>
                         <td class="flex justify-content-end">
                             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"

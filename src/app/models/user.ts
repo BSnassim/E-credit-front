@@ -8,6 +8,6 @@ export class User {
     email : string;
     tel : number;
     cin : number;
-    dateN : Date;
+    dateNais : Date;
     profil : Profil;
 }

@@ -24,14 +24,7 @@ export class FormProfilComponent implements OnInit {
 
   libelle : string;
 
-  validated: boolean;
-
-  constructor(private habService: HabilitationService, private profilService: ProfilService, private breadcrumbService: AppBreadcrumbService) {
-    this.breadcrumbService.setItems([
-      { label: 'Gestion des profils', routerLink: ['administration/profils'] },
-      { label: 'Formulaire Profil' }
-    ]);
-  }
+  constructor(private habService: HabilitationService, private profilService: ProfilService) { }
 
   ngOnInit(): void {
     this.habService.getHabilitations().subscribe(data => {

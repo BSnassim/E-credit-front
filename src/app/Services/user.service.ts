@@ -33,7 +33,7 @@ export class UserService {
     return this.http.delete(URL + "/deleteAll/" + ids);
   }
 
-  EditUser(id: number, User: User): Observable<User> {
-    return this.http.put<User>(URL + "/" + id, User);
+  EditUser(User: User): Observable<User> {
+    return this.http.put<User>(URL, User);
   }
 }

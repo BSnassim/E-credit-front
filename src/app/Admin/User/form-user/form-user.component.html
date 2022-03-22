@@ -1,55 +1,55 @@
+
 <div class="p-fluid formgrid grid">
     <div class="field col">
         <label for="nom">Nom</label>
-        <input type="text" pInputText id="nom" required autofocus />
+        <input type="text" pInputText id="nom" [(ngModel)]="nom" required autofocus />
     </div>
     <div class="field col">
         <label for="prenom">Prénom</label>
-        <input type="text" pInputText id="prenom" required />
+        <input type="text" pInputText id="prenom" [(ngModel)]="prenom" required />
     </div>
 </div>
 
 <div class="p-fluid formgrid grid">
     <div class="field col">
         <label for="dateNaissance">Date de naissance</label>
-        <p-calendar id="dateNaissance" name="dateNaissance" [showIcon]="true" inputId="icon" ></p-calendar>
+        <p-calendar id="dateNaissance" name="dateNaissance" [showIcon]="true" inputId="icon" [(ngModel)]="dateN" ></p-calendar>
     </div>
     <div class="field col">
         <label>Profil</label>
-        <p-dropdown [options]="profils" dateFormat="y.mm.dd" optionLabel="libelle"[(ngModel)]="selectedProfil" placeholder="Choisir un profil" [showClear]="true">
+        <p-dropdown [options]="profils" dateFormat="y.mm.dd" optionLabel="libelle" [(ngModel)]="selectedProfil" placeholder="Choisir un profil" [showClear]="true">
         </p-dropdown>
     </div>
 </div>
 
 <div class="field">
     <label for="mail">E-mail</label>
-    <input type="text" pInputText id="mail" required />
+    <input type="text" pInputText id="mail" [(ngModel)]="email" required [ngClass]="'ng-dirty'"/>
 </div>
 
 <div class="p-fluid formgrid grid">
     <div class="field col">
         <label for="numTel">Numéro Téléphone</label>
-        <p-inputNumber id="numTel"></p-inputNumber>
+        <input type="text" pInputText pKeyFilter="pnum" id="numTel" [(ngModel)]="tel" maxlength="8" />
     </div>
     <div class="field col">
         <label for="numCin">Numéro Carte d'identité</label>
-        <p-inputNumber id="numCin"></p-inputNumber>
+        <input type="text" pInputText pKeyFilter="pnum" id="numCin" [(ngModel)]="cin" maxlength="8" />
     </div>
 </div>
 
 <div class="p-fluid formgrid grid">
     <div class="field col">
         <label for="pass">Mot de passe</label>
-        <p-inputNumber id="pass"></p-inputNumber>
+        <p-password id="pass" class="ng-dirty" [(ngModel)]="password" ></p-password>
     </div>
     <div class="field col">
         <label for="passR">Répéter le mot de passe</label>
-        <p-inputNumber id="passR"></p-inputNumber>
+        <p-password id="passR" [(ngModel)]="repeatedPass" [feedback]="false"></p-password>
     </div>
 </div>
-<small class="p-invalid" *ngIf="">Vérifier le mot de passe !</small>
 
 <div class="footer">
-    <button pButton pRipple label="Confirmer" icon="pi pi-check" class="p-button-text"></button>
-    <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text"></button>
+    <button (click)="onSubmit()" pButton pRipple label="Confirmer" icon="pi pi-check" class="p-button-text"></button>
+    <button (click)="terminateDialog()" pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text"></button>
 </div>
