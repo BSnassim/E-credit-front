@@ -2,8 +2,9 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Habilitation } from '../models/habilitation';
+import { environment } from 'src/environments/environment.dev';
 
-const URL = "http://localhost:8088/data/habilitations";
+const URL = environment.adminURL + "/habilitations";
 
 @Injectable({
   providedIn: 'root'

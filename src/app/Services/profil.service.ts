@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.dev';
 import { Profil } from '../models/profil';
 
-const URL = "http://localhost:8088/data/profils";
+const URL = environment.adminURL + "/profils";
 
 @Injectable({
   providedIn: 'root'
