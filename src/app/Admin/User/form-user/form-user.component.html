@@ -2,11 +2,11 @@
 <div class="p-fluid formgrid grid">
     <div class="field col">
         <label for="nom">Nom</label>
-        <input type="text" pInputText id="nom" [(ngModel)]="nom" required autofocus />
+        <input type="text" pInputText id="nom" pKeyFilter="alpha" [(ngModel)]="nom" required autofocus />
     </div>
     <div class="field col">
         <label for="prenom">Prénom</label>
-        <input type="text" pInputText id="prenom" [(ngModel)]="prenom" required />
+        <input type="text" pInputText id="prenom" pKeyFilter="alpha" [(ngModel)]="prenom" required />
     </div>
 </div>
 
@@ -24,32 +24,33 @@
 
 <div class="field">
     <label for="mail">E-mail</label>
-    <input type="text" pInputText id="mail" [(ngModel)]="email" required [ngClass]="'ng-dirty'"/>
+    <input type="text" pInputText id="mail" [(ngModel)]="email" required [ngClass]="{'invalid' : validateEmail()}"/>
 </div>
 
 <div class="p-fluid formgrid grid">
     <div class="field col">
         <label for="numTel">Numéro Téléphone</label>
-        <input type="text" pInputText pKeyFilter="pnum" id="numTel" [(ngModel)]="tel" maxlength="8" />
+        <input type="text" pInputText pKeyFilter="pnum" id="numTel" [(ngModel)]="tel" [ngClass]="{'invalid':validateNumbers(tel)}" required maxlength="8" />
     </div>
     <div class="field col">
         <label for="numCin">Numéro Carte d'identité</label>
-        <input type="text" pInputText pKeyFilter="pnum" id="numCin" [(ngModel)]="cin" maxlength="8" />
+        <input type="text" pInputText pKeyFilter="pnum" id="numCin" [(ngModel)]="cin" [ngClass]="{'invalid':validateNumbers(cin)}" required maxlength="8" />
     </div>
 </div>
 
 <div class="p-fluid formgrid grid">
     <div class="field col">
         <label for="pass">Mot de passe</label>
-        <p-password id="pass" class="ng-dirty" [(ngModel)]="password" ></p-password>
+        <p-password id="pass" [(ngModel)]="password" required ></p-password>
     </div>
     <div class="field col">
         <label for="passR">Répéter le mot de passe</label>
-        <p-password id="passR" [(ngModel)]="repeatedPass" [feedback]="false"></p-password>
+        <p-password id="passR" [(ngModel)]="repeatedPass" [feedback]="false" required></p-password>
     </div>
 </div>
+<small>{{validatePassword()}}</small>
 
 <div class="footer">
-    <button (click)="onSubmit()" pButton pRipple label="Confirmer" icon="pi pi-check" class="p-button-text"></button>
+    <button [disabled]="allValidated()" (click)="onSubmit()" pButton pRipple label="Confirmer" icon="pi pi-check" class="p-button-text"></button>
     <button (click)="terminateDialog()" pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text"></button>
 </div>

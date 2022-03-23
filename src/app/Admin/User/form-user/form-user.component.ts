@@ -19,23 +19,23 @@ export class FormUserComponent implements OnInit {
 
   user: User = new User;
 
-  nom;
+  nom: string;
 
-  prenom;
+  prenom: string;
 
-  email;
+  email: string = '';
 
-  cin;
+  cin: number;
 
-  tel;
+  tel: number;
 
-  dateN;
+  dateN: Date;
 
-  password;
+  password: string = '';
 
-  repeatedPass;
+  repeatedPass: string = '';
 
-  emailRegex = "^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$";
+  emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   constructor(private profilService: ProfilService, private userService: UserService) { }
 
@@ -84,6 +84,30 @@ export class FormUserComponent implements OnInit {
 
   terminateDialog() {
     this.closeDialog.emit(false);
+  }
+
+  validateEmail() {
+    return (this.email.length !== 0 && !(this.emailRegex.test(this.email)));
+  }
+
+  validatePassword() {
+    if (this.password.length < 6 && this.password.length > 0)
+      return "Mot de passe doit être 6 caractéres au minimum";
+    else if (this.password != this.repeatedPass && this.repeatedPass.length > 0)
+      return "Le mot de passe n'est pas le même";
+    else return "";
+  }
+
+  validateNumbers(field) {
+    if (field!=null)
+    return field.toString().length !==8;
+    else return false;
+  }
+
+  allValidated(){
+    let empty = (this.cin == null || this.tel == null || this.nom == null || this.prenom == null || this.email == null 
+      || this.password == null || this.repeatedPass == null || this.dateN == null || this.selectedProfil == null );
+    return (this.validateEmail() || this.validatePassword()!="" || this.validateNumbers(this.cin) || this.validateNumbers(this.tel) || empty);
   }
 
 }
