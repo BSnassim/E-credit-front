@@ -57,7 +57,8 @@ export class FormProfilComponent implements OnInit {
     }
     else {
       this.profil.habilitations = this.selectedMulti;
-      this.profilService.EditProfil(this.profil.id, this.profil).subscribe();
+      this.profil.libelle = this.libelle;
+      this.profilService.EditProfil(this.profil).subscribe();
     }
     this.closeDialog.emit(false);
   }

@@ -30,7 +30,6 @@ export class AppMenuComponent implements OnInit {
                      items: [
                          {label: 'Gestion des utilisateurs', icon: 'pi pi-fw pi-id-card', routerLink: ['administration/users']},
                          {label: 'Gestion des profils', icon: 'pi pi-fw pi-id-card', routerLink: ['/administration/profils']},
-                         {label: 'Gestion des habilitation', icon: 'pi pi-fw pi-id-card', routerLink:['/administration/habilitations']}
                      ]
                  },
                  {

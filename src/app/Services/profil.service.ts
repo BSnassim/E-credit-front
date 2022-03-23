@@ -33,7 +33,7 @@ export class ProfilService {
     return this.http.delete(URL+"/deleteAll/"+ids);
   }
 
-  EditProfil(id:number, Profil:Profil): Observable<Profil>{
-    return this.http.put<Profil>(URL+"/"+id, Profil);
+  EditProfil(Profil:Profil): Observable<Profil>{
+    return this.http.put<Profil>(URL, Profil);
   }
 }

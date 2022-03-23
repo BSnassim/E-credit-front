@@ -28,7 +28,7 @@ export class HabilitationService {
     return this.http.delete(URL+"/"+id);
   }
 
-  EditHabilitation(id:number, Habilitation:Habilitation): Observable<Habilitation>{
-    return this.http.put<Habilitation>(URL+"/"+id, Habilitation);
+  EditHabilitation(Habilitation:Habilitation): Observable<Habilitation>{
+    return this.http.put<Habilitation>(URL, Habilitation);
   }
 }
