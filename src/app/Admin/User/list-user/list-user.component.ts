@@ -1,3 +1,4 @@
+import { EncryptionService } from './../../../Services/encryption.service';
 import { Component, OnInit } from '@angular/core';
 import { AppBreadcrumbService } from 'src/app/main/app-breadcrumb/app.breadcrumb.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -28,7 +29,8 @@ export class ListUserComponent implements OnInit {
   constructor(private breadcrumbService: AppBreadcrumbService,
     private userService: UserService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService,
+    private encrypter: EncryptionService) {
     this.breadcrumbService.setItems([
       { label: 'Gestion des utilisateurs' },
       { label: 'Liste des utilisateurs', routerLink: ['/administration/users'] }
