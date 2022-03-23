@@ -29,7 +29,7 @@ export class FormUserComponent implements OnInit {
 
   tel: number;
 
-  dateN: Date;
+  dateN: Date = new Date;
 
   password: string = '';
 
@@ -105,8 +105,8 @@ export class FormUserComponent implements OnInit {
   }
 
   allValidated(){
-    let empty = (this.cin == null || this.tel == null || this.nom == null || this.prenom == null || this.email == null 
-      || this.password == null || this.repeatedPass == null || this.dateN == null || this.selectedProfil == null );
+    let empty = (this.cin == null || this.tel == null || this.nom == '' || this.prenom == '' || this.email == '' 
+      || this.password == '' || this.repeatedPass == '' || this.dateN == null || this.selectedProfil == null );
     return (this.validateEmail() || this.validatePassword()!="" || this.validateNumbers(this.cin) || this.validateNumbers(this.tel) || empty);
   }
 
