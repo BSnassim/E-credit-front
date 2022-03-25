@@ -10,12 +10,12 @@ import {Router} from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-    baseUrl = environment.adminURL;
+    baseUrl = environment.apiURL;
     constructor(private http: HttpClient, private tokenService: TokenService, private router: Router) {}
 
 
     login(u: LoginUser): Observable<any>{
-        return this.http.post(this.baseUrl + '/login', u);
+        return this.http.post(this.baseUrl + '/authenticate', u);
     }
     logout(){
         this.tokenService.removeToken();

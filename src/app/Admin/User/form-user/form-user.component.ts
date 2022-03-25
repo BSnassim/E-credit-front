@@ -1,4 +1,3 @@
-import { EncryptionService } from './../../../Services/encryption.service';
 import { UserService } from './../../../Services/user.service';
 import { User } from './../../../models/user';
 import { ProfilService } from './../../../Services/profil.service';
@@ -38,7 +37,7 @@ export class FormUserComponent implements OnInit {
 
   emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  constructor(private profilService: ProfilService, private userService: UserService, private encrypter : EncryptionService) { }
+  constructor(private profilService: ProfilService, private userService: UserService) { }
 
   ngOnInit(): void {
     this.profilService.getProfils().subscribe(data => {
@@ -51,7 +50,7 @@ export class FormUserComponent implements OnInit {
       this.cin = this.userToEdit.cin;
       this.dateN = this.userToEdit.dateNais;
       this.email = this.userToEdit.email;
-      this.password = this.encrypter.decrypt(this.userToEdit.password);
+      this.password = this.userToEdit.password;
       this.tel = this.userToEdit.tel;
       this.selectedProfil = this.userToEdit.profil;
     };
@@ -65,7 +64,7 @@ export class FormUserComponent implements OnInit {
       this.user.cin = this.cin;
       this.user.dateNais = this.dateN;
       this.user.email = this.email;
-      this.user.password = this.encrypter.encrypt(this.password);
+      this.user.password = this.password;
       this.user.tel = this.tel;
       this.userService.addUser(this.user).subscribe();
     }
@@ -76,7 +75,7 @@ export class FormUserComponent implements OnInit {
       this.user.cin = this.cin;
       this.user.dateNais = this.dateN;
       this.user.email = this.email;
-      this.user.password = this.encrypter.encrypt(this.password);
+      this.user.password = this.password;
       this.user.tel = this.tel;
       this.userService.EditUser(this.user).subscribe();
     }

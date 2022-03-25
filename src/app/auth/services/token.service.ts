@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
   providedIn: 'root'
 })
 export class TokenService {
-    baseUrl = environment.adminURL + '/unsecured/token';
+    baseUrl = environment.apiURL + '/authenticate';
 
     constructor(private http: HttpClient) { }
     getToken(){
