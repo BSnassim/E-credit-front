@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.router.navigate(['/']);
         }
         this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
+            email: ['', Validators.required],
             password: ['', Validators.required]
         }, { updateOn: 'submit' });
     }
@@ -43,14 +43,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         } else { // Valid Form
             let loginUser: LoginUser;
             // Binding data to Model
-            loginUser = { ...loginUser, ...this.loginForm.value };
+            loginUser = { ...this.loginForm.value };
             this.authService.login(loginUser).subscribe((response) => {
-                console.log(response);
-                this.tokenService.setToken(response.token.value);
+                this.tokenService.setToken(response.token);
                 // Add roles to permission service
                 // tslint:disable-next-line:max-line-length
-                response.roles.forEach(role => this.permissionsService.addRoleWithPermissions(role.name, role.permissions.map((permission) => role.name + '_' + permission)));
-                console.log(this.permissionsService.getRoles());
+                // response.roles.forEach(role => this.permissionsService.addRoleWithPermissions(role.name, role.permissions.map((permission) => role.name + '_' + permission)));
+                // console.log(this.permissionsService.getRoles());
                 this.router.navigate(['/']);
             }, (error) => {
                 this.subscription = this.translateService.get('msgs').subscribe((msg) => {

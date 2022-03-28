@@ -3,6 +3,8 @@ import { AppBreadcrumbService } from 'src/app/main/app-breadcrumb/app.breadcrumb
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/Services/user.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-user',
@@ -11,7 +13,9 @@ import { UserService } from 'src/app/Services/user.service';
   providers: [MessageService, ConfirmationService]
 })
 export class ListUserComponent implements OnInit {
-  userList: User[];
+  userList$: Observable<User[]>;
+
+  refreshUsers$ = new BehaviorSubject<boolean>(true);
 
   cols: any[];
 
@@ -43,19 +47,12 @@ export class ListUserComponent implements OnInit {
       { field: 'tel', header: 'Telephone'},
       { field: 'dateN', header: 'Date de naissance'},
       { field: 'cin', header: 'CIN'},
-      { field: 'password', header: 'Mot de passe'},
       { field: 'profil', header: 'Profil'},
     ];
-    this.getData();
-    this.interval = setInterval(() => {
-      this.getData();
-    }, 1000);
-  }
-
-  getData() {
-    this.userService.getUsers().subscribe(data => {
-      this.userList = data;
-    });
+    this.userList$ = this.refreshUsers$.pipe(switchMap(_ => this.userService.getUsers()));
+    // this.userService.getUsers().subscribe(data => {
+    //   this.userList = data;
+    // });
   }
 
   openNew() {
@@ -65,6 +62,7 @@ export class ListUserComponent implements OnInit {
 
   closeDialog($event) {
     this.userDialog = false;
+    this.refreshUsers$.next(true);
   }
 
   deleteUser(user: User) {
@@ -74,6 +72,7 @@ export class ListUserComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.userService.deleteUser(user.id).subscribe();
+        this.refreshUsers$.next(true);
         this.messageService.add({ severity: 'réussi', summary: 'Réussi', detail: 'user supprimé', life: 3000 });
       }
     });
@@ -91,6 +90,7 @@ export class ListUserComponent implements OnInit {
         });
         this.userService.deleteUsers(idList).subscribe();
         this.selectedUsers = null;
+        this.refreshUsers$.next(true);
         this.messageService.add({ severity: 'réussi', summary: 'Réussi', detail: 'users supprimés', life: 3000 });
       }
     });
@@ -99,5 +99,6 @@ export class ListUserComponent implements OnInit {
   editUser(user: User) {
     this.user = user;
     this.userDialog = true;
+    this.refreshUsers$.next(true);
   }
 }

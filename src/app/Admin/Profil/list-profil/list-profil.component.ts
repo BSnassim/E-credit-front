@@ -41,13 +41,6 @@ export class ListProfilComponent implements OnInit {
       { field: 'libelle', header: 'Libelle' },
       { field: 'habilitations', header: 'Habilitations' },
     ];
-    this.getData();
-    this.interval = setInterval(() => {
-      this.getData();
-    }, 1000);
-  }
-
-  getData() {
     this.profilService.getProfils().subscribe(data => {
       this.profilList = data;
     });

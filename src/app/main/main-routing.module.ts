@@ -77,7 +77,7 @@ const templateRoutes: Routes = [
 
 
 export const mainRoutes: Routes = [
-    {path: '', component: DashboardDemoComponent, canActivate: [AuthGuardService]},
+    {path: '', component: DashboardDemoComponent},
     // place here child routes
   /*  {
         path: 'administration',

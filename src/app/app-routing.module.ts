@@ -1,3 +1,4 @@
+import { AuthGuardService } from './auth/guards/auth-guard.service';
 
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
@@ -13,9 +14,9 @@ import { AdminModule } from './Admin/admin.module';
     imports: [
         RouterModule.forRoot([
             {
-                path: '', component: AppMainComponent,
+                path: '', component: AppMainComponent, canActivate:[AuthGuardService],
                 children: [
-                    ...mainRoutes
+                    ...mainRoutes,
                 ]
             },
             ...authRoutes,

@@ -1,31 +1,25 @@
 import { Injectable } from '@angular/core';
-import {AuthService} from '../auth/services/auth.service';
-import {TokenService} from '../auth/services/token.service';
-import {Observable, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {environment} from '../../environments/environment';
-import {Router} from '@angular/router';
+import { TokenService } from '../auth/services/token.service';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
-export class TokenInterceptorService implements HttpInterceptor{
+export class TokenInterceptorService implements HttpInterceptor {
 
-
-    constructor(private authService: AuthService, private tokenService: TokenService, private router: Router) {
-    }
+    constructor(private tokenService: TokenService, private router: Router) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        // We retrieve the token, if any*/
+        let authReq = req;
         const token = this.tokenService.getToken();
-        let newHeaders = req.headers;
-        if (token) {
-            newHeaders = newHeaders.append('Authorization', 'Bearer ' + token);
+        if (token != null) {
+            authReq = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + token) });
         }
-        const tokenReq = req.clone({headers: newHeaders});
-        return next.handle(tokenReq).pipe(catchError((error: HttpErrorResponse) => {
+        return next.handle(authReq).pipe(catchError((error: HttpErrorResponse) => {
             console.log(error);
             if (error.status === 403) {
                 // 403 handled in auth.interceptor
@@ -45,6 +39,7 @@ export class TokenInterceptorService implements HttpInterceptor{
             return throwError(error);
         }));
     }
+
 
 
 }
