@@ -25,8 +25,6 @@ export class FormUserComponent implements OnInit {
 
   email: string = '';
 
-  cin: number;
-
   tel: number;
 
   dateN: Date = new Date;
@@ -47,7 +45,6 @@ export class FormUserComponent implements OnInit {
       this.user.id = this.userToEdit.id;
       this.nom = this.userToEdit.nom;
       this.prenom = this.userToEdit.prenom;
-      this.cin = this.userToEdit.cin;
       this.dateN = this.userToEdit.dateNais;
       this.email = this.userToEdit.email;
       this.password = this.userToEdit.password;
@@ -61,7 +58,6 @@ export class FormUserComponent implements OnInit {
       this.user.profil = this.selectedProfil;
       this.user.nom = this.nom;
       this.user.prenom = this.prenom;
-      this.user.cin = this.cin;
       this.user.dateNais = this.dateN;
       this.user.email = this.email;
       this.user.password = this.password;
@@ -72,7 +68,6 @@ export class FormUserComponent implements OnInit {
       this.user.profil = this.selectedProfil;
       this.user.nom = this.nom;
       this.user.prenom = this.prenom;
-      this.user.cin = this.cin;
       this.user.dateNais = this.dateN;
       this.user.email = this.email;
       this.user.password = this.password;
@@ -105,9 +100,9 @@ export class FormUserComponent implements OnInit {
   }
 
   allValidated(){
-    let empty = (this.cin == null || this.tel == null || this.nom == '' || this.prenom == '' || this.email == '' 
+    let empty = (this.tel == null || this.nom == '' || this.prenom == '' || this.email == '' 
       || this.password == '' || this.repeatedPass == '' || this.dateN == null || this.selectedProfil == null );
-    return (this.validateEmail() || this.validatePassword()!="" || this.validateNumbers(this.cin) || this.validateNumbers(this.tel) || empty);
+    return (this.validateEmail() || this.validatePassword()!="" || this.validateNumbers(this.tel) || empty);
   }
 
 }

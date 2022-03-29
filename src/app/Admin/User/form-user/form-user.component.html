@@ -32,10 +32,6 @@
         <label for="numTel">Numéro Téléphone</label>
         <input type="text" pInputText pKeyFilter="pnum" id="numTel" [(ngModel)]="tel" [ngClass]="{'invalid':validateNumbers(tel)}" required maxlength="8" />
     </div>
-    <div class="field col">
-        <label for="numCin">Numéro Carte d'identité</label>
-        <input type="text" pInputText pKeyFilter="pnum" id="numCin" [(ngModel)]="cin" [ngClass]="{'invalid':validateNumbers(cin)}" required maxlength="8" />
-    </div>
 </div>
 
 <div class="p-fluid formgrid grid">

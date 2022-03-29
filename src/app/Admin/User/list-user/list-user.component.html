@@ -19,7 +19,7 @@
             </p-toolbar>
 
             <p-table #dt [value]="userList$ | async" [columns]="cols" [rows]="10" [paginator]="true"
-                [globalFilterFields]="['name','country.name','representative.name','status']"
+                [globalFilterFields]="['nom','prenom','email','profil.libelle']"
                 [(selection)]="selectedUsers" [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
                 currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
                 [showCurrentPageReport]="true">
@@ -48,9 +48,7 @@
                         </th>
                         <th pSortableColumn="dateN">Date de naissance <p-sortIcon field="dateN"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="cin">CIN <p-sortIcon field="cin"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="profil">Profil <p-sortIcon field="profil"></p-sortIcon>
+                        <th pSortableColumn="profil.libelle">Profil <p-sortIcon field="profil.libelle"></p-sortIcon>
                         </th>
                         <th></th>
                     </tr>
@@ -75,9 +73,6 @@
                         <td><span class="p-column-title">Date de naissance</span>
                             {{user.dateNais | date:'dd/MM/yyyy' }}
                         </td>
-                        <td><span class="p-column-title">CIN</span>
-                            {{user.cin}}
-                        </td>
                         <td><span class="p-column-title">Profil</span>
                             {{user.profil.libelle}}
                         </td>
@@ -91,7 +86,7 @@
                 </ng-template>
                 <ng-template pTemplate="summary">
                     <div class="flex align-items-center justify-content-between">
-                        En total il ya {{userList$ ? userList$.length : 0 }} utilisateurs.
+                        En total il ya {{userList$ ? (userList$|async).length : 0 }} utilisateurs.
                     </div>
                 </ng-template>
             </p-table>

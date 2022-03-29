@@ -7,7 +7,6 @@ export class User {
     password : string;
     email : string;
     tel : number;
-    cin : number;
     dateNais : Date;
     profil : Profil;
 }

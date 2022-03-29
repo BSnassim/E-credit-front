@@ -46,13 +46,9 @@ export class ListUserComponent implements OnInit {
       { field: 'email', header: 'E-mail'},
       { field: 'tel', header: 'Telephone'},
       { field: 'dateN', header: 'Date de naissance'},
-      { field: 'cin', header: 'CIN'},
-      { field: 'profil', header: 'Profil'},
+      { field: 'profil.libelle', header: 'Profil'},
     ];
     this.userList$ = this.refreshUsers$.pipe(switchMap(_ => this.userService.getUsers()));
-    // this.userService.getUsers().subscribe(data => {
-    //   this.userList = data;
-    // });
   }
 
   openNew() {
