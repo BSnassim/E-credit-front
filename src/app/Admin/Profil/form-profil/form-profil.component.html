@@ -1,6 +1,6 @@
 <div class="field">
     <label for="firstname1">Libellé du profil</label>
-    <input id="firstname1" type="text" [(ngModel)]="libelle" pKeyFilter="alpha" autofocus maxlength="30" pInputText>
+    <input id="firstname1" type="text" [(ngModel)]="libelle" [pKeyFilter]="noSpecial" autofocus maxlength="40" pInputText>
 </div>
 <p>Liste des habilitations</p>
 <p-multiSelect [options]="habs" [(ngModel)]="selectedMulti" defaultLabel="Select a Country" optionLabel="libelle"

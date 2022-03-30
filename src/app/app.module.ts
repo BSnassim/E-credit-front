@@ -120,15 +120,6 @@ import {EmptyDemoComponent} from './demo/view/emptydemo.component';
 import {ChartsDemoComponent} from './demo/view/chartsdemo.component';
 import {FileDemoComponent} from './demo/view/filedemo.component';
 import {DocumentationComponent} from './demo/view/documentation.component';
-import {DisplayComponent} from './utilities/display.component';
-import {ElevationComponent} from './utilities/elevation.component';
-import {FlexboxComponent} from './utilities/flexbox.component';
-import {GridComponent} from './utilities/grid.component';
-import {IconsComponent} from './utilities/icons.component';
-import {WidgetsComponent} from './utilities/widgets.component';
-import {SpacingComponent} from './utilities/spacing.component';
-import {TypographyComponent} from './utilities/typography.component';
-import {TextComponent} from './utilities/text.component';
 import {AppCrudComponent} from './pages/app.crud.component';
 import {AppCalendarComponent} from './pages/app.calendar.component';
 import {AppTimelineDemoComponent} from './demo/view/app.timelinedemo.component';
@@ -161,7 +152,6 @@ import {SharedModule} from './shared/shared.module';
 import {NgxPermissionsModule, NgxPermissionsService} from "ngx-permissions";
 import {TokenInterceptorService} from "./interceptors/token-interceptor.service";
 import { FormProfilComponent } from './Admin/Profil/form-profil/form-profil.component';
-import { FormHabComponent } from './Admin/Habilitation/form-hab/form-hab.component';
 import { ListProfilComponent } from './Admin/Profil/list-profil/list-profil.component';
 import { FormUserComponent } from './Admin/User/form-user/form-user.component';
 import { ListUserComponent } from './Admin/User/list-user/list-user.component';
@@ -308,15 +298,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         EmptyDemoComponent,
         FileDemoComponent,
         DocumentationComponent,
-        DisplayComponent,
-        ElevationComponent,
-        FlexboxComponent,
-        GridComponent,
-        IconsComponent,
-        WidgetsComponent,
-        SpacingComponent,
-        TypographyComponent,
-        TextComponent,
         AppCrudComponent,
         AppCalendarComponent,
         AppTimelineDemoComponent,
@@ -328,7 +309,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         FormUserComponent,
         ListUserComponent,
         FormProfilComponent,
-        FormHabComponent,
         ListProfilComponent,
 
     ],

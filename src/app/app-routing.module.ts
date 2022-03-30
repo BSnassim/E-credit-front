@@ -8,7 +8,6 @@ import {AppErrorComponent} from './pages/app.error.component';
 import {AppAccessdeniedComponent} from './pages/app.accessdenied.component';
 import {mainRoutes, MainRoutingModule} from './main/main-routing.module';
 import {authRoutes} from './auth/auth-routing.module';
-import { AdminModule } from './Admin/admin.module';
 
 @NgModule({
     imports: [

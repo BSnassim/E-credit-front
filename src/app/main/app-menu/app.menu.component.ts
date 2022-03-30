@@ -18,7 +18,7 @@ export class AppMenuComponent implements OnInit {
      // this.loadMenu();
 
      this.templateMenu = [
-         {label: 'Template', icon: 'pi pi-home', items: [
+         {label: 'Liste des menus', icon: 'pi pi-home', items: [
                  {
                      label: 'Favorites', icon: 'pi pi-home',
                      items: [
@@ -26,11 +26,14 @@ export class AppMenuComponent implements OnInit {
                      ]
                  },
                  {
-                     label: 'Administration', icon: 'pi pi-fw pi-id-card', routerLink: ['/administration'],
+                     label: 'Administration', icon: 'pi pi-fw pi-list', routerLink: ['/administration'],
                      items: [
-                         {label: 'Gestion des utilisateurs', icon: 'pi pi-fw pi-id-card', routerLink: ['administration/users']},
-                         {label: 'Gestion des profils', icon: 'pi pi-fw pi-id-card', routerLink: ['/administration/profils']},
+                         {label: 'Gestion des utilisateurs', icon: 'pi pi-fw pi-users', routerLink: ['administration/users']},
+                         {label: 'Gestion des profils', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/administration/profils']},
                      ]
+                 },
+                 {
+                     label: 'Traitement des demandes', icon: 'pi pi-fw pi-money-bill', routerLink: ['demandes'],
                  },
                  {
                      label: 'UI Kit', icon: 'pi pi-fw pi-star', routerLink: ['/uikit'],
@@ -51,20 +54,6 @@ export class AppMenuComponent implements OnInit {
                          {label: 'File', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/file']},
                          {label: 'Chart', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/uikit/charts']},
                          {label: 'Misc', icon: 'pi pi-fw pi-circle-off', routerLink: ['/uikit/misc']}
-                     ]
-                 },
-                 {
-                     label: 'Utilities', icon: 'pi pi-fw pi-compass', routerLink: ['utilities'],
-                     items: [
-                         {label: 'Display', icon: 'pi pi-fw pi-desktop', routerLink: ['utilities/display']},
-                         {label: 'Elevation', icon: 'pi pi-fw pi-external-link', routerLink: ['utilities/elevation']},
-                         {label: 'FlexBox', icon: 'pi pi-fw pi-directions', routerLink: ['utilities/flexbox']},
-                         {label: 'Icons', icon: 'pi pi-fw pi-search', routerLink: ['utilities/icons']},
-                         {label: 'Text', icon: 'pi pi-fw pi-pencil', routerLink: ['utilities/text']},
-                         {label: 'Widgets', icon: 'pi pi-fw pi-star-o', routerLink: ['utilities/widgets']},
-                         {label: 'Grid System', icon: 'pi pi-fw pi-th-large', routerLink: ['utilities/grid']},
-                         {label: 'Spacing', icon: 'pi pi-fw pi-arrow-right', routerLink: ['utilities/spacing']},
-                         {label: 'Typography', icon: 'pi pi-fw pi-align-center', routerLink: ['utilities/typography']}
                      ]
                  },
                  {

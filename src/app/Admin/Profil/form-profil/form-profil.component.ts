@@ -24,6 +24,8 @@ export class FormProfilComponent implements OnInit {
 
   libelle : string;
 
+  noSpecial = /^[a-zàâçéèêëîïôûùüÿñæœ .-]*$/i
+
   constructor(private habService: HabilitationService, private profilService: ProfilService) { }
 
   ngOnInit(): void {

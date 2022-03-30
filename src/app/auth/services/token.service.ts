@@ -10,13 +10,13 @@ export class TokenService {
 
     constructor(private http: HttpClient) { }
     getToken(){
-        return localStorage.getItem('Token');
+        return localStorage.getItem('access token');
     }
     setToken(token: string){
-        localStorage.setItem('Token', token);
+        localStorage.setItem('access token', token);
     }
     removeToken(){
-        localStorage.removeItem('Token');
+        localStorage.removeItem('access token');
     }
 
     // Used in the interceptor to refresh the current token
