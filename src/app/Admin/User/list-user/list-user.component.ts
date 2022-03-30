@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppBreadcrumbService } from 'src/app/main/app-breadcrumb/app.breadcrumb.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/Services/user.service';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list-user',
@@ -12,10 +11,8 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./list-user.component.scss'],
   providers: [MessageService, ConfirmationService]
 })
-export class ListUserComponent implements OnInit {
-  userList$: Observable<User[]>;
-
-  refreshUsers$ = new BehaviorSubject<boolean>(true);
+export class ListUserComponent implements OnInit, OnDestroy {
+  userList: User[];
 
   cols: any[];
 
@@ -25,9 +22,7 @@ export class ListUserComponent implements OnInit {
 
   user: User;
 
-  submitted: boolean;
-
-  interval: any;
+  subscription : Subscription;
 
   constructor(private breadcrumbService: AppBreadcrumbService,
     private userService: UserService,
@@ -48,7 +43,16 @@ export class ListUserComponent implements OnInit {
       { field: 'dateN', header: 'Date de naissance'},
       { field: 'profil.libelle', header: 'Profil'},
     ];
-    this.userList$ = this.refreshUsers$.pipe(switchMap(_ => this.userService.getUsers()));
+    this.getData();
+    this.subscription = this.userService.refresh$.subscribe( () =>{
+      this.getData();
+    });
+  }
+
+  getData(){
+    this.userService.getUsers().subscribe( data =>{
+      this.userList = data;
+    });
   }
 
   openNew() {
@@ -58,7 +62,6 @@ export class ListUserComponent implements OnInit {
 
   closeDialog($event) {
     this.userDialog = false;
-    this.refreshUsers$.next(true);
   }
 
   deleteUser(user: User) {
@@ -68,7 +71,6 @@ export class ListUserComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.userService.deleteUser(user.id).subscribe();
-        this.refreshUsers$.next(true);
         this.messageService.add({ severity: 'réussi', summary: 'Réussi', detail: 'user supprimé', life: 3000 });
       }
     });
@@ -86,7 +88,6 @@ export class ListUserComponent implements OnInit {
         });
         this.userService.deleteUsers(idList).subscribe();
         this.selectedUsers = null;
-        this.refreshUsers$.next(true);
         this.messageService.add({ severity: 'réussi', summary: 'Réussi', detail: 'users supprimés', life: 3000 });
       }
     });
@@ -95,6 +96,10 @@ export class ListUserComponent implements OnInit {
   editUser(user: User) {
     this.user = user;
     this.userDialog = true;
-    this.refreshUsers$.next(true);
   }
+
+  ngOnDestroy():void{
+    this.subscription.unsubscribe();
+  }
+
 }

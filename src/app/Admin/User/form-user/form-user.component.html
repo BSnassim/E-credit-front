@@ -2,11 +2,11 @@
 <div class="p-fluid formgrid grid">
     <div class="field col">
         <label for="nom">Nom</label>
-        <input type="text" pInputText id="nom" pKeyFilter="alpha" [(ngModel)]="nom" required autofocus />
+        <input type="text" pInputText id="nom" [pKeyFilter]="noSpecial" [(ngModel)]="nom" required autofocus maxlength="40" />
     </div>
     <div class="field col">
         <label for="prenom">Prénom</label>
-        <input type="text" pInputText id="prenom" pKeyFilter="alpha" [(ngModel)]="prenom" required />
+        <input type="text" pInputText id="prenom" [pKeyFilter]="noSpecial" [(ngModel)]="prenom" required maxlength="40" />
     </div>
 </div>
 
@@ -45,6 +45,7 @@
     </div>
 </div>
 <small>{{validatePassword()}}</small>
+<small>{{errorEmail}}</small>
 
 <div class="footer">
     <button [disabled]="allValidated()" (click)="onSubmit()" pButton pRipple label="Confirmer" icon="pi pi-check" class="p-button-text"></button>

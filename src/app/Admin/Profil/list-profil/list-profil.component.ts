@@ -1,6 +1,8 @@
+import { Subscription } from 'rxjs';
+import { TokenService } from './../../../auth/services/token.service';
 import { Profil } from './../../../models/profil';
 import { ProfilService } from './../../../Services/profil.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppBreadcrumbService } from 'src/app/main/app-breadcrumb/app.breadcrumb.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
@@ -10,7 +12,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrls: ['./list-profil.component.scss'],
   providers: [MessageService, ConfirmationService]
 })
-export class ListProfilComponent implements OnInit {
+export class ListProfilComponent implements OnInit, OnDestroy {
 
   profilList: Profil[];
 
@@ -22,18 +24,21 @@ export class ListProfilComponent implements OnInit {
 
   profil: Profil;
 
-  submitted: boolean;
-
-  interval: any;
+  subscription : Subscription;
 
   constructor(private breadcrumbService: AppBreadcrumbService, 
     private profilService: ProfilService,
     private messageService: MessageService, 
-    private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService
+    ) {
     this.breadcrumbService.setItems([
       { label: 'Gestion des profils' },
       { label: 'Liste des Profils', routerLink: ['/administration/profils'] }
     ]);
+    this.getData();
+    this.subscription = this.profilService.refresh$.subscribe( () =>{
+      this.getData();
+    });
   }
 
   ngOnInit(): void {
@@ -42,6 +47,12 @@ export class ListProfilComponent implements OnInit {
       { field: 'habilitations', header: 'Habilitations' },
     ];
     this.profilService.getProfils().subscribe(data => {
+      this.profilList = data;
+    });
+  }
+
+  getData(){
+    this.profilService.getProfils().subscribe( data =>{
       this.profilList = data;
     });
   }
@@ -87,6 +98,10 @@ export class ListProfilComponent implements OnInit {
   editProfil(profil: Profil) {
     this.profil = profil;
     this.profilDialog = true;
+  }
+
+  ngOnDestroy():void{
+    this.subscription.unsubscribe();
   }
 
 }

@@ -33,7 +33,11 @@ export class FormUserComponent implements OnInit {
 
   repeatedPass: string = '';
 
+  errorEmail : string;
+
   emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  noSpecial = /^[a-zàâçéèêëîïôûùüÿñæœ .-]*$/i
 
   constructor(private profilService: ProfilService, private userService: UserService) { }
 
@@ -54,6 +58,10 @@ export class FormUserComponent implements OnInit {
   };
 
   onSubmit() {
+    console.log()
+    if(this.userService.emailAlreadyExists(this.email)){
+      this.errorEmail = "Email existe déjà";
+    }else{
     if (this.userToEdit == null) {
       this.user.profil = this.selectedProfil;
       this.user.nom = this.nom;
@@ -75,6 +83,7 @@ export class FormUserComponent implements OnInit {
       this.userService.EditUser(this.user).subscribe();
     }
     this.closeDialog.emit(false);
+  }
   }
 
   terminateDialog() {
@@ -102,7 +111,7 @@ export class FormUserComponent implements OnInit {
   allValidated(){
     let empty = (this.tel == null || this.nom == '' || this.prenom == '' || this.email == '' 
       || this.password == '' || this.repeatedPass == '' || this.dateN == null || this.selectedProfil == null );
-    return (this.validateEmail() || this.validatePassword()!="" || this.validateNumbers(this.tel) || empty);
+    return (this.validateEmail() || this.validatePassword()!='' || this.validateNumbers(this.tel) || empty);
   }
 
 }

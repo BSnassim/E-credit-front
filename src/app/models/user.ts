@@ -9,4 +9,5 @@ export class User {
     tel : number;
     dateNais : Date;
     profil : Profil;
+    
 }

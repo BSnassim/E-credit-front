@@ -18,7 +18,7 @@
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [value]="userList$ | async" [columns]="cols" [rows]="10" [paginator]="true"
+            <p-table #dt [value]="userList" [columns]="cols" [rows]="10" [paginator]="true"
                 [globalFilterFields]="['nom','prenom','email','profil.libelle']"
                 [(selection)]="selectedUsers" [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
                 currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
@@ -86,7 +86,7 @@
                 </ng-template>
                 <ng-template pTemplate="summary">
                     <div class="flex align-items-center justify-content-between">
-                        En total il ya {{userList$ ? (userList$|async).length : 0 }} utilisateurs.
+                        En total il ya {{userList ? userList.length : 0 }} utilisateurs.
                     </div>
                 </ng-template>
             </p-table>
