@@ -28,16 +28,8 @@ export class UserService {
   //   return this.http.get<User>(URL + "/" + id);
   // }
 
-  emailAlreadyExists(email: string){
-    let user;
-    this.http.get(URL + "/" + email).subscribe( data =>{
-      user = data;
-    });
-    console.log(user);
-    if(user==null){
-      return false;
-    }
-    else return true;
+  emailAlreadyExists(email: string): Observable<User>{
+    return this.http.get<User>(URL + "/" + email);
   }
 
   addUser(User: User): Observable<User> {

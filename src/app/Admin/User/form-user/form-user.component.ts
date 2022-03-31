@@ -33,7 +33,7 @@ export class FormUserComponent implements OnInit {
 
   repeatedPass: string = '';
 
-  errorEmail : string;
+  errorEmail: string;
 
   emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -58,32 +58,43 @@ export class FormUserComponent implements OnInit {
   };
 
   onSubmit() {
-    console.log()
-    if(this.userService.emailAlreadyExists(this.email)){
-      this.errorEmail = "Email existe déjà";
-    }else{
     if (this.userToEdit == null) {
-      this.user.profil = this.selectedProfil;
-      this.user.nom = this.nom;
-      this.user.prenom = this.prenom;
-      this.user.dateNais = this.dateN;
-      this.user.email = this.email;
-      this.user.password = this.password;
-      this.user.tel = this.tel;
-      this.userService.addUser(this.user).subscribe();
+
+      this.userService.emailAlreadyExists(this.email).subscribe(data => {
+        if (data != null) {
+          this.errorEmail = "Email existe déjà";
+        } else {
+          this.user.profil = this.selectedProfil;
+          this.user.nom = this.nom;
+          this.user.prenom = this.prenom;
+          this.user.dateNais = this.dateN;
+          this.user.email = this.email;
+          this.user.password = this.password;
+          this.user.tel = this.tel;
+          this.userService.addUser(this.user).subscribe();
+          this.closeDialog.emit(false);
+        };
+      });
     }
     else {
-      this.user.profil = this.selectedProfil;
-      this.user.nom = this.nom;
-      this.user.prenom = this.prenom;
-      this.user.dateNais = this.dateN;
-      this.user.email = this.email;
-      this.user.password = this.password;
-      this.user.tel = this.tel;
-      this.userService.EditUser(this.user).subscribe();
+      this.userService.emailAlreadyExists(this.email).subscribe(data => {
+        if (data != null && data.email != this.userToEdit.email) {
+          this.errorEmail = "Email utilisé par un autre utilisateur";
+        } else {
+          this.user.profil = this.selectedProfil;
+          this.user.nom = this.nom;
+          this.user.prenom = this.prenom;
+          this.user.dateNais = this.dateN;
+          this.user.email = this.email;
+          this.user.password = this.password;
+          this.user.tel = this.tel;
+          this.userService.EditUser(this.user).subscribe();
+          this.closeDialog.emit(false);
+        }
+      });
     }
-    this.closeDialog.emit(false);
-  }
+    
+
   }
 
   terminateDialog() {
@@ -103,15 +114,15 @@ export class FormUserComponent implements OnInit {
   }
 
   validateNumbers(field) {
-    if (field!=null)
-    return field.toString().length !==8;
+    if (field != null)
+      return field.toString().length !== 8;
     else return false;
   }
 
-  allValidated(){
-    let empty = (this.tel == null || this.nom == '' || this.prenom == '' || this.email == '' 
-      || this.password == '' || this.repeatedPass == '' || this.dateN == null || this.selectedProfil == null );
-    return (this.validateEmail() || this.validatePassword()!='' || this.validateNumbers(this.tel) || empty);
+  allValidated() {
+    let empty = (this.tel == null || this.nom == '' || this.prenom == '' || this.email == ''
+      || this.password == '' || this.repeatedPass == '' || this.dateN == null || this.selectedProfil == null);
+    return (this.validateEmail() || this.validatePassword() != '' || this.validateNumbers(this.tel) || empty);
   }
 
 }
