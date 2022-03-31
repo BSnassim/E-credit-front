@@ -25,16 +25,10 @@ export class TokenInterceptorService implements HttpInterceptor {
                 // 403 handled in auth.interceptor
                 //  Token expired !
                 //  refresh token
-                this.tokenService.refreshToken().subscribe((newToken: string) => {
-                    this.tokenService.setToken(newToken);
-                    this.intercept(req, next);
-                }, err => {
-                    console.log('Error refreshing token !');
-                    console.log(err);
+                
                     this.tokenService.removeToken();
                     this.router.navigate(['/']);
-                });
-                console.log('need to refresh token !');
+                
             }
             return throwError(error);
         }));

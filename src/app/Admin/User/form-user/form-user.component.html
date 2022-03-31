@@ -1,53 +1,77 @@
-
 <div class="p-fluid formgrid grid">
     <div class="field col">
         <label for="nom">Nom</label>
-        <input type="text" pInputText id="nom" [pKeyFilter]="noSpecial" [(ngModel)]="nom" required autofocus maxlength="40" />
+        <input type="text" pInputText id="nom" [pKeyFilter]="noSpecial" [(ngModel)]="nom" required autofocus
+            maxlength="40" />
     </div>
     <div class="field col">
         <label for="prenom">Prénom</label>
-        <input type="text" pInputText id="prenom" [pKeyFilter]="noSpecial" [(ngModel)]="prenom" required maxlength="40" />
+        <input type="text" pInputText id="prenom" [pKeyFilter]="noSpecial" [(ngModel)]="prenom" required
+            maxlength="40" />
     </div>
 </div>
 
 <div class="p-fluid formgrid grid">
     <div class="field col">
         <label for="dateNaissance">Date de naissance</label>
-        <p-calendar id="dateNaissance" name="dateNaissance" [showIcon]="true" inputId="icon" [(ngModel)]="dateN" ></p-calendar>
+        <p-calendar id="dateNaissance" name="dateNaissance" [showIcon]="true" inputId="icon" [(ngModel)]="dateN">
+        </p-calendar>
     </div>
     <div class="field col">
         <label>Profil</label>
-        <p-dropdown [options]="profils" dateFormat="y.mm.dd" optionLabel="libelle" [(ngModel)]="selectedProfil" placeholder="Choisir un profil" [showClear]="true">
+        <p-dropdown [options]="profils" dateFormat="y.mm.dd" optionLabel="libelle" [(ngModel)]="selectedProfil"
+            placeholder="Choisir un profil" [showClear]="true">
         </p-dropdown>
     </div>
 </div>
-
-<div class="field">
-    <label for="mail">E-mail</label>
-    <input type="text" pInputText id="mail" [(ngModel)]="email" required [ngClass]="{'invalid' : validateEmail()}"/>
-</div>
-
 <div class="p-fluid formgrid grid">
     <div class="field col">
+        <label for="mail">E-mail</label>
+        <input type="text" pInputText id="mail" [(ngModel)]="email" required
+            [ngClass]="{'invalid' : validateEmail()}" />
+    </div>
+    <div class="field col">
         <label for="numTel">Numéro Téléphone</label>
-        <input type="text" pInputText pKeyFilter="pnum" id="numTel" [(ngModel)]="tel" [ngClass]="{'invalid':validateNumbers(tel)}" required maxlength="8" />
+        <input type="text" pInputText pKeyFilter="pnum" id="numTel" [(ngModel)]="tel"
+            [ngClass]="{'invalid':validateNumbers(tel)}" required maxlength="8" />
     </div>
 </div>
 
-<div class="p-fluid formgrid grid">
+<div class="p-fluid formgrid grid" *ngIf="userToEdit == null">
     <div class="field col">
         <label for="pass">Mot de passe</label>
-        <p-password id="pass" [(ngModel)]="password" required ></p-password>
+        <p-password id="pass" [(ngModel)]="password" required></p-password>
     </div>
     <div class="field col">
         <label for="passR">Répéter le mot de passe</label>
         <p-password id="passR" [(ngModel)]="repeatedPass" [feedback]="false" required></p-password>
     </div>
 </div>
-<small>{{validatePassword()}}</small>
-<small>{{errorEmail}}</small>
+
+<span *ngIf="userToEdit != null">
+<div class="field">
+    <label for="oldPass">Mot de passe actuel</label>
+    <p-password id="oldPass" [(ngModel)]="oldPassword" required></p-password>
+</div>
+<div class="p-fluid formgrid grid">
+    <div class="field col">
+        <label for="newPass">Nouveau mot de passe</label>
+        <p-password id="newPass" [(ngModel)]="password" [feedback]="false" required></p-password>
+    </div>
+    <div class="field col">
+        <label for="newpassR">Répéter le nouveau mot de passe</label>
+        <p-password id="newPassR" [(ngModel)]="repeatedPass" [feedback]="false" required></p-password>
+    </div>
+</div>
+</span>
+
+<small>{{validatePassword()}}</small><br>
+<small>{{errorEmail}}</small><br>
+<small>{{errorPass}}</small>
 
 <div class="footer">
-    <button [disabled]="allValidated()" (click)="onSubmit()" pButton pRipple label="Confirmer" icon="pi pi-check" class="p-button-text"></button>
-    <button (click)="terminateDialog()" pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text"></button>
+    <button [disabled]="allValidated()" (click)="onSubmit()" pButton pRipple label="Confirmer" icon="pi pi-check"
+        class="p-button-text"></button>
+    <button (click)="terminateDialog()" pButton pRipple label="Annuler" icon="pi pi-times"
+        class="p-button-text"></button>
 </div>

@@ -1,6 +1,7 @@
+import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/models/user';
 
@@ -10,7 +11,7 @@ import { User } from 'src/app/models/user';
 export class TokenService {
     baseUrl = environment.apiURL + '/authenticate';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private router : Router) { }
     getToken(){
         return localStorage.getItem('access token');
     }
@@ -26,8 +27,15 @@ export class TokenService {
         return this.http.get<User>(this.baseUrl + '/getUserByToken/'+ this.getToken());
     }
 
-    // Used in the interceptor to refresh the current token
-    refreshToken(){
-        return this.http.post(this.baseUrl + '/refresh', this.getToken());
+    // Used to check if string matches encoded password
+    checkPassword(rawPassword : string, encodedPassword : string){
+        return this.http.get(this.baseUrl + '/checkPassword', {
+            params: {rawPassword : rawPassword, encodedPassword : encodedPassword}
+            });
     }
+
+    // Used in the interceptor to refresh the current token
+    // refreshToken(){
+    //     this.router.navigate(['/login']);
+    // }
 }

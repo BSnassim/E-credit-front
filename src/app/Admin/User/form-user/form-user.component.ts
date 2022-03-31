@@ -1,3 +1,4 @@
+import { TokenService } from './../../../auth/services/token.service';
 import { UserService } from './../../../Services/user.service';
 import { User } from './../../../models/user';
 import { ProfilService } from './../../../Services/profil.service';
@@ -33,13 +34,17 @@ export class FormUserComponent implements OnInit {
 
   repeatedPass: string = '';
 
+  oldPassword: string = '';
+
   errorEmail: string;
+
+  errorPass: string;
 
   emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   noSpecial = /^[a-zàâçéèêëîïôûùüÿñæœ .-]*$/i
 
-  constructor(private profilService: ProfilService, private userService: UserService) { }
+  constructor(private profilService: ProfilService, private userService: UserService, private tokenService: TokenService) { }
 
   ngOnInit(): void {
     this.profilService.getProfils().subscribe(data => {
@@ -51,13 +56,12 @@ export class FormUserComponent implements OnInit {
       this.prenom = this.userToEdit.prenom;
       this.dateN = this.userToEdit.dateNais;
       this.email = this.userToEdit.email;
-      this.password = this.userToEdit.password;
       this.tel = this.userToEdit.tel;
       this.selectedProfil = this.userToEdit.profil;
     };
   };
 
-  onSubmit() {
+  async onSubmit() {
     if (this.userToEdit == null) {
 
       this.userService.emailAlreadyExists(this.email).subscribe(data => {
@@ -77,24 +81,33 @@ export class FormUserComponent implements OnInit {
       });
     }
     else {
-      this.userService.emailAlreadyExists(this.email).subscribe(data => {
-        if (data != null && data.email != this.userToEdit.email) {
-          this.errorEmail = "Email utilisé par un autre utilisateur";
-        } else {
-          this.user.profil = this.selectedProfil;
-          this.user.nom = this.nom;
-          this.user.prenom = this.prenom;
-          this.user.dateNais = this.dateN;
-          this.user.email = this.email;
-          this.user.password = this.password;
-          this.user.tel = this.tel;
-          this.userService.EditUser(this.user).subscribe();
-          this.closeDialog.emit(false);
-        }
-      });
-    }
-    
+      const req1 = await this.userService.emailAlreadyExists(this.email).toPromise();
+      if (req1 != null && req1.email != this.userToEdit.email) {
+        this.errorEmail = "Email utilisé par un autre utilisateur";
+      }
+      else this.errorEmail = "";
 
+      const req2 = await this.tokenService.checkPassword(this.oldPassword, this.userToEdit.password).toPromise();
+      if (req2 == false) {
+        this.errorPass = "Mot de passe actuel invalide";
+      }
+      else this.errorPass = "";
+
+
+      if (this.errorEmail == "" && this.errorPass == "") {
+
+        this.user.profil = this.selectedProfil;
+        this.user.nom = this.nom;
+        this.user.prenom = this.prenom;
+        this.user.dateNais = this.dateN;
+        this.user.email = this.email;
+        this.user.password = this.password;
+        this.user.tel = this.tel;
+        this.userService.EditUser(this.user).subscribe();
+        this.closeDialog.emit(false);
+      };
+
+    }
   }
 
   terminateDialog() {

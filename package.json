@@ -28,6 +28,7 @@
         "@fullcalendar/timegrid": "^5.8.0",
         "@ngx-translate/core": "^13.0.0",
         "@ngx-translate/http-loader": "^6.0.0",
+        "bcryptjs": "^2.4.3",
         "chart.js": "^3.3.2",
         "crypto-js": "^4.1.1",
         "ngx-permissions": "^8.1.1",
