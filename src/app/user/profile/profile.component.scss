@@ -1,0 +1,25 @@
+.userCard {
+    background: rgb(2, 0, 36);
+    background: linear-gradient(141deg, rgba(2, 0, 36, 1) 0%, rgba(70, 12, 105, 1) 35%, rgba(179, 0, 255, 1) 100%);
+    width: 50%;
+    margin: auto;
+    border-radius: 2ch;
+    box-shadow: 1px 1px black;
+}
+aside{
+    float:left;
+    border-radius: 2ch;
+    width: 30%;
+    border: 5ch,medium,aqua;
+    background: black;
+    text-align: center;
+}
+main{
+    width: 70%;
+    float:right;
+    border-radius: 2ch;
+    background: red;
+}
+.clear{
+    clear: both;
+}

@@ -14,7 +14,7 @@ import {MessagesModule} from "primeng/messages";
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
   ],
     imports: [
         CommonModule,

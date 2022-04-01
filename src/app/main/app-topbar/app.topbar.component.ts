@@ -33,7 +33,7 @@ import {AuthService} from "../../auth/services/auth.service";
 
                         <ul class="fadeInDown">
                             <li role="menuitem">
-                                <a href="#" (click)="appMain.onTopbarSubItemClick($event)">
+                                <a href="#" [routerLink]="['/user/profile']">
                                     <i class="pi pi-fw pi-user"></i>
                                     <span>Profile</span>
                                 </a>

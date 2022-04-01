@@ -1,3 +1,4 @@
+import { AuthService } from './../auth/services/auth.service';
 import { Injectable } from '@angular/core';
 import { TokenService } from '../auth/services/token.service';
 import { Observable, throwError } from 'rxjs';
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class TokenInterceptorService implements HttpInterceptor {
 
-    constructor(private tokenService: TokenService, private router: Router) { }
+    constructor(private tokenService: TokenService, private authService: AuthService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let authReq = req;
@@ -26,8 +27,7 @@ export class TokenInterceptorService implements HttpInterceptor {
                 //  Token expired !
                 //  refresh token
                 
-                    this.tokenService.removeToken();
-                    this.router.navigate(['/']);
+                    this.authService.logout();
                 
             }
             return throwError(error);

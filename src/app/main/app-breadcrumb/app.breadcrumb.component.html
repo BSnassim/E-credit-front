@@ -11,12 +11,12 @@
             <i class="pi pi-search"></i>
         </a>
 
-        <div class="search-wrapper" [ngClass]="{'active-search-wrapper': appMain.searchActive}">
+        <!-- <div class="search-wrapper" [ngClass]="{'active-search-wrapper': appMain.searchActive}">
             <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
                 <input type="text" pInputText placeholder="Search..." [(ngModel)]="search" (click)="appMain.searchClick=true"/>
             </span>
-        </div>
+        </div> -->
 
         <button pButton pRipple type="button" label="Today" icon="pi pi-bookmark" *ngIf="!appMain.isMobile()"
                 class="layout-rightmenu-button" (click)="appMain.onRightMenuButtonClick()"></button>
