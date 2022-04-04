@@ -4,12 +4,19 @@
         <div class="userCard" >
             <aside>
                 <img src="assets/layout/images/profile-image.png">
-                <p>{{currentUser.nom}} {{currentUser.prenom}}</p>
-                <p>{{currentUser.profil.libelle}}</p>
+                <p class="name">{{currentUser.nom | uppercase}} {{currentUser.prenom | uppercase}}</p>
             </aside>
             <main>
-                <h4>Email address</h4>
+                <h4>Votre Profil</h4>
+                <p class="header">Adresse email</p>
                 <p>{{currentUser.email}}</p>
+                <p class="header">Type d'utilisateur</p>
+                <p>{{currentUser.profil.libelle}}</p>
+                <p class="header">Telephone</p>
+                <p>{{currentUser.tel}}</p>
+                <p class="header">Date de naissance</p>
+                <p>{{currentUser.dateNais | date:'dd/MM/yyyy'}}</p>
+                <h4></h4>
             </main>
             <div class="clear"></div>
         </div>
