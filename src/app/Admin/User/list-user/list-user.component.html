@@ -1,0 +1,106 @@
+<div class="grid">
+    <div class="col-12">
+
+        <p-toast></p-toast>
+
+        <div class="card">
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2 mb-2"
+                        (click)="openNew()"></button>
+                    <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger mb-2"
+                        (click)="deleteSelectedUsers()" [disabled]="!selectedUsers || !selectedUsers.length"></button>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help mb-2"
+                        (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="userList" [columns]="cols" [rows]="10" [paginator]="true"
+                [globalFilterFields]="['nom','prenom','email','profil.libelle']"
+                [(selection)]="selectedUsers" [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+                currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
+                [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between table-header">
+                        <h5 class="p-m-0">Liste des utilisateurs</h5>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Search..." />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="nom">Nom <p-sortIcon field="nom"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="prenom">Prenom <p-sortIcon field="prenom"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="email">E-mail <p-sortIcon field="email"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="tel">Telephone <p-sortIcon field="tel"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="dateN">Date de naissance <p-sortIcon field="dateN"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="profil.libelle">Profil <p-sortIcon field="profil.libelle"></p-sortIcon>
+                        </th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-user>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="user"></p-tableCheckbox>
+                        </td>
+                        <td><span class="p-column-title">Nom</span>
+                            {{user.nom}}
+                        </td>
+                        <td><span class="p-column-title">Prenom</span>
+                            {{user.prenom}}
+                        </td>
+                        <td><span class="p-column-title">E-mail</span>
+                            {{user.email}}
+                        </td>
+                        <td><span class="p-column-title">Telephone</span>
+                            {{user.tel}}
+                        </td>
+                        <td><span class="p-column-title">Date de naissance</span>
+                            {{user.dateNais | date:'dd/MM/yyyy' }}
+                        </td>
+                        <td><span class="p-column-title">Profil</span>
+                            {{user.profil.libelle}}
+                        </td>
+                        <td class="flex justify-content-end">
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                                (click)="editUser(user)"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                (click)="deleteUser(user)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        En total il ya {{userList ? userList.length : 0 }} utilisateurs.
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="userDialog" [style]="{width: '500px', height:'600px'}" header="Détails Utilisateur"
+            [modal]="true" styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <app-form-user (closeDialog)="closeDialog($event)" [userToEdit]="user"></app-form-user>
+            </ng-template>
+            <ng-template pTemplate="footer">
+            </ng-template>
+        </p-dialog>
+
+        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+    </div>
+</div>
