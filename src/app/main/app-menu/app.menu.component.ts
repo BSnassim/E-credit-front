@@ -43,15 +43,18 @@ export class AppMenuComponent implements OnInit {
                     this.templateMenu[0].items.push({
                         label: 'Administration', icon: 'pi pi-fw pi-list', routerLink: ['/administration'],
                         items: [
-                            { label: 'Gestion des utilisateurs', icon: 'pi pi-fw pi-users', routerLink: ['administration/users'] },
+                            { label: 'Gestion des utilisateurs', icon: 'pi pi-fw pi-users', routerLink: ['/administration/users'] },
                             { label: 'Gestion des profils', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/administration/profils'] },
                         ]
                     });
                 }
 
-                if(e.libelle=="ROLE_Traitement Demandes"){
+                if(e.libelle=="ROLE_Demande Credit Client"){
                     this.templateMenu[0].items.push({
-                        label: 'Traitement des demandes', icon: 'pi pi-fw pi-money-bill', routerLink: ['demandes'],
+                        label: 'Credit client', icon: 'pi pi-fw pi-money-bill', routerLink: ['/credit'],
+                        items: [
+                            { label: 'Demander un credit', icon: 'pi pi-fw pi-money-bill', routerLink: ['/credit/demande']}
+                        ]
                     });
                 }
                 

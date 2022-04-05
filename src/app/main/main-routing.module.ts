@@ -1,3 +1,4 @@
+import { ClientModule } from './../Client/client.module';
 import { UserModule } from './../user/user.module';
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
@@ -12,7 +13,8 @@ export const mainRoutes: Routes = [
         loadChildren: () => import('../administration/administration.module').then(m => m.AdministrationModule)
     },*/
     {path: 'administration', loadChildren:()=> AdminModule},
-    {path: 'user', loadChildren:()=>UserModule}
+    {path: 'user', loadChildren:()=>UserModule},
+    {path: 'credit', loadChildren:()=>ClientModule}
 ];
 
 @NgModule({
