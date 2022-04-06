@@ -1,7 +1,7 @@
 /*           *************** LIGNE CREDIT ***************           */
 export interface Credit {
-    libCredit?: string;
-    codeType?: number;
+    libcredit?: string;
+    idType?: number;
 }
 
 export interface LigneCredit {

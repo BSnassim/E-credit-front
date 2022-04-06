@@ -1,11 +1,15 @@
-
 import { Component, OnInit } from "@angular/core";
 import { MessageService, ConfirmationService } from "primeng/api";
-
 import { AppBreadcrumbService } from "src/app/main/app-breadcrumb/app.breadcrumb.service";
-import { LigneCredit, Garantie, PiecesJointes, Demande, Credit, TypeGarantie, NatureGarantie } from "src/app/models/credit/demande";
+import {
+    Garantie,
+    NatureGarantie,
+    TypeGarantie,
+} from "src/app/models/credit/garantie";
+import { Demande } from "src/app/models/credit/info-personnel";
+import { Credit, LigneCredit } from "src/app/models/credit/ligne-credit";
+import { PiecesJointes } from "src/app/models/credit/piece-jointes";
 import { CreditFormService } from "src/app/Services/credit-form-service.service";
-
 
 @Component({
     selector: "app-credit-form",
@@ -14,21 +18,23 @@ import { CreditFormService } from "src/app/Services/credit-form-service.service"
     providers: [MessageService, ConfirmationService],
 })
 export class CreditFormComponent implements OnInit {
-    demande = {
-        ligne: {} as LigneCredit,
-        garantie: {} as Garantie,
-        piece: {} as PiecesJointes,
-    } as Demande;
+    // demande = {
+    //     ligne: {} as LigneCredit,
+    // } as Demande;
 
-    // demandes = [lignes: [] as LigneCredit[], garanties: [] as Garantie, piepiecesJointesce: [] as PiecesJointes] as Demande [];
+    demande = {} as Demande;
 
-    demandes = [] as Demande[];
+    ligne = {} as LigneCredit;
+
+    garantie = {} as Garantie;
+
+    piece = {} as PiecesJointes;
 
     lignes = [] as LigneCredit[];
 
-    typeCredit: Credit[];
-
     garanties = [] as Garantie[];
+
+    typeCredit: Credit[];
 
     typeGarantie: TypeGarantie[];
 
@@ -37,8 +43,6 @@ export class CreditFormComponent implements OnInit {
     piecesJointes: PiecesJointes[];
 
     submitted: boolean;
-
-    LigneCreditDialog: boolean;
 
     GarantieDialog: boolean;
 
@@ -94,32 +98,22 @@ export class CreditFormComponent implements OnInit {
         });
     }
 
-    // storeLigneInformation(ligne: LigneCredit) {
-    //     this.creditFormService.storeLigneInformation(ligne).subscribe(() => {
-    //         console.log("SuccessFully fetched record");
-    //     });
-    // }
-
     addLigne() {
         this.submitted = true;
-        if (this.demande.ligne.credit.libCredit.trim()) {
-            if (this.demande.ligne.id) {
-                this.lignes[this.findIndexByIdLigne(this.demande.ligne.id)] =
-                    this.demande.ligne;
-            } else {
-                this.demande.ligne.id = this.createId();
-                this.lignes.push(this.demande.ligne);
-            }
-            this.lignes = [...this.lignes];
-            // this.ligne = {};
+        if (this.ligne.id) {
+            this.lignes[this.findIndexByIdLigne(this.ligne.id)] = this.ligne;
+        } else {
+            this.ligne.id = this.createId();
+            this.lignes.push(this.ligne);
         }
+        this.lignes = [...this.lignes];
 
         console.log(this.lignes);
 
-        console.log(this.lignes[this.lignes.length - 1].credit.codeType);
+        console.log(this.lignes[this.lignes.length - 1].credit.idType);
 
         this.getPiecesJointes(
-            this.lignes[this.lignes.length - 1].credit.codeType
+            this.lignes[this.lignes.length - 1].credit.idType
         );
     }
 
@@ -150,16 +144,8 @@ export class CreditFormComponent implements OnInit {
         });
     }
 
-    // storeGarantieInformation(garantie: Garantie) {
-    //     this.creditFormService
-    //         .storeGarantieInformation(garantie)
-    //         .subscribe(() => {
-    //             console.log("SuccessFully fetched record");
-    //         });
-    // }
-
     newGarantie() {
-        this.demande.garantie = {};
+        this.garantie = {};
         this.submitted = false;
         this.GarantieDialog = true;
     }
@@ -167,42 +153,39 @@ export class CreditFormComponent implements OnInit {
     hideGarantieDialog() {
         this.GarantieDialog = false;
         this.submitted = false;
-        this.demande.garantie = {};
+        this.garantie = {};
     }
 
     saveGarantie() {
         this.submitted = true;
-        if (this.demande.garantie.nature.codeNature.trim()) {
-            if (this.demande.garantie.id) {
-                this.garanties[
-                    this.findIndexByIdGarantie(this.demande.garantie.id)
-                ] = this.demande.garantie;
-                this.messageService.add({
-                    severity: "success",
-                    summary: "Successful",
-                    detail: "Garantie mis è jour",
-                    life: 3000,
-                });
-            } else {
-                this.demande.garantie.id = this.createId();
-                this.garanties.push(this.demande.garantie);
-                this.messageService.add({
-                    severity: "success",
-                    summary: "Successful",
-                    detail: "Garantie ajouter",
-                    life: 3000,
-                });
-            }
-
-            this.garanties = [...this.garanties];
-            this.GarantieDialog = false;
-            this.demande.garantie = {};
+        if (this.garantie.id) {
+            this.garanties[this.findIndexByIdGarantie(this.garantie.id)] =
+                this.garantie;
+            this.messageService.add({
+                severity: "success",
+                summary: "Successful",
+                detail: "Garantie mis è jour",
+                life: 3000,
+            });
+        } else {
+            this.garantie.id = this.createId();
+            this.garanties.push(this.garantie);
+            this.messageService.add({
+                severity: "success",
+                summary: "Successful",
+                detail: "Garantie ajouter",
+                life: 3000,
+            });
         }
+
+        this.garanties = [...this.garanties];
+        this.GarantieDialog = false;
+        this.garantie = {};
         console.log(this.garanties);
     }
 
     editGarantie(garantie: Garantie) {
-        this.demande.garantie = { ...garantie };
+        this.garantie = { ...garantie };
         this.GarantieDialog = true;
     }
 
@@ -215,7 +198,7 @@ export class CreditFormComponent implements OnInit {
                 this.garanties = this.garanties.filter(
                     (val) => val.id !== garantie.id
                 );
-                this.demande.garantie = {};
+                this.garantie = {};
                 this.messageService.add({
                     severity: "success",
                     summary: "Successful",
@@ -249,7 +232,7 @@ export class CreditFormComponent implements OnInit {
         for (const file of event.files) {
             this.uploadedFiles.push(file);
         }
-
+        console.log(event);
         this.messageService.add({
             severity: "info",
             summary: "Success",
@@ -261,14 +244,22 @@ export class CreditFormComponent implements OnInit {
 
     /*           ***********************************************           */
 
-    resetBT() {
-        this.demande = {};
-        this.messageService.add({
-            severity: "info",
-            summary: "Success",
-            detail: "Le formulaire est initialiser",
-            life: 3000,
-        });
+    // resetBT() {
+    //     this.demande = {};
+    //     this.messageService.add({
+    //         severity: "info",
+    //         summary: "Success",
+    //         detail: "Le formulaire est initialiser",
+    //         life: 3000,
+    //     });
+    // }
+
+    onSubmit() {
+        this.creditFormService
+            .postDemandeAPI(this.demande, this.garanties)
+            .subscribe((response) => {
+                this.demande = response;
+            });
     }
 
     createId(): string {
