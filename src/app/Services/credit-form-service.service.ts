@@ -1,26 +1,54 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Credit, TypeGarantie, NatureGarantie, PiecesJointes } from "../models/credit/demande";
-
+import { Subject } from "rxjs";
+import { tap } from "rxjs/operators";
+import {
+    Garantie,
+    NatureGarantie,
+    TypeGarantie,
+} from "../models/credit/garantie";
+import { Demande } from "../models/credit/info-personnel";
+import { Credit } from "../models/credit/ligne-credit";
+import { PiecesJointes } from "../models/credit/piece-jointes";
 
 @Injectable({
     providedIn: "root",
 })
 export class CreditFormService {
-    private getTypeCreditUrl = "http://localhost:8081/typeCredit/findAll";
+    private _refresh$ = new Subject<void>();
 
-    private getTypeGarantieUrl = "http://localhost:8081/typeGarantie/findAll";
+    private getTypeCreditUrl = "http://localhost:8088/credit/typeCredit";
+
+    private postDemandeUrl = "http://localhost:8088/credit/demande";
+
+    private getTypeGarantieUrl = "http://localhost:8088/credit/typeGarantie";
+
+    private postGarantieUrl = "http://localhost:8088/credit/garantie";
 
     private getNatureGarantieUrl =
-        "http://localhost:8081/natureGarantie/findAll";
+        "http://localhost:8088/credit/natureGarantie";
 
-    private getPiecesJointesUrl =
-        "http://localhost:8081/piecesJointes/findByType/";
+    private getPiecesJointesUrl = "http://localhost:8088/credit/documents/";
 
     constructor(private http: HttpClient) {}
 
     getTypeCreditAPI() {
         return this.http.get<Credit[]>(`${this.getTypeCreditUrl}`);
+    }
+
+    postDemandeAPI(demande: Demande, listGarantie: Garantie[]) {
+        demande.garantie = listGarantie;
+        return this.http.post<Demande>(`${this.postDemandeUrl}`, demande);
+    }
+
+    postGarantieAPI(garantie: Garantie) {
+        return this.http
+            .post<Garantie>(`${this.postGarantieUrl}`, garantie)
+            .pipe(
+                tap(() => {
+                    this._refresh$.next();
+                })
+            );
     }
 
     getTypeGarantieAPI() {

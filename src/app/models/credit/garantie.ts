@@ -1,11 +1,11 @@
 /*           *************** GARANTIE ***************               */
 export interface TypeGarantie {
-    codeType?: string;
+    idType?: number;
     libType?: string;
 }
 
 export interface NatureGarantie {
-    codeNature?: string;
+    idNature?: number;
     libelleNature?: string;
 }
 
