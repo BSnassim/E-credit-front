@@ -1,5 +1,5 @@
 div {
-    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+    font-family: "Century gothic";
 }
 .name {
     padding-top: 30px;
@@ -7,8 +7,13 @@ div {
     font-weight: bold;
 }
 .userCard {
-    background: rgb(227, 83, 26);
-    background: linear-gradient(270deg, rgba(227, 83, 26, 1) 0%, rgba(213, 122, 24, 1) 50%, rgba(238, 80, 131, 1) 100%);
+    background: rgb(175, 15, 15);
+    background: linear-gradient(
+        234deg,
+        rgba(175, 15, 15, 1) 65%,
+        rgba(232, 67, 131, 1) 95%,
+        rgba(213, 87, 163, 1) 100%
+    );
     width: 50%;
     margin: auto;
     border-radius: 2ch;
@@ -28,19 +33,20 @@ main {
     float: right;
     border-top-right-radius: 2ch;
     border-bottom-right-radius: 2ch;
-    border-left: 1px solid #f5f5f5;
-    background: #f5f5f5;
-    color: rgb(2, 0, 36);
+    border-left: 1px solid #32324e;
+    background: rgb(50, 50, 78);
+    background: linear-gradient(184deg, rgba(50, 50, 78, 1) 1%, rgba(77, 77, 105, 1) 69%, rgba(129, 129, 170, 1) 100%);
+    color: rgb(255, 255, 255);
 }
 .clear {
     clear: both;
 }
 .header {
-    border-bottom: 1px solid #5d5856;
+    border-bottom: 1px solid #ffffff;
     width: 80%;
     font-weight: 900;
     font-size: 15px;
 }
-h4{
+h4 {
     font-size: 25px;
 }

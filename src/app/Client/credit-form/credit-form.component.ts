@@ -53,8 +53,8 @@ export class CreditFormComponent implements OnInit {
         private breadcrumbService: AppBreadcrumbService
     ) {
         this.breadcrumbService.setItems([
-            { label: "Pages" },
-            { label: "Crud", routerLink: ["/pages/crud"] },
+            { label: "Credit" },
+            { label: "Demande", routerLink: ["creidt/demande"] },
         ]);
     }
 

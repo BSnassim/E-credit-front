@@ -38,8 +38,8 @@ export class AppMenuComponent implements OnInit {
         ];
         this.tokenService.getUser().subscribe(data => {
             data.profil.habilitations.forEach(e => {
-                
-                if(e.libelle=="ROLE_Administration"){
+
+                if (e.libelle == "ROLE_Administration") {
                     this.templateMenu[0].items.push({
                         label: 'Administration', icon: 'pi pi-fw pi-list', routerLink: ['/administration'],
                         items: [
@@ -49,15 +49,16 @@ export class AppMenuComponent implements OnInit {
                     });
                 }
 
-                if(e.libelle=="ROLE_Demande Credit Client"){
+                if (e.libelle == "ROLE_Demande Credit Client") {
                     this.templateMenu[0].items.push({
                         label: 'Credit client', icon: 'pi pi-fw pi-money-bill', routerLink: ['/credit'],
                         items: [
-                            { label: 'Demander un credit', icon: 'pi pi-fw pi-money-bill', routerLink: ['/credit/demande']}
+                            { label: 'Demander un credit', icon: 'pi pi-fw pi-money-bill', routerLink: ['/credit/demande'] },
+                            { label: 'Consulter vos credits', icon: 'pi pi-fw pi-money-bill', routerLink: ['/credit/consultation'] }
                         ]
                     });
                 }
-                
+
             });
         });
 
