@@ -22,7 +22,7 @@ export class TokenInterceptorService implements HttpInterceptor {
         }
         return next.handle(authReq).pipe(catchError((error: HttpErrorResponse) => {
             console.log(error);
-            if (error.status === 403) {
+            if (error.status) {
                 // 403 handled in auth.interceptor
                 //  Token expired !
                 //  refresh token
