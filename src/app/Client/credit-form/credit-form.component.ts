@@ -1,14 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { MessageService, ConfirmationService } from "primeng/api";
 import { AppBreadcrumbService } from "src/app/main/app-breadcrumb/app.breadcrumb.service";
-import {
-    Garantie,
-    NatureGarantie,
-    TypeGarantie,
-} from "src/app/models/credit/garantie";
+import { Garantie } from "src/app/models/credit/garantie";
 import { Demande } from "src/app/models/credit/info-personnel";
 import { Credit, LigneCredit } from "src/app/models/credit/ligne-credit";
+import { NatureGarantie } from "src/app/models/credit/natureGarantie";
 import { PiecesJointes } from "src/app/models/credit/piece-jointes";
+import { TypeGarantie } from "src/app/models/credit/typeGarantie";
 import { CreditFormService } from "src/app/Services/credit-form-service.service";
 
 @Component({
@@ -43,6 +41,8 @@ export class CreditFormComponent implements OnInit {
     GarantieDialog: boolean;
 
     uploadedFiles: any[] = [];
+
+    selectedFile: File = null;
 
     garantieCols: any[];
 
@@ -218,11 +218,14 @@ export class CreditFormComponent implements OnInit {
         });
     }
 
+    onFileSelected(event) {
+        this.selectedFile = event.target.files[0];
+    }
+
     onUpload(event) {
         for (const file of event.files) {
             this.uploadedFiles.push(file);
         }
-        console.log(event);
         this.messageService.add({
             severity: "info",
             summary: "Success",
