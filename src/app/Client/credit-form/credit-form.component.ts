@@ -8,6 +8,7 @@ import { NatureGarantie } from "src/app/models/credit/natureGarantie";
 import { PiecesJointes } from "src/app/models/credit/piece-jointes";
 import { Credit } from "src/app/models/credit/typeCredit";
 import { TypeGarantie } from "src/app/models/credit/typeGarantie";
+import { User } from "src/app/models/user";
 import { CreditFormService } from "src/app/Services/credit-form-service.service";
 
 @Component({
@@ -30,6 +31,8 @@ export class CreditFormComponent implements OnInit {
     garanties = [] as Garantie[];
 
     typeC = {} as Credit;
+
+    user = {} as User;
 
     typeCredit: Credit[];
 
@@ -250,6 +253,7 @@ export class CreditFormComponent implements OnInit {
         console.log(this.demande);
         console.log(this.garanties);
         this.demande.idTypeCredit = this.typeC.idType;
+        this.demande.idUser = this.user.id;
         this.creditFormService
             .postDemandeAPI(this.demande, this.garanties)
             .subscribe();
