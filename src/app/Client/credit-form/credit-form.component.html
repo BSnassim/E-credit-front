@@ -207,8 +207,16 @@
                 </ng-template>
             </p-table>
 
-            <p-fileUpload name="demo[]" url="./upload.php" (onUpload)="onUpload($event)" multiple="multiple"
-                accept="image/*" maxFileSize="1000000">
+            <p-fileUpload
+                type="file"
+                (change)="onFileSelected($event)"
+                name="demo[]"
+                url="./upload.php"
+                (onUpload)="onUpload($event)"
+                multiple="multiple"
+                accept="image/*"
+                maxFileSize="1000000"
+            >
                 <ng-template pTemplate="content">
                     <ul *ngIf="uploadedFiles.length">
                         <li *ngFor="let file of uploadedFiles">
@@ -234,8 +242,15 @@
     </div>
     <!--/*           ***********************************************           */-->
 </div>
-
-<button pButton pRipple type="button" block="true" (click)="onSubmit()" label="Sauvegarder" class="mr-2 mb-2"></button>
+<button
+    pButton
+    pRipple
+    type="button"
+    block="true"
+    (click)="onSubmit()"
+    label="Sauvegarder"
+    class="mr-2 mb-2"
+></button>
 
 <button pButton pRipple type="button" block="true" label="Initialiser" class="p-button-secondary mr-2 mb-2"></button>
 

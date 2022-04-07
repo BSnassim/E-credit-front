@@ -2,14 +2,12 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import { tap } from "rxjs/operators";
-import {
-    Garantie,
-    NatureGarantie,
-    TypeGarantie,
-} from "../models/credit/garantie";
+import { Garantie } from "../models/credit/garantie";
 import { Demande } from "../models/credit/info-personnel";
 import { Credit } from "../models/credit/ligne-credit";
+import { NatureGarantie } from "../models/credit/natureGarantie";
 import { PiecesJointes } from "../models/credit/piece-jointes";
+import { TypeGarantie } from "../models/credit/typeGarantie";
 
 @Injectable({
     providedIn: "root",
