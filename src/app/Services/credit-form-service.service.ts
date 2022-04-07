@@ -4,9 +4,9 @@ import { Subject } from "rxjs";
 import { tap } from "rxjs/operators";
 import { Garantie } from "../models/credit/garantie";
 import { Demande } from "../models/credit/info-personnel";
-import { Credit } from "../models/credit/ligne-credit";
 import { NatureGarantie } from "../models/credit/natureGarantie";
 import { PiecesJointes } from "../models/credit/piece-jointes";
+import { Credit } from "../models/credit/typeCredit";
 import { TypeGarantie } from "../models/credit/typeGarantie";
 
 @Injectable({

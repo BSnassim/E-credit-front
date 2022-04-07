@@ -59,8 +59,14 @@
                 <div class="field col-12 md:col-6">
                     <label for="credit">Type Crédit</label>
                     <span class="p-float-label">
-                        <p-dropdown inputId="credit" placeholder="Type" [(ngModel)]="ligne.credit"
-                            [options]="typeCredit" optionLabel="libcredit" required></p-dropdown>
+                        <p-dropdown
+                            inputId="credit"
+                            placeholder="Type"
+                            [(ngModel)]="typeC"
+                            [options]="typeCredit"
+                            optionLabel="libcredit"
+                            required
+                        ></p-dropdown>
                     </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -209,7 +215,6 @@
 
             <p-fileUpload
                 type="file"
-                (change)="onFileSelected($event)"
                 name="demo[]"
                 url="./upload.php"
                 (onUpload)="onUpload($event)"
