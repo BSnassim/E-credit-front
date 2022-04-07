@@ -23,12 +23,11 @@ export class CreditFormService {
 
     private postGarantieUrl = "http://localhost:8088/credit/garantie";
 
-    private getNatureGarantieUrl =
-        "http://localhost:8088/credit/natureGarantie";
+    private getNatureGarantieUrl = "http://localhost:8088/credit/natureGarantie";
 
     private getPiecesJointesUrl = "http://localhost:8088/credit/documents/";
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { }
 
     getTypeCreditAPI() {
         return this.http.get<Credit[]>(`${this.getTypeCreditUrl}`);

@@ -6,78 +6,44 @@
             <div class="p-fluid formgrid grid">
                 <div class="field col-12 md:col-6">
                     <label for="nom">Nom</label>
-                    <input
-                        id="nom"
-                        [(ngModel)]="demande.nom"
-                        type="text"
-                        pInputText
-                    />
+                    <input id="nom" [(ngModel)]="demande.nom" type="text" pInputText />
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="prenom">Prénom</label>
-                    <input
-                        id="prenom"
-                        [(ngModel)]="demande.prenom"
-                        type="text"
-                        pInputText
-                    />
+                    <input id="prenom" [(ngModel)]="demande.prenom" type="text" pInputText />
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="typePiece">Type de pièce</label>
-                    <p-dropdown
-                        inputId="typePiece"
-                        [options]="typePiece"
-                        [(ngModel)]="demande.typePiece"
-                        placeholder="Select"
-                    ></p-dropdown>
+                    <p-dropdown inputId="typePiece" [options]="typePiece" [(ngModel)]="demande.typePiece"
+                        placeholder="Select"></p-dropdown>
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="numCin">Numéro Pièce</label>
-                    <p-inputNumber
-                        id="numCin"
-                        [(ngModel)]="demande.numPiece"
-                    ></p-inputNumber>
+                    <p-inputNumber id="numCin" [(ngModel)]="demande.numPiece"></p-inputNumber>
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="numCompte">N° Compte</label>
-                    <p-inputNumber
-                        id="numCompte"
-                        [(ngModel)]="demande.numCompte"
-                    ></p-inputNumber>
+                    <p-inputNumber id="numCompte" [(ngModel)]="demande.numCompte"></p-inputNumber>
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="dateCompte">Date ouverture compte</label>
-                    <p-calendar
-                        id="dateCompte"
-                        name="dateNaissance"
-                        [showIcon]="true"
-                        inputId="icon"
-                        [(ngModel)]="demande.dateCompte"
-                    >
+                    <p-calendar id="dateCompte" name="dateNaissance" [showIcon]="true" inputId="icon"
+                        [(ngModel)]="demande.dateCompte">
                     </p-calendar>
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="dateNaissance">Né le</label>
                     <span class="p-float-label">
-                        <p-calendar
-                            id="dateNaissance"
-                            name="dateNaissance"
-                            [showIcon]="true"
-                            inputId="icon"
-                            [(ngModel)]="demande.dateNaissance"
-                        >
+                        <p-calendar id="dateNaissance" name="dateNaissance" [showIcon]="true" inputId="icon"
+                            [(ngModel)]="demande.dateNaissance">
                         </p-calendar>
                     </span>
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="sitFam">Situation familiale</label>
                     <span class="p-float-label">
-                        <p-dropdown
-                            inputId="situation"
-                            [options]="sitFam"
-                            [(ngModel)]="demande.sitFamiliale"
-                            placeholder="Select"
-                        ></p-dropdown>
+                        <p-dropdown inputId="situation" [options]="sitFam" [(ngModel)]="demande.sitFamiliale"
+                            placeholder="Select"></p-dropdown>
                     </span>
                 </div>
             </div>
@@ -105,41 +71,23 @@
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="montant">Montant</label>
-                    <p-inputNumber
-                        id="montant"
-                        [(ngModel)]="demande.montant"
-                        mode="currency"
-                        currency="TND"
-                        locale="tn-TN"
-                    ></p-inputNumber>
+                    <p-inputNumber id="montant" [(ngModel)]="demande.montant" mode="currency" currency="TND"
+                        locale="tn-TN"></p-inputNumber>
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="unite">Unité</label>
                     <span class="p-float-label">
-                        <p-dropdown
-                            inputId="unite"
-                            [options]="unite"
-                            [(ngModel)]="demande.unite"
-                            placeholder="Par"
-                        ></p-dropdown>
+                        <p-dropdown inputId="unite" [options]="unite" [(ngModel)]="demande.unite" placeholder="Par">
+                        </p-dropdown>
                     </span>
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="nbrEcheance">Nombre échéance</label>
-                    <p-inputNumber
-                        id="nbrEcheance"
-                        [(ngModel)]="demande.nbreEcheance"
-                    ></p-inputNumber>
+                    <p-inputNumber id="nbrEcheance" [(ngModel)]="demande.nbreEcheance"></p-inputNumber>
                 </div>
             </div>
-            <button
-                pButton
-                pRipple
-                label="Ajouter un ligne de crédit"
-                icon="pi pi-check"
-                (click)="addLigne()"
-                class="p-button-text"
-            ></button>
+            <button pButton pRipple label="Ajouter un ligne de crédit" icon="pi pi-check" (click)="addLigne()"
+                class="p-button-text"></button>
         </div>
     </div>
 
@@ -149,29 +97,16 @@
     <div class="col-12">
         <div class="card">
             <h5>Garantie Proposées</h5>
-            <p-table
-                [value]="garanties"
-                [columns]="garantieCols"
-                dataKey="id"
-                styleClass="p-datatable-customers"
-                [rowHover]="true"
-                [rows]="3"
-                [paginator]="true"
-            >
+            <p-table [value]="garanties" [columns]="garantieCols" dataKey="id" styleClass="p-datatable-customers"
+                [rowHover]="true" [rows]="3" [paginator]="true">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Nature</th>
                         <th>Type</th>
                         <th>Montant</th>
                         <th>
-                            <button
-                                pButton
-                                pRipple
-                                label="Nouveau garantie"
-                                icon="pi pi-plus"
-                                class="p-button-success mr-2 mb-2"
-                                (click)="newGarantie()"
-                            ></button>
+                            <button pButton pRipple label="Nouveau garantie" icon="pi pi-plus"
+                                class="p-button-success mr-2 mb-2" (click)="newGarantie()"></button>
                         </th>
                     </tr>
                 </ng-template>
@@ -190,27 +125,15 @@
                             {{ garantie.montant | currency: "TND" }}
                         </td>
                         <td style="text-align: center">
-                            <button
-                                pButton
-                                pRipple
-                                icon="pi pi-pencil"
-                                class="p-button-rounded p-button-success mr-2"
-                                (click)="editGarantie(garantie)"
-                            ></button>
-                            <button
-                                pButton
-                                pRipple
-                                icon="pi pi-trash"
-                                class="p-button-rounded p-button-warning"
-                                (click)="deleteGarantie(garantie)"
-                            ></button>
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                                (click)="editGarantie(garantie)"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                (click)="deleteGarantie(garantie)"></button>
                         </td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="summary">
-                    <div
-                        class="flex align-items-center justify-content-between"
-                    >
+                    <div class="flex align-items-center justify-content-between">
                         En total il y a
                         {{ garantie ? garanties?.length : 0 }} garanties.
                     </div>
@@ -218,90 +141,45 @@
             </p-table>
         </div>
 
-        <p-dialog
-            [(visible)]="GarantieDialog"
-            [style]="{ width: '450px' }"
-            header="Ajouter garantie"
-            [modal]="true"
-            styleClass="p-fluid"
-        >
+        <p-dialog [(visible)]="GarantieDialog" [style]="{ width: '450px' }" header="Ajouter garantie" [modal]="true"
+            styleClass="p-fluid">
             <ng-template pTemplate="content">
                 <div class="field">
                     <label for="nature">Nature Garantie</label>
                     <span class="p-float-label">
-                        <p-dropdown
-                            inputId="nature"
-                            [autoDisplayFirst]="false"
-                            [options]="natureGarantie"
-                            optionLabel="libelleNature"
-                            [(ngModel)]="garantie.nature"
-                            placeholder="Nature"
-                            required
-                        ></p-dropdown>
-                    </span>
-                    <br />
-                    <p-message
-                        severity="error"
-                        *ngIf="submitted && !garantie.nature"
-                        text="Ce champ est nécessair."
-                    ></p-message>
-                    <br />
-                    <label for="type">Type Garantie</label>
-                    <span class="p-float-label">
-                        <p-dropdown
-                            inputId="type"
-                            [autoDisplayFirst]="false"
-                            [options]="typeGarantie"
-                            optionLabel="libType"
-                            [(ngModel)]="garantie.type"
-                            placeholder="Type"
-                            required
-                        >
+                        <p-dropdown inputId="nature" [autoDisplayFirst]="false" [options]="natureGarantie"
+                            optionLabel="libelleNature" [(ngModel)]="garantie.nature" placeholder="Nature" required>
                         </p-dropdown>
                     </span>
                     <br />
-                    <p-message
-                        severity="error"
-                        *ngIf="submitted && !garantie.type"
-                        text="Ce champ est nécessair."
-                    ></p-message>
+                    <p-message severity="error" *ngIf="submitted && !garantie.nature" text="Ce champ est nécessair.">
+                    </p-message>
+                    <br />
+                    <label for="type">Type Garantie</label>
+                    <span class="p-float-label">
+                        <p-dropdown inputId="type" [autoDisplayFirst]="false" [options]="typeGarantie"
+                            optionLabel="libType" [(ngModel)]="garantie.type" placeholder="Type" required>
+                        </p-dropdown>
+                    </span>
+                    <br />
+                    <p-message severity="error" *ngIf="submitted && !garantie.type" text="Ce champ est nécessair.">
+                    </p-message>
                     <br />
                     <label for="montant">Montant</label>
-                    <p-inputNumber
-                        id="montant"
-                        [(ngModel)]="garantie.montant"
-                        mode="currency"
-                        currency="TND"
-                        locale="tn-TN"
-                        required
-                    ></p-inputNumber>
+                    <p-inputNumber id="montant" [(ngModel)]="garantie.montant" mode="currency" currency="TND"
+                        locale="tn-TN" required></p-inputNumber>
                     <br />
                     <br />
-                    <p-message
-                        severity="error"
-                        *ngIf="submitted && !garantie.montant"
-                        text="Ce champ est nécessair."
-                    ></p-message>
+                    <p-message severity="error" *ngIf="submitted && !garantie.montant" text="Ce champ est nécessair.">
+                    </p-message>
                 </div>
             </ng-template>
 
             <ng-template pTemplate="footer">
-                <button
-                    pButton
-                    pRipple
-                    label="Annuler"
-                    icon="pi pi-times"
-                    class="p-button-text"
-                    (click)="hideGarantieDialog()"
-                ></button>
-                <button
-                    pButton
-                    pRipple
-                    label="Ajouter"
-                    icon="pi pi-check"
-                    class="p-button-text"
-                    (click)="saveGarantie()"
-                ></button>
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text"
+                    (click)="hideGarantieDialog()"></button>
+                <button pButton pRipple label="Ajouter" icon="pi pi-check" class="p-button-text"
+                    (click)="saveGarantie()"></button>
             </ng-template>
         </p-dialog>
         <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
@@ -313,13 +191,8 @@
     <div class="col-12">
         <div class="card">
             <h5>Piéces Jointes</h5>
-            <p-table
-                [value]="piecesJointes"
-                [rowHover]="true"
-                selectionMode="single"
-                dataKey="id"
-                styleClass="p-datatable-customers p-datatable-gridlines p-datatable-striped"
-            >
+            <p-table [value]="piecesJointes" [rowHover]="true" selectionMode="single" dataKey="id"
+                styleClass="p-datatable-customers p-datatable-gridlines p-datatable-striped">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Documents</th>
@@ -367,12 +240,7 @@
             <h5>Observation</h5>
             <div class="p-fluid formgrid grid">
                 <div class="field col-12">
-                    <textarea
-                        id="commentaire"
-                        type="text"
-                        rows="4"
-                        pInputTextarea
-                    ></textarea>
+                    <textarea id="commentaire" type="text" rows="4" pInputTextarea></textarea>
                 </div>
             </div>
         </div>
@@ -389,14 +257,7 @@
     class="mr-2 mb-2"
 ></button>
 
-<button
-    pButton
-    pRipple
-    type="button"
-    block="true"
-    label="Initialiser"
-    class="p-button-secondary mr-2 mb-2"
-></button>
+<button pButton pRipple type="button" block="true" label="Initialiser" class="p-button-secondary mr-2 mb-2"></button>
 
 {{ piecesJointes | json }}
 <br />
