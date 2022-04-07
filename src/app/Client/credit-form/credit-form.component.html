@@ -96,7 +96,7 @@
                         <p-dropdown
                             inputId="credit"
                             placeholder="Type"
-                            [(ngModel)]="ligne.credit"
+                            [(ngModel)]="typeC"
                             [options]="typeCredit"
                             optionLabel="libcredit"
                             required
@@ -342,7 +342,6 @@
 
             <p-fileUpload
                 type="file"
-                (change)="onFileSelected($event)"
                 name="demo[]"
                 url="./upload.php"
                 (onUpload)="onUpload($event)"
