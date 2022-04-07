@@ -24,12 +24,12 @@
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="typePiece">Type de pièce</label>
-                    <input
-                        id="typePiece"
+                    <p-dropdown
+                        inputId="typePiece"
+                        [options]="typePiece"
                         [(ngModel)]="demande.typePiece"
-                        type="text"
-                        pInputText
-                    />
+                        placeholder="Select"
+                    ></p-dropdown>
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="numCin">Numéro Pièce</label>
@@ -47,20 +47,26 @@
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="dateCompte">Date ouverture compte</label>
-                    <p-inputMask
-                        inputId="dateCompte"
-                        mask="99/99/9999"
+                    <p-calendar
+                        id="dateCompte"
+                        name="dateNaissance"
+                        [showIcon]="true"
+                        inputId="icon"
                         [(ngModel)]="demande.dateCompte"
-                    ></p-inputMask>
+                    >
+                    </p-calendar>
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="dateNaissance">Né le</label>
                     <span class="p-float-label">
-                        <p-inputMask
-                            inputId="dateNaissance"
-                            mask="99/99/9999"
+                        <p-calendar
+                            id="dateNaissance"
+                            name="dateNaissance"
+                            [showIcon]="true"
+                            inputId="icon"
                             [(ngModel)]="demande.dateNaissance"
-                        ></p-inputMask>
+                        >
+                        </p-calendar>
                     </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -71,7 +77,6 @@
                             [options]="sitFam"
                             [(ngModel)]="demande.sitFamiliale"
                             placeholder="Select"
-                            optionLabel="name"
                         ></p-dropdown>
                     </span>
                 </div>
@@ -116,7 +121,6 @@
                             [options]="unite"
                             [(ngModel)]="demande.unite"
                             placeholder="Par"
-                            optionLabel="name"
                         ></p-dropdown>
                     </span>
                 </div>

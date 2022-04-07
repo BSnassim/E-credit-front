@@ -18,10 +18,6 @@ import { CreditFormService } from "src/app/Services/credit-form-service.service"
     providers: [MessageService, ConfirmationService],
 })
 export class CreditFormComponent implements OnInit {
-    // demande = {
-    //     ligne: {} as LigneCredit,
-    // } as Demande;
-
     demande = {} as Demande;
 
     ligne = {} as LigneCredit;
@@ -76,20 +72,14 @@ export class CreditFormComponent implements OnInit {
 
     /*           *************** INFORMATION CLIENT ***************         */
 
-    sitFam: any[] = [
-        { name: "Mariée", code: "M" },
-        { name: "Célibataire", code: "C" },
-        { name: "Divorsé", code: "D" },
-    ];
+    sitFam: any[] = ["Mariée", "Célibataire", "Divorsé"];
+
+    typePiece: any[] = ["CIN", "Passeport"];
 
     /*           ********************************************               */
     /*           *************** LIGNE CREDIT ***************               */
 
-    unite: any[] = [
-        { name: "Jour", code: "J" },
-        { name: "Mois", code: "M" },
-        { name: "Ans", code: "A" },
-    ];
+    unite: any[] = ["Jour", "Mois", "Année"];
 
     getTypeCredit() {
         this.creditFormService.getTypeCreditAPI().subscribe((response) => {
@@ -255,11 +245,14 @@ export class CreditFormComponent implements OnInit {
     // }
 
     onSubmit() {
+        console.log(this.demande);
+        console.log(this.garanties);
         this.creditFormService
             .postDemandeAPI(this.demande, this.garanties)
-            .subscribe((response) => {
-                this.demande = response;
-            });
+            .subscribe();
+        // ((response) => {
+        //     this.demande = response;
+        // });
     }
 
     createId(): string {
