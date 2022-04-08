@@ -1,4 +1,3 @@
-import { User } from "../user";
 import { Garantie } from "./garantie";
 import { PiecesJointes } from "./piece-jointes";
 
@@ -20,6 +19,6 @@ export interface Demande {
     idPhase?: number;
     idTypeCredit?: number;
     garantie?: Garantie[];
-    piece?: PiecesJointes[];
+    pieces?: File[];
     idUser?: number;
 }

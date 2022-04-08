@@ -46,9 +46,9 @@ export class CreditFormComponent implements OnInit {
 
     GarantieDialog: boolean;
 
-    uploadedFiles: any[] = [];
+    uploadedFiles: File[] = [];
 
-    selectedFile: File = null;
+    // selectedFile: File = null;
 
     garantieCols: any[];
 
@@ -254,6 +254,7 @@ export class CreditFormComponent implements OnInit {
         console.log(this.garanties);
         this.demande.idTypeCredit = this.typeC.idType;
         this.demande.idUser = this.user.id;
+        this.demande.pieces = this.uploadedFiles;
         this.creditFormService
             .postDemandeAPI(this.demande, this.garanties)
             .subscribe();
