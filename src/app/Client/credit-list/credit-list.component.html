@@ -1,1 +1,18 @@
-<p>this is a list of your credits</p>
+<p-table [value]="listDemande" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Montant</th>
+            <th>Type de credit</th>
+            <th>Date du dernier changement</th>
+            <th>Etat</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-demande>
+        <tr>
+            <td>montant</td>
+            <td>type credit</td>
+            <td>date dernier changement</td>
+            <td>etat</td>
+        </tr>
+    </ng-template>
+</p-table>
