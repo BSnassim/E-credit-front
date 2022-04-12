@@ -20,14 +20,27 @@ export class CreditFormService {
 
     constructor(private http: HttpClient) {}
 
-    getTypeCreditAPI() {
-        return this.http.get<Credit[]>(`${this.baseUrl}` + `/typeCredit`);
-    }
-
+    // demande
     postDemandeAPI(demande: Demande, listGarantie: Garantie[]) {
         demande.garantie = listGarantie;
         return this.http.post<Demande>(`${this.baseUrl}` + `/demande`, demande);
     }
+
+    getListDemande(){
+        return this.http.get<Demande[]>(this.baseUrl + '/demande');
+    }
+
+    //type credit
+
+    getTypeCreditAPI() {
+        return this.http.get<Credit[]>(`${this.baseUrl}` + `/typeCredit`);
+    }
+    
+    getTypeCreditById(id : number){
+        return this.http.get<Credit>(this.baseUrl + '/typeCredit/' + id);
+    }
+
+    //garantie
 
     postGarantieAPI(garantie: Garantie) {
         return this.http
@@ -51,19 +64,17 @@ export class CreditFormService {
         );
     }
 
+    //pieces jointes
+
     getPiecesJointesAPI(i: any) {
         return this.http.get<PiecesJointes[]>(
             `${this.baseUrl}` + `/documents/` + i
         );
     }
 
-    // getToken() {
-    //     return localStorage.getItem("access token");
-    // }
+    // phase
 
-    // getUser(): Observable<User> {
-    //     return this.http.get<User>(
-    //         this.baseUrl + "/getUserByToken/" + this.getToken()
-    //     );
-    // }
+    getListPhases(){
+        return this.http.get(this.baseUrl + '/phase');
+    }
 }
