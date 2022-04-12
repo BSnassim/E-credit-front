@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ClientRoutingModule } from './client-routing.module';
+import { CreditDetailsComponent } from './credit-details/credit-details.component';
 
 
 @NgModule({
