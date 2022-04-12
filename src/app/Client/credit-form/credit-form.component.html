@@ -42,6 +42,8 @@
                     <label for="numCompte">N° Compte</label>
                     <p-inputNumber
                         id="numCompte"
+                        maxlength="16"
+                        max="16"
                         [(ngModel)]="demande.numCompte"
                     ></p-inputNumber>
                 </div>
@@ -399,6 +401,7 @@
     <!--/*           ***********************************************           */-->
 </div>
 <div class="flex align-items-center justify-content-center">
+    <p-toast key="tst"></p-toast>
     <button
         pButton
         pRipple
@@ -419,12 +422,6 @@
     ></button>
 </div>
 
-<!-- {{ piecesJointes | json }}
 <br />
 {{ demande | json }}
 <br />
-{{ ligne | json }}
-<br />
-{{ garantie | json }}
-<br />
-{{ piece | json }} -->

@@ -29,6 +29,11 @@ export class CreditFormService {
     getListDemande(){
         return this.http.get<Demande[]>(this.baseUrl + '/demande');
     }
+  
+    getDemandeExistsAPI(i: any) {
+        return this.http.get<boolean>(
+            `${this.baseUrl}` + `/demande/Exists/` + i
+        );
 
     //type credit
 

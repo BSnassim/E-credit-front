@@ -1,4 +1,3 @@
-import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { MessageService, ConfirmationService } from "primeng/api";
 import { AppBreadcrumbService } from "src/app/main/app-breadcrumb/app.breadcrumb.service";
@@ -12,9 +11,8 @@ import { TypeGarantie } from "src/app/models/credit/typeGarantie";
 import { User } from "src/app/models/user";
 import { base64StringToBlob } from "blob-util";
 import { saveAs } from "file-saver";
-import { FileUpload } from "primeng/fileupload";
-
 import { CreditFormService } from "src/app/Services/credit-form-service.service";
+import { TokenService } from "src/app/auth/services/token.service";
 
 @Component({
     selector: "app-credit-form",
@@ -50,20 +48,33 @@ export class CreditFormComponent implements OnInit {
     GarantieDialog: boolean;
 
     fileMaxSize: number;
+
     multiple: boolean;
 
     garantieCols: any[];
+
     disabled: boolean;
+
     loading: boolean;
+
     propagateChange: any;
+
     propagateValidator: any;
+
     readOnly: boolean;
+
     required: boolean;
+
     style: any;
+
     selected: PiecesJointes[];
+
     fileUpload: any;
+
+    exists: boolean;
+
     constructor(
-        private http: HttpClient,
+        private tokenService: TokenService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         private creditFormService: CreditFormService,
@@ -86,6 +97,12 @@ export class CreditFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.messageService.add({
+            key: "tst",
+            severity: "error",
+            summary: "Erreur",
+            detail: "Vous-avez déja déposer une demande",
+        });
         this.getTypeCredit();
         this.getTypeGarantie();
         this.getNatureGarantie();
@@ -103,6 +120,13 @@ export class CreditFormComponent implements OnInit {
 
     typePiece: any[] = ["CIN", "Passeport"];
 
+    // if (typePiece = "CIN")
+    // {
+    //     this.cin = true;
+    // }else{
+    //     this.cin=false
+    // }
+
     /*           ********************************************               */
     /*           *************** LIGNE CREDIT ***************               */
 
@@ -113,14 +137,6 @@ export class CreditFormComponent implements OnInit {
             this.typeCredit = response;
             console.log(this.typeCredit);
         });
-    }
-    findDocObligatoire() {
-        this.creditFormService
-            .getPiecesJointesAPI(this.typeC.idType)
-            .subscribe((response) => {
-                this.piecesJointes = response;
-                console.log(this.piecesJointes);
-            });
     }
 
     /*           ****************************************               */
@@ -215,42 +231,18 @@ export class CreditFormComponent implements OnInit {
         }
         return index;
     }
+    /*           ****************************************               */
+    /*           *************** Piece Jointe ***********               */
 
-    // resetBT() {
-    //     this.demande = {};
-    //     this.messageService.add({
-    //         severity: "info",
-    //         summary: "Success",
-    //         detail: "Le formulaire est initialiser",
-    //         life: 3000,
-    //     });
-    // }
-
-    saveDemandeCredit(): void {
-        console.log(this.demande);
-        console.log(this.garanties);
-        this.demande.idTypeCredit = this.typeC.idType;
-        this.demande.idUser = this.user.id;
-        // this.demande.pieces = this.uploadedFiles;
+    findDocObligatoire() {
         this.creditFormService
-            .postDemandeAPI(this.demande, this.garanties)
-            .subscribe();
-        // ((response) => {
-        //     this.demande = response;
-        // });
+            .getPiecesJointesAPI(this.typeC.idType)
+            .subscribe((response) => {
+                this.piecesJointes = response;
+                console.log(this.piecesJointes);
+            });
     }
 
-    createId(): string {
-        let id = "";
-        const chars =
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        for (let i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return id;
-    }
-
-    /*Piece Jointe  */
     public onUpload(event: any): void {
         if (event.files.length > 0) {
             let total = event.files.length;
@@ -317,5 +309,60 @@ export class CreditFormComponent implements OnInit {
         let index = this.selected.indexOf(pj);
         if (index != -1) this.selected.splice(index, 1);
         this.propagateChange(this.selected);
+    }
+    /*           ****************************************               */
+
+    // resetBT() {
+    //     this.demande = {};
+    //     this.messageService.add({
+    //         severity: "info",
+    //         summary: "Success",
+    //         detail: "Le formulaire est initialiser",
+    //         life: 3000,
+    //     });
+    // }
+
+    saveDemandeCredit(): void {
+        console.log(this.demande);
+        console.log(this.garanties);
+        this.creditFormService
+            .getDemandeExistsAPI(this.demande.numPiece)
+            .subscribe((response) => {
+                if (response) {
+                    console.log("exists");
+                    this.messageService.add({
+                        key: "tst",
+                        severity: "error",
+                        summary: "Erreur",
+                        detail: "Vous-avez déja déposer une demande",
+                    });
+                } else {
+                    console.log("!exists");
+                    this.tokenService.getUser().subscribe((response) => {
+                        this.user = response;
+                    });
+                    this.demande.idTypeCredit = this.typeC.idType;
+                    this.demande.idUser = this.user.id;
+                    this.creditFormService
+                        .postDemandeAPI(this.demande, this.garanties)
+                        .subscribe();
+                    this.messageService.add({
+                        key: "tst",
+                        severity: "success",
+                        summary: "Succués",
+                        detail: "Demande déposer avec succés",
+                    });
+                }
+            });
+    }
+
+    createId(): string {
+        let id = "";
+        const chars =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (let i = 0; i < 5; i++) {
+            id += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return id;
     }
 }
