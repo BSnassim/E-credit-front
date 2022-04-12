@@ -1,6 +1,5 @@
-import { User } from "../user";
 import { Garantie } from "./garantie";
-import { PiecesJointes } from "./piece-jointes";
+import { PiecesJointes } from "src/app/models/credit/piece-jointes";
 
 /*           *************** INFORMATION PERSONNEL ***************           */
 export interface Demande {
@@ -20,6 +19,6 @@ export interface Demande {
     idPhase?: number;
     idTypeCredit?: number;
     garantie?: Garantie[];
-    piece?: PiecesJointes[];
+    pieces?: PiecesJointes[];
     idUser?: number;
 }
