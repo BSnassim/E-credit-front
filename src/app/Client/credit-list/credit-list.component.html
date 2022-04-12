@@ -1,4 +1,4 @@
-<p-table [value]="listDemande" responsiveLayout="scroll">
+<p-table [value]="displayList" responsiveLayout="scroll">
     <ng-template pTemplate="header">
         <tr>
             <th>Montant</th>
@@ -9,10 +9,11 @@
     </ng-template>
     <ng-template pTemplate="body" let-demande>
         <tr>
-            <td>montant</td>
-            <td>type credit</td>
-            <td>date dernier changement</td>
-            <td>etat</td>
+            <td>{{demande.montant | currency : ' '}} TND</td>
+            <td>{{demande.type}}</td>
+            <td>{{demande.dateDernier | date:'dd/MM/yyyy'}}</td>
+            <td><p-tag styleClass="mr-2" icon="pi pi-info-circle" value="{{demande.etat}}"></p-tag></td>
+            
         </tr>
     </ng-template>
 </p-table>
