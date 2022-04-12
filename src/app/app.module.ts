@@ -158,6 +158,7 @@ import { ListUserComponent } from './Admin/User/list-user/list-user.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { CreditFormComponent } from './Client/credit-form/credit-form.component';
 import { CreditListComponent } from './Client/credit-list/credit-list.component';
+import { CreditDetailsComponent } from './Client/credit-details/credit-details.component';
 
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
@@ -315,7 +316,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         ListProfilComponent,
         ProfileComponent,
         CreditFormComponent,
-        CreditListComponent
+        CreditListComponent,
+        CreditDetailsComponent
     ],
     providers: [
     {
