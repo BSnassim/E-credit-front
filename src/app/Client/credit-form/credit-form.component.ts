@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { MessageService, ConfirmationService } from "primeng/api";
 import { AppBreadcrumbService } from "src/app/main/app-breadcrumb/app.breadcrumb.service";
@@ -9,6 +10,10 @@ import { PiecesJointes } from "src/app/models/credit/piece-jointes";
 import { Credit } from "src/app/models/credit/typeCredit";
 import { TypeGarantie } from "src/app/models/credit/typeGarantie";
 import { User } from "src/app/models/user";
+import { base64StringToBlob } from "blob-util";
+import { saveAs } from "file-saver";
+import { FileUpload } from "primeng/fileupload";
+
 import { CreditFormService } from "src/app/Services/credit-form-service.service";
 
 @Component({
@@ -23,8 +28,6 @@ export class CreditFormComponent implements OnInit {
     ligne = {} as LigneCredit;
 
     garantie = {} as Garantie;
-
-    piece = {} as PiecesJointes;
 
     lignes = [] as LigneCredit[];
 
@@ -46,13 +49,21 @@ export class CreditFormComponent implements OnInit {
 
     GarantieDialog: boolean;
 
-    uploadedFiles: File[] = [];
-
-    // selectedFile: File = null;
+    fileMaxSize: number;
+    multiple: boolean;
 
     garantieCols: any[];
-
+    disabled: boolean;
+    loading: boolean;
+    propagateChange: any;
+    propagateValidator: any;
+    readOnly: boolean;
+    required: boolean;
+    style: any;
+    selected: PiecesJointes[];
+    fileUpload: any;
     constructor(
+        private http: HttpClient,
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         private creditFormService: CreditFormService,
@@ -62,6 +73,16 @@ export class CreditFormComponent implements OnInit {
             { label: "Credit" },
             { label: "Demande", routerLink: ["creidt/demande"] },
         ]);
+
+        this.disabled = false;
+        this.fileMaxSize = null;
+        this.loading = false;
+        this.multiple = true;
+        this.propagateChange = (object: any) => {};
+        this.propagateValidator = () => {};
+        this.readOnly = false;
+        this.required = false;
+        this.style = { width: "100%" };
     }
 
     ngOnInit(): void {
@@ -93,36 +114,15 @@ export class CreditFormComponent implements OnInit {
             console.log(this.typeCredit);
         });
     }
-
-    addLigne() {
-        this.submitted = true;
-        if (this.ligne.id) {
-            this.lignes[this.findIndexByIdLigne(this.ligne.id)] = this.ligne;
-        } else {
-            this.ligne.id = this.createId();
-            this.lignes.push(this.ligne);
-        }
-        this.lignes = [...this.lignes];
-
-        console.log(this.lignes);
-
-        console.log(this.lignes[this.lignes.length - 1].credit.idType);
-
-        this.getPiecesJointes(
-            this.lignes[this.lignes.length - 1].credit.idType
-        );
+    findDocObligatoire() {
+        this.creditFormService
+            .getPiecesJointesAPI(this.typeC.idType)
+            .subscribe((response) => {
+                this.piecesJointes = response;
+                console.log(this.piecesJointes);
+            });
     }
 
-    findIndexByIdLigne(id: string): number {
-        let index = -1;
-        for (let i = 0; i < this.lignes.length; i++) {
-            if (this.lignes[i].id === id) {
-                index = i;
-                break;
-            }
-        }
-        return index;
-    }
     /*           ****************************************               */
     /*           *************** GARANTIE ***************               */
 
@@ -215,29 +215,6 @@ export class CreditFormComponent implements OnInit {
         }
         return index;
     }
-    /*           ***********************************************              */
-    /*           *************** PIECES JOINTES ***************               */
-    getPiecesJointes(i: any) {
-        this.creditFormService.getPiecesJointesAPI(i).subscribe((response) => {
-            this.piecesJointes = response;
-            console.log(this.piecesJointes);
-        });
-    }
-
-    onUpload(event) {
-        for (const file of event.files) {
-            this.uploadedFiles.push(file);
-        }
-        this.messageService.add({
-            severity: "info",
-            summary: "Success",
-            detail: "Fichier téléchager",
-        });
-    }
-    /*           ***********************************************           */
-    /*           *************** OBSERVATION ***************               */
-
-    /*           ***********************************************           */
 
     // resetBT() {
     //     this.demande = {};
@@ -249,12 +226,12 @@ export class CreditFormComponent implements OnInit {
     //     });
     // }
 
-    onSubmit() {
+    saveDemandeCredit(): void {
         console.log(this.demande);
         console.log(this.garanties);
         this.demande.idTypeCredit = this.typeC.idType;
         this.demande.idUser = this.user.id;
-        this.demande.pieces = this.uploadedFiles;
+        // this.demande.pieces = this.uploadedFiles;
         this.creditFormService
             .postDemandeAPI(this.demande, this.garanties)
             .subscribe();
@@ -273,37 +250,72 @@ export class CreditFormComponent implements OnInit {
         return id;
     }
 
-    // onSort() {
-    //     this.updateRowGroupMetaData();
-    // }
+    /*Piece Jointe  */
+    public onUpload(event: any): void {
+        if (event.files.length > 0) {
+            let total = event.files.length;
+            this.loading = true;
+            event.files.forEach((file) => {
+                let fileReader = new FileReader();
+                fileReader.readAsDataURL(file);
+                fileReader.onloadend = () => {
+                    const data = fileReader.result.toString().split(";");
+                    let document = {} as PiecesJointes;
+                    if (fileReader.result === "data:") {
+                        document.fileContent = "";
+                        document.fileName = file.name;
+                        document.fileType = "";
+                    } else {
+                        document.fileContent = data[1].split(",")[1];
+                        document.fileName = file.name;
+                        document.fileType = data[0].split(":")[1];
+                    }
+                    if (this.multiple) {
+                        if (!this.selected) this.selected = [];
+                        if (
+                            this.selected.filter(
+                                (doc) => doc.fileName === document.fileName
+                            ).length === 0
+                        )
+                            this.selected.push(document);
+                        // console.log(this.selected);
+                    } else {
+                        if (
+                            !this.selected ||
+                            this.selected.filter(
+                                (doc) => doc.fileName === document.fileName
+                            ).length === 0
+                        ) {
+                            this.selected = [];
+                            this.selected.push(document);
+                        }
+                    }
 
-    // updateRowGroupMetaData() {
-    //     this.rowGroupMetadata = {};
-
-    //     if (this.customers3) {
-    //         for (let i = 0; i < this.customers3.length; i++) {
-    //             const rowData = this.customers3[i];
-    //             const representativeName = rowData.representative.name;
-
-    //             if (i === 0) {
-    //                 this.rowGroupMetadata[representativeName] = {
-    //                     index: 0,
-    //                     size: 1,
-    //                 };
-    //             } else {
-    //                 const previousRowData = this.customers3[i - 1];
-    //                 const previousRowGroup =
-    //                     previousRowData.representative.name;
-    //                 if (representativeName === previousRowGroup) {
-    //                     this.rowGroupMetadata[representativeName].size++;
-    //                 } else {
-    //                     this.rowGroupMetadata[representativeName] = {
-    //                         index: i,
-    //                         size: 1,
-    //                     };
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+                    total -= 1;
+                    if (total === 0) {
+                        this.loading = false;
+                        this.propagateChange(this.selected);
+                    }
+                    this.demande.pieces = this.selected;
+                    console.log(this.demande);
+                };
+            });
+        }
+    }
+    public onDownload(pj: PiecesJointes): void {
+        this.loading = true;
+        if (pj.fileContent) {
+            saveAs(
+                base64StringToBlob(pj.fileContent, pj.fileType),
+                pj.fileName,
+                { autoBOM: true }
+            );
+            this.loading = false;
+        }
+    }
+    public onDelete(pj: PiecesJointes): void {
+        let index = this.selected.indexOf(pj);
+        if (index != -1) this.selected.splice(index, 1);
+        this.propagateChange(this.selected);
+    }
 }

@@ -1,6 +1,5 @@
-/*           *************** PIECES JOINTES ****************        */
 export interface PiecesJointes {
-    libDoc?: string;
-    idDoc?: number;
-    // getFileContent: string;
+    fileType: string;
+    fileName?: string;
+    fileContent?: any;
 }
