@@ -23,9 +23,9 @@ export class UserService {
         return this.http.get<User[]>(URL);
     }
 
-    // getUserById(id: number): Observable<User> {
-    //   return this.http.get<User>(URL + "/" + id);
-    // }
+    getUserById(id: number): Observable<User> {
+        return this.http.get<User>(URL + "/" + id);
+    }
 
     emailAlreadyExists(email: string): Observable<User> {
         return this.http.get<User>(URL + "/" + email);

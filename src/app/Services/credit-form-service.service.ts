@@ -57,13 +57,9 @@ export class CreditFormService {
         );
     }
 
-    // getToken() {
-    //     return localStorage.getItem("access token");
-    // }
-
-    // getUser(): Observable<User> {
-    //     return this.http.get<User>(
-    //         this.baseUrl + "/getUserByToken/" + this.getToken()
-    //     );
-    // }
+    getDemandeExistsAPI(i: any) {
+        return this.http.get<boolean>(
+            `${this.baseUrl}` + `/demande/Exists/` + i
+        );
+    }
 }
