@@ -15,7 +15,7 @@ export class CreditListComponent implements OnInit {
 
   listTypesCredit: Credit[] = [];
 
-  displayList: { 'montant': number, 'type': string, 'dateDernier': Date, 'etat': string }[] = [];
+  displayList: {'id':number, 'montant': number, 'type': string, 'dateDernier': Date, 'etat': string }[] = [];
 
   phases: any;
 
@@ -72,7 +72,7 @@ export class CreditListComponent implements OnInit {
     this.listDemande.forEach(e => {
       let credit = this.listTypesCredit.find(i => i.idType === e.idTypeCredit);
       let phase = this.phases.find(i => i.id === e.idPhase);
-      this.displayList.push({
+      this.displayList.push({id:e.idDemande,
         montant: e.montant,
         type: credit?.libcredit,
         dateDernier: e.datePhase,
