@@ -22,7 +22,7 @@
                         pInputText
                     />
                 </div>
-                <div class="field col-12 md:col-6">
+                <div class="field col-12 md:col-4">
                     <label for="typePiece">Type de pièce</label>
                     <p-dropdown
                         inputId="typePiece"
@@ -31,12 +31,23 @@
                         placeholder="Choisir"
                     ></p-dropdown>
                 </div>
-                <div class="field col-12 md:col-6">
-                    <label for="numCin">Numéro Pièce</label>
+                <div class="field col-12 md:col-4">
+                    <label for="numCin">Numéro CIN</label>
                     <p-inputNumber
                         id="numCin"
+                        maxlength="10"
                         [(ngModel)]="demande.numPiece"
                     ></p-inputNumber>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label for="numCin">Numéro Passport</label>
+                    <input
+                        id="numCin"
+                        maxlength="9"
+                        [(ngModel)]="demande.numPiece"
+                        type="text"
+                        pInputText
+                    />
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="numCompte">N° Compte</label>

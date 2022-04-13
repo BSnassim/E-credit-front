@@ -7,7 +7,7 @@ export interface Demande {
     nom?: string;
     prenom?: string;
     dateNaissance?: Date;
-    numPiece?: number;
+    numPiece?: string;
     sitFamiliale?: string;
     typePiece?: string;
     numCompte?: number;
