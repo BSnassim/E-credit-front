@@ -22,7 +22,7 @@
                         pInputText
                     />
                 </div>
-                <div class="field col-12 md:col-4">
+                <div class="field col-12 md:col-6">
                     <label for="typePiece">Type de pièce</label>
                     <p-dropdown
                         inputId="typePiece"
@@ -31,7 +31,10 @@
                         placeholder="Choisir"
                     ></p-dropdown>
                 </div>
-                <div class="field col-12 md:col-4">
+                <div
+                    class="field col-12 md:col-6"
+                    *ngIf="demande.typePiece == 'CIN'"
+                >
                     <label for="numCin">Numéro CIN</label>
                     <p-inputNumber
                         id="numCin"
@@ -39,7 +42,10 @@
                         [(ngModel)]="demande.numPiece"
                     ></p-inputNumber>
                 </div>
-                <div class="field col-12 md:col-4">
+                <div
+                    class="field col-12 md:col-6"
+                    *ngIf="demande.typePiece == 'Passeport'"
+                >
                     <label for="numCin">Numéro Passport</label>
                     <input
                         id="numCin"
