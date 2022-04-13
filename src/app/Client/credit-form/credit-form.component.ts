@@ -340,17 +340,17 @@ export class CreditFormComponent implements OnInit {
                     // console.log("!exists");
                     this.tokenService.getUser().subscribe((response) => {
                         this.user = response;
-                    });
-                    this.demande.idTypeCredit = this.typeC.idType;
-                    this.demande.idUser = this.user.id;
-                    this.creditFormService
-                        .postDemandeAPI(this.demande, this.garanties)
-                        .subscribe();
-                    this.messageService.add({
-                        key: "tst",
-                        severity: "success",
-                        summary: "Succués",
-                        detail: "Demande déposer avec succés",
+                        this.demande.idTypeCredit = this.typeC.idType;
+                        this.demande.idUser = this.user.id;
+                        this.creditFormService
+                            .postDemandeAPI(this.demande, this.garanties)
+                            .subscribe();
+                        this.messageService.add({
+                            key: "tst",
+                            severity: "success",
+                            summary: "Succués",
+                            detail: "Demande déposer avec succés",
+                        });
                     });
                 }
             });
