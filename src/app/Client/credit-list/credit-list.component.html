@@ -1,114 +1,45 @@
 <div class="grid">
-    <!-- /*           *************** INFORMATION CLIENT ***************           */ -->
     <div class="col-12">
-        <div class="card">
-            <h5>Information Client</h5>
-            <div class="p-fluid formgrid grid">
-                <div class="field col-12 md:col-6">
-                    <label for="nom">Nom</label>
-                    <input
-                        id="nom"
-                        [(ngModel)]="demande.nom"
-                        type="text"
-                        pInputText
-                    />
-                </div>
-                <div class="field col-12 md:col-6">
-                    <label for="prenom">Prénom</label>
-                    <input
-                        id="prenom"
-                        [(ngModel)]="demande.prenom"
-                        type="text"
-                        pInputText
-                    />
-                </div>
-                <div class="field col-12 md:col-6">
-                    <label for="typePiece">Type de pièce</label>
-                    <p-dropdown
-                        inputId="typePiece"
-                        [options]="typePiece"
-                        [(ngModel)]="demande.typePiece"
-                        placeholder="Choisir"
-                    ></p-dropdown>
-                </div>
-                <div class="field col-12 md:col-6">
-                    <label for="numCin">Numéro Pièce</label>
-                    <p-inputNumber
-                        id="numCin"
-                        [(ngModel)]="demande.numPiece"
-                    ></p-inputNumber>
-                </div>
-                <div class="field col-12 md:col-6">
-                    <label for="numCompte">N° Compte</label>
-                    <p-inputNumber
-                        id="numCompte"
-                        maxlength="16"
-                        max="16"
-                        [(ngModel)]="demande.numCompte"
-                    ></p-inputNumber>
-                </div>
-                <div class="field col-12 md:col-6">
-                    <label for="dateCompte">Date ouverture compte</label>
-                    <p-calendar
-                        id="dateCompte"
-                        name="dateNaissance"
-                        [showIcon]="true"
-                        inputId="icon"
-                        [(ngModel)]="demande.dateCompte"
-                    >
-                    </p-calendar>
-                </div>
-                <div class="field col-12 md:col-6">
-                    <label for="dateNaissance">Né le</label>
-                    <span class="p-float-label">
-                        <p-calendar
-                            id="dateNaissance"
-                            name="dateNaissance"
-                            [showIcon]="true"
-                            inputId="icon"
-                            [(ngModel)]="demande.dateNaissance"
-                        >
-                        </p-calendar>
-                    </span>
-                </div>
-                <div class="field col-12 md:col-6">
-                    <label for="sitFam">Situation familiale</label>
-                    <span class="p-float-label">
-                        <p-dropdown
-                            inputId="situation"
-                            [options]="sitFam"
-                            [(ngModel)]="demande.sitFamiliale"
-                            placeholder="Choisir"
-                        ></p-dropdown>
-                    </span>
-                </div>
-            </div>
-        </div>
+        <p-table [value]="displayList" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Montant</th>
+                    <th>Type de credit</th>
+                    <th>Date du dernier changement</th>
+                    <th>Etat</th>
+                    <th>Actions</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-demande>
+                <tr>
+                    <td>{{ demande.montant | currency: " " }} TND</td>
+                    <td>{{ demande.type }}</td>
+                    <td>{{ demande.dateDernier | date: "dd/MM/yyyy" }}</td>
+                    <td>
+                        <p-tag
+                            styleClass="mr-2"
+                            icon="pi pi-info-circle"
+                            value="{{ demande.etat }}"
+                        ></p-tag>
+                    </td>
+                    <td>
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            label="Voir Détails"
+                            class="p-button-raised p-button-info"
+                        ></button
+                        ><button
+                            pButton
+                            pRipple
+                            type="button"
+                            label="Info"
+                            class="p-button-raised p-button-info"
+                        ></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
-    <!--/*           ***********************************************           */-->
 </div>
-<div class="flex align-items-center justify-content-center">
-    <p-toast key="tst"></p-toast>
-    <button
-        pButton
-        pRipple
-        type="button"
-        block="true"
-        (click)="saveDemandeCredit()"
-        label="Sauvegarder"
-        class="mr-2 mb-2"
-    ></button>
-
-    <button
-        pButton
-        pRipple
-        type="button"
-        block="true"
-        label="Initialiser"
-        class="p-button-secondary mr-2 mb-2"
-    ></button>
-</div>
-
-<!-- <br />
-{{ demande | json }}
-<br /> -->
