@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { Garantie } from "../models/credit/garantie";
@@ -41,11 +41,11 @@ export class CreditFormService {
 
     //type credit
 
-    getTypeCreditAPI() {
+    getTypeCreditAPI(): Observable<Credit[]> {
         return this.http.get<Credit[]>(`${this.baseUrl}` + `/typeCredit`);
     }
     
-    getTypeCreditById(id : number){
+    getTypeCreditById(id : number): Observable<Credit>{
         return this.http.get<Credit>(this.baseUrl + '/typeCredit/' + id);
     }
 
