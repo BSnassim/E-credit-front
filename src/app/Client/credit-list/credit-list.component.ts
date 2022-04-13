@@ -4,6 +4,7 @@ import { Component, OnInit } from "@angular/core";
 import { AppBreadcrumbService } from "src/app/main/app-breadcrumb/app.breadcrumb.service";
 import { Demande } from "src/app/models/credit/info-personnel";
 import { CreditFormService } from "src/app/Services/credit-form-service.service";
+import { Table } from "primeng/table";
 
 @Component({
     selector: "app-credit-list",
@@ -11,7 +12,6 @@ import { CreditFormService } from "src/app/Services/credit-form-service.service"
     styleUrls: ["./credit-list.component.scss"],
 })
 export class CreditListComponent implements OnInit {
-    demande = {} as Demande;
 
     listDemande: Demande[] = [];
 
@@ -51,6 +51,10 @@ export class CreditListComponent implements OnInit {
                 
             });
         });
+    }
+
+    clear(table: Table) {
+        table.clear();
     }
 
     async getUserId() {

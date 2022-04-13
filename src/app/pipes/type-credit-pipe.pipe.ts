@@ -7,24 +7,17 @@ import { Credit } from '../models/credit/typeCredit';
 })
 export class TypeCreditPipePipe implements PipeTransform {
 
-  listTypesCredit: Credit[] = [];
+  constructor(private creditService: CreditFormService) {
 
-  constructor(private creditService: CreditFormService) { }
+  }
 
-  async getTypes() {
-    const result = await this.creditService.getTypeCreditAPI().toPromise()
+  transform(value: number, ...args: unknown[]): any {
+    return this.getLibCredit(value);
+  }
 
+  async getLibCredit(value){
+    let result =(await this.creditService.getTypeCreditById(value).toPromise()).libcredit
     return result;
-}
-
-  transform(value: number, ...args: unknown[]): string {
-    this.getTypes().then((result)=>{
-      this.listTypesCredit = result;
-    });
-    let credit = this.listTypesCredit.find(
-      (i) => i.idType === value
-    );
-    return credit?.libcredit;
   }
 
 }
