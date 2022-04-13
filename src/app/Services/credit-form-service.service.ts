@@ -26,6 +26,10 @@ export class CreditFormService {
         return this.http.post<Demande>(`${this.baseUrl}` + `/demande`, demande);
     }
 
+    getDemandesByUser(id:number){
+        return this.http.get<Demande[]>(this.baseUrl + '/demande/ByUser/' + id);
+    }
+
     getListDemande(){
         return this.http.get<Demande[]>(this.baseUrl + '/demande');
     }
@@ -33,7 +37,7 @@ export class CreditFormService {
     getDemandeExistsAPI(i: any) {
         return this.http.get<boolean>(
             `${this.baseUrl}` + `/demande/Exists/` + i
-        );
+        );}
 
     //type credit
 

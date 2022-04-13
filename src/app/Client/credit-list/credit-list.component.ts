@@ -1,3 +1,4 @@
+import { TokenService } from 'src/app/auth/services/token.service';
 import { Credit } from 'src/app/models/credit/typeCredit';
 import { Component, OnInit } from '@angular/core';
 import { AppBreadcrumbService } from 'src/app/main/app-breadcrumb/app.breadcrumb.service';
@@ -15,13 +16,16 @@ export class CreditListComponent implements OnInit {
 
   listTypesCredit: Credit[] = [];
 
-  displayList: {'id':number, 'montant': number, 'type': string, 'dateDernier': Date, 'etat': string }[] = [];
+  displayList: { 'id': number, 'montant': number, 'type': string, 'dateDernier': Date, 'etat': string }[] = [];
 
   phases: any;
 
+  userId: number;
+
   constructor(
     private breadcrumbService: AppBreadcrumbService,
-    private creditService: CreditFormService
+    private creditService: CreditFormService,
+    private tokenService: TokenService
   ) {
     this.breadcrumbService.setItems([
       { label: "Liste des credits" }
@@ -29,50 +33,51 @@ export class CreditListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getListTypes().then(() => {
-      this.getPhases().then(() => {
-      this.getDemandes().then(() => {
-        this.initList();
+    this.getUserId().then((result) => {
+      this.userId = result.id;
+      this.getListTypes().then((result1) => {
+        this.listTypesCredit = result1;
+        this.getPhases().then((result2) => {
+          this.phases = result2;
+          this.getDemandes().then((result3) => {
+            this.listDemande = result3;
+            this.initList();
+          })
+        })
       })
     })
-  })
   };
 
-  getListTypes(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.creditService.getTypeCreditAPI().subscribe(data => {
-        this.listTypesCredit = data;
-        resolve();
-      }
-      );
-    })
+  async getUserId() {
+    const result = await this.tokenService.getUser().toPromise();
+
+    return result;
+  }
+
+  async getListTypes() {
+    const result = await this.creditService.getTypeCreditAPI().toPromise();
+
+    return result;
   };
 
-  getPhases(): Promise<void>{
-    return new Promise((resolve, reject) => {
-      this.creditService.getListPhases().subscribe(data => {
-        this.phases = data;
-        resolve();
-      }
-      );
-    })
+  async getPhases() {
+    const result = await this.creditService.getListPhases().toPromise();
+
+    return result;
   };
 
-  getDemandes(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.creditService.getListDemande().subscribe(data => {
-        this.listDemande = data;
-        resolve();
-      }
-      );
-    })
+  async getDemandes() {
+    const result = await this.creditService.getDemandesByUser(this.userId).toPromise();
+
+    return result;
   };
 
   initList(): void {
     this.listDemande.forEach(e => {
       let credit = this.listTypesCredit.find(i => i.idType === e.idTypeCredit);
       let phase = this.phases.find(i => i.id === e.idPhase);
-      this.displayList.push({id:e.idDemande,
+      this.displayList.push({
+        id: e.idDemande,
         montant: e.montant,
         type: credit?.libcredit,
         dateDernier: e.datePhase,
