@@ -15,19 +15,20 @@ export class CreditListComponent implements OnInit {
 
     listDemande: Demande[] = [];
 
-    listTypesCredit: Credit[] = [];
-
     displayList: {
         id: number;
+        nomprenom: string;
+        type: number;
+        dateCreation: Date;
         montant: number;
-        type: string;
-        dateDernier: Date;
         etat: string;
     }[] = [];
 
     phases: any;
 
     userId: number;
+
+    loading: boolean = true;
 
     constructor(
         private breadcrumbService: AppBreadcrumbService,
@@ -40,27 +41,20 @@ export class CreditListComponent implements OnInit {
     ngOnInit(): void {
         this.getUserId().then((result) => {
             this.userId = result.id;
-            this.getListTypes().then((result1) => {
-                this.listTypesCredit = result1;
                 this.getPhases().then((result2) => {
                     this.phases = result2;
                     this.getDemandes().then((result3) => {
                         this.listDemande = result3;
                         this.initList();
+                        this.loading = false;
                     });
-                });
+                
             });
         });
     }
 
     async getUserId() {
         const result = await this.tokenService.getUser().toPromise();
-
-        return result;
-    }
-
-    async getListTypes() {
-        const result = await this.creditService.getTypeCreditAPI().toPromise();
 
         return result;
     }
@@ -81,15 +75,13 @@ export class CreditListComponent implements OnInit {
 
     initList(): void {
         this.listDemande.forEach((e) => {
-            let credit = this.listTypesCredit.find(
-                (i) => i.idType === e.idTypeCredit
-            );
             let phase = this.phases.find((i) => i.id === e.idPhase);
             this.displayList.push({
                 id: e.idDemande,
+                nomprenom: e.nom + " " + e.prenom,
+                dateCreation: e.datePhase,
                 montant: e.montant,
-                type: credit?.libcredit,
-                dateDernier: e.datePhase,
+                type: e.idTypeCredit,
                 etat: phase.enAttenteDe,
             });
         });
