@@ -12,14 +12,32 @@
             </ng-template>
             <ng-template pTemplate="body" let-demande>
                 <tr>
-                    <td>{{demande.montant | currency : ' '}} TND</td>
-                    <td>{{demande.type}}</td>
-                    <td>{{demande.dateDernier | date:'dd/MM/yyyy'}}</td>
+                    <td>{{ demande.montant | currency: " " }} TND</td>
+                    <td>{{ demande.type }}</td>
+                    <td>{{ demande.dateDernier | date: "dd/MM/yyyy" }}</td>
                     <td>
-                        <p-tag styleClass="mr-2" icon="pi pi-info-circle" value="{{demande.etat}}"></p-tag>
+                        <p-tag
+                            styleClass="mr-2"
+                            icon="pi pi-info-circle"
+                            value="{{ demande.etat }}"
+                        ></p-tag>
                     </td>
-                    <td><button pButton pRipple type="button" label="Voir Détails" class="p-button-raised p-button-info"></button><button pButton pRipple type="button" label="Info" class="p-button-raised p-button-info"></button></td>
-
+                    <td>
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            label="Voir Détails"
+                            class="p-button-raised p-button-info"
+                        ></button
+                        ><button
+                            pButton
+                            pRipple
+                            type="button"
+                            label="Info"
+                            class="p-button-raised p-button-info"
+                        ></button>
+                    </td>
                 </tr>
             </ng-template>
         </p-table>
