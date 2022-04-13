@@ -135,7 +135,7 @@ export class CreditFormComponent implements OnInit {
     getTypeCredit() {
         this.creditFormService.getTypeCreditAPI().subscribe((response) => {
             this.typeCredit = response;
-            console.log(this.typeCredit);
+            // console.log(this.typeCredit);
         });
     }
 
@@ -145,14 +145,14 @@ export class CreditFormComponent implements OnInit {
     getTypeGarantie() {
         this.creditFormService.getTypeGarantieAPI().subscribe((response) => {
             this.typeGarantie = response;
-            console.log(this.typeGarantie);
+            // console.log(this.typeGarantie);
         });
     }
 
     getNatureGarantie() {
         this.creditFormService.getNatureGarantieAPI().subscribe((response) => {
             this.natureGarantie = response;
-            console.log(this.natureGarantie);
+            // console.log(this.natureGarantie);
         });
     }
 
@@ -193,7 +193,7 @@ export class CreditFormComponent implements OnInit {
         this.garanties = [...this.garanties];
         this.GarantieDialog = false;
         this.garantie = {};
-        console.log(this.garanties);
+        // console.log(this.garanties);
     }
 
     editGarantie(garantie: Garantie) {
@@ -239,7 +239,7 @@ export class CreditFormComponent implements OnInit {
             .getPiecesJointesAPI(this.typeC.idType)
             .subscribe((response) => {
                 this.piecesJointes = response;
-                console.log(this.piecesJointes);
+                // console.log(this.piecesJointes);
             });
     }
 
@@ -289,7 +289,7 @@ export class CreditFormComponent implements OnInit {
                         this.propagateChange(this.selected);
                     }
                     this.demande.pieces = this.selected;
-                    console.log(this.demande);
+                    // console.log(this.demande);
                 };
             });
         }
@@ -323,13 +323,13 @@ export class CreditFormComponent implements OnInit {
     // }
 
     saveDemandeCredit(): void {
-        console.log(this.demande);
-        console.log(this.garanties);
+        // console.log(this.demande);
+        // console.log(this.garanties);
         this.creditFormService
             .getDemandeExistsAPI(this.demande.numPiece)
             .subscribe((response) => {
                 if (response) {
-                    console.log("exists");
+                    // console.log("exists");
                     this.messageService.add({
                         key: "tst",
                         severity: "error",
@@ -337,7 +337,7 @@ export class CreditFormComponent implements OnInit {
                         detail: "Vous-avez déja déposer une demande",
                     });
                 } else {
-                    console.log("!exists");
+                    // console.log("!exists");
                     this.tokenService.getUser().subscribe((response) => {
                         this.user = response;
                     });
