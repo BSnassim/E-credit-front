@@ -1,4 +1,7 @@
+import { CreditFormService } from 'src/app/Services/credit-form-service.service';
+import { Demande } from 'src/app/models/credit/info-personnel';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AppBreadcrumbService } from 'src/app/main/app-breadcrumb/app.breadcrumb.service';
 
 @Component({
@@ -8,13 +11,30 @@ import { AppBreadcrumbService } from 'src/app/main/app-breadcrumb/app.breadcrumb
 })
 export class CreditDetailsComponent implements OnInit {
 
-  constructor(private breadcrumbService: AppBreadcrumbService) {
+  demande = {} as Demande;
+
+  constructor(
+    private breadcrumbService: AppBreadcrumbService,
+    private route: ActivatedRoute,
+    private demandeService: CreditFormService) {
     this.breadcrumbService.setItems([
+      { label: "Liste des credits", routerLink: ['credit/consultation']},
       { label: "Details du demande" }
     ]);
-   }
+  }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.getDemande(params.id);
+    })
+  }
+
+  getDemande(id: number) {
+    this.demandeService.getDemandeById(id).subscribe(
+      data =>{
+        this.demande = data;
+      }
+    );
   }
 
 }

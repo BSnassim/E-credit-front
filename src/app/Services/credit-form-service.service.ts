@@ -39,6 +39,10 @@ export class CreditFormService {
             `${this.baseUrl}` + `/demande/Exists/` + i
         );}
 
+    getDemandeById(id:number){
+        return this.http.get<Demande>(this.baseUrl + '/demande/' + id);
+    }
+
     //type credit
 
     getTypeCreditAPI(): Observable<Credit[]> {
