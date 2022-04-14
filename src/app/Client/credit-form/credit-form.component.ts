@@ -45,6 +45,8 @@ export class CreditFormComponent implements OnInit {
 
     submitted: boolean;
 
+    submitAll: boolean;
+
     GarantieDialog: boolean;
 
     fileMaxSize: number;
@@ -323,6 +325,7 @@ export class CreditFormComponent implements OnInit {
     // }
 
     saveDemandeCredit(): void {
+        this.submitAll = true;
         // console.log(this.demande);
         // console.log(this.garanties);
         this.creditFormService

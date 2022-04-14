@@ -11,6 +11,7 @@
                         [(ngModel)]="demande.nom"
                         type="text"
                         pInputText
+                        required
                     />
                 </div>
                 <div class="field col-12 md:col-6">
@@ -20,6 +21,7 @@
                         [(ngModel)]="demande.prenom"
                         type="text"
                         pInputText
+                        required
                     />
                 </div>
                 <div class="field col-12 md:col-6">
@@ -29,6 +31,7 @@
                         [options]="typePiece"
                         [(ngModel)]="demande.typePiece"
                         placeholder="Choisir"
+                        required
                     ></p-dropdown>
                 </div>
                 <div
@@ -40,7 +43,14 @@
                         id="numCin"
                         maxlength="10"
                         [(ngModel)]="demande.numPiece"
+                        required
                     ></p-inputNumber>
+                    <small
+                        *ngIf="demande.numPiece.length < 8"
+                        id="numCin"
+                        class="p-invalid"
+                        >Ce champ doit comporter 8 chiffre.</small
+                    >
                 </div>
                 <div
                     class="field col-12 md:col-6"
@@ -53,14 +63,28 @@
                         [(ngModel)]="demande.numPiece"
                         type="text"
                         pInputText
+                        required
                     />
+                    <small
+                        *ngIf="submitAll && !demande.numPiece"
+                        id="numCin"
+                        class="p-invalid"
+                        >Ce champ est nécessair.</small
+                    >
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="numCompte">N° Compte</label>
                     <p-inputNumber
                         id="numCompte"
                         [(ngModel)]="demande.numCompte"
+                        required
                     ></p-inputNumber>
+                    <small
+                        *ngIf="submitAll && !demande.numCompte"
+                        id="numCompte"
+                        class="p-invalid"
+                        >Ce champ est nécessair.</small
+                    >
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="dateCompte">Date ouverture compte</label>
@@ -70,8 +94,15 @@
                         [showIcon]="true"
                         inputId="icon"
                         [(ngModel)]="demande.dateCompte"
+                        required
                     >
                     </p-calendar>
+                    <small
+                        *ngIf="submitAll && !demande.dateCompte"
+                        id="dateCompte"
+                        class="p-invalid"
+                        >Ce champ est nécessair.</small
+                    >
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="dateNaissance">Né le</label>
@@ -82,9 +113,16 @@
                             [showIcon]="true"
                             inputId="icon"
                             [(ngModel)]="demande.dateNaissance"
+                            required
                         >
                         </p-calendar>
                     </span>
+                    <small
+                        *ngIf="submitAll && !demande.dateNaissance"
+                        id="dateNaissance"
+                        class="p-invalid"
+                        >Ce champ est nécessair.</small
+                    >
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="sitFam">Situation familiale</label>
@@ -94,15 +132,15 @@
                             [options]="sitFam"
                             [(ngModel)]="demande.sitFamiliale"
                             placeholder="Choisir"
+                            required
                         ></p-dropdown>
                     </span>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- /*           ***********************************************           */ -->
-    <!-- /*           *************** LIGNE CREDIT ***************               */ -->
+    <!-- /*           ********************************************           */ -->
+    <!-- /*           *************** LIGNE CREDIT ***************           */ -->
     <div class="col-12">
         <div class="card">
             <h5>Ligne de Crédit</h5>
@@ -112,7 +150,7 @@
                     <span class="p-float-label">
                         <p-dropdown
                             (onChange)="findDocObligatoire()"
-                            inputId="credit"
+                            id="credit"
                             placeholder="Type"
                             [(ngModel)]="typeC"
                             [options]="typeCredit"
@@ -127,6 +165,7 @@
                         id="montant"
                         [(ngModel)]="demande.montant"
                         mode="currency"
+                        required
                         currency="TND"
                         locale="tn-TN"
                     ></p-inputNumber>
@@ -139,6 +178,7 @@
                             [options]="unite"
                             [(ngModel)]="demande.unite"
                             placeholder="Par"
+                            required
                         >
                         </p-dropdown>
                     </span>
@@ -148,6 +188,7 @@
                     <p-inputNumber
                         id="nbrEcheance"
                         [(ngModel)]="demande.nbreEcheance"
+                        required
                     ></p-inputNumber>
                 </div>
             </div>
@@ -426,6 +467,21 @@
         label="Sauvegarder"
         class="mr-2 mb-2"
     ></button>
+    <!-- [disabled]="
+            !demande.nom ||
+            !demande.prenom ||
+            !demande.dateNaissance ||
+            !demande.numPiece ||
+            !demande.sitFamiliale ||
+            !demande.typePiece ||
+            !demande.numCompte ||
+            !demande.dateCompte ||
+            !demande.nbreEcheance ||
+            !demande.montant ||
+            !demande.unite ||
+            !demande.pieces ||
+            !demande.garantie
+        " -->
 
     <button
         pButton
