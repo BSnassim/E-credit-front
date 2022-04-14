@@ -71,10 +71,22 @@ export class CreditFormService {
         );
     }
 
+    getTypeGarantieById(id : number){
+        return this.http.get<TypeGarantie>(this.baseUrl + '/typeGarantie/' + id);
+    }
+
     getNatureGarantieAPI() {
         return this.http.get<NatureGarantie[]>(
             `${this.baseUrl}` + `/natureGarantie`
         );
+    }
+
+    getNatureGarantieById(id : number){
+        return this.http.get<NatureGarantie>(this.baseUrl + '/natureGarantie/' + id);
+    }
+
+    getGarantiesByDemande(id : number){
+        return this.http.get<Garantie[]>(this.baseUrl + '/garantie/ByDemande/' + id);
     }
 
     //pieces jointes
