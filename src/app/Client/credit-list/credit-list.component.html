@@ -69,7 +69,7 @@
                         <p-tag styleClass="mr-2" icon="pi pi-info-circle" value="{{ demande.etat }}"></p-tag>
                     </td>
                     <td>
-                        <button pButton pRipple type="button" label="Voir Détails" class="p-button-raised p-button-info"></button>
+                        <button pButton pRipple type="button" label="Voir Détails" class="p-button-raised p-button-info" [routerLink]="['details',demande.id]" ></button>
                         <button pButton pRipple type="button" label="Info" class="p-button-raised p-button-info" [disabled]="true"></button>
                     </td>
                 </tr>
