@@ -1,43 +1,82 @@
-<div class="grid">
-    <div class="col-12">
-        <p-table [value]="displayList" responsiveLayout="scroll">
+<div class="grid flex justify-content-center align-items-center">
+    <div class="card">
+        <p-table #dt1 [value]="displayList" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-gridlines" [paginator]="true"
+            currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
+            [globalFilterFields]="['nomprenom','type','dateCreation','etat']">
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                        (click)="clear(dt1)"></button>
+                    <span class="p-input-icon-left ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                            placeholder="Search keyword" />
+                    </span>
+                </div>
+            </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Montant</th>
-                    <th>Type de credit</th>
-                    <th>Date du dernier changement</th>
-                    <th>Etat</th>
+                    <th>
+                        <div class="flex justify-content-center align-items-center">
+                            Nom et Prenom
+                            <p-columnFilter type="text" field="nomprenom" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-center align-items-center">
+                            Type de credit
+                            <p-columnFilter type="text" field="type" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-center align-items-center">
+                            Date du creation
+                            <p-columnFilter type="date" field="dateCreation" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-center align-items-center">
+                            Montant
+                            <p-columnFilter type="numeric" field="montant" display="menu" currency="TND">
+                            </p-columnFilter>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-center align-items-center">
+                            Etat du dossier
+                            <p-columnFilter type="text" field="etat" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
                     <th>Actions</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-demande>
                 <tr>
-                    <td>{{ demande.montant | currency: " " }} TND</td>
-                    <td>{{ demande.type }}</td>
-                    <td>{{ demande.dateDernier | date: "dd/MM/yyyy" }}</td>
                     <td>
-                        <p-tag
-                            styleClass="mr-2"
-                            icon="pi pi-info-circle"
-                            value="{{ demande.etat }}"
-                        ></p-tag>
+                        {{ demande.nomprenom }}
                     </td>
                     <td>
-                        <button
-                            pButton
-                            pRipple
-                            type="button"
-                            label="Voir Détails"
-                            class="p-button-raised p-button-info"
-                        ></button
-                        ><button
-                            pButton
-                            pRipple
-                            type="button"
-                            label="Info"
-                            class="p-button-raised p-button-info"
-                        ></button>
+                        {{ demande.type | typeCredit | async }}
                     </td>
+                    <td>
+                        {{ demande.dateCreation | date: "dd/MM/yyyy" }}
+                    </td>
+                    <td>
+                        {{ demande.montant | currency: " " }} TND
+                    </td>
+                    <td>
+                        <p-tag styleClass="mr-2" icon="pi pi-info-circle" value="{{ demande.etat }}"></p-tag>
+                    </td>
+                    <td>
+                        <button pButton pRipple type="button" label="Voir Détails" class="p-button-raised p-button-info" [routerLink]="['details',demande.id]" ></button>
+                        <button pButton pRipple type="button" label="Info" class="p-button-raised p-button-info" [disabled]="true"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="7">Aucun resultat trouvé.</td>
                 </tr>
             </ng-template>
         </p-table>

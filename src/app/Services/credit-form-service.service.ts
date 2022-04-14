@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { Garantie } from "../models/credit/garantie";
@@ -41,6 +41,10 @@ export class CreditFormService {
         );
     }
 
+    getDemandeById(id: number) {
+        return this.http.get<Demande>(this.baseUrl + "/demande/" + id);
+    }
+
     //type credit
 
     getTypeCreditAPI() {
@@ -69,9 +73,27 @@ export class CreditFormService {
         );
     }
 
+    getTypeGarantieById(id: number) {
+        return this.http.get<TypeGarantie>(
+            this.baseUrl + "/typeGarantie/" + id
+        );
+    }
+
     getNatureGarantieAPI() {
         return this.http.get<NatureGarantie[]>(
             `${this.baseUrl}` + `/natureGarantie`
+        );
+    }
+
+    getNatureGarantieById(id: number) {
+        return this.http.get<NatureGarantie>(
+            this.baseUrl + "/natureGarantie/" + id
+        );
+    }
+
+    getGarantiesByDemande(id: number) {
+        return this.http.get<Garantie[]>(
+            this.baseUrl + "/garantie/ByDemande/" + id
         );
     }
 

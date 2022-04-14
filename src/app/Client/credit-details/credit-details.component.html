@@ -1,4 +1,99 @@
 <div class="grid">
+    <!-- Information du client -->
     <div class="col-12">
-        <p>credit details</p>
-        </div></div>
+        <div class="card">
+            <h5>Information Client</h5>
+            <div class="p-fluid formgrid grid">
+                <div class="field col-12 md:col-6">
+                    <label for="nom">Nom</label>
+                    <input id="nom" [value]="demande.nom" type="text" pInputText disabled />
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label for="prenom">Prénom</label>
+                    <input id="prenom" [value]="demande.prenom" type="text" pInputText disabled />
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label for="typePiece">Type de pièce</label>
+                    <input id="typePiece" [value]="demande.typePiece" type="text" pInputText disabled />
+                </div>
+                <div class="field col-12 md:col-6" class="field col-12 md:col-6" *ngIf="demande.typePiece == 'CIN'">
+                    <label for="numCin">Numéro CIN</label>
+                    <input id="numCin" [value]="demande.numPiece" type="text" pInputText disabled />
+                </div>
+                <div class="field col-12 md:col-6" class="field col-12 md:col-6"
+                    *ngIf="demande.typePiece == 'Passeport'">
+                    <label for="numPasseport">Numéro Passeport</label>
+                    <input id="numPasseport" [value]="demande.numPiece" type="text" pInputText disabled />
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label for="numCompte">N° Compte</label>
+                    <input id="numCompte" [value]="demande.numCompte" type="text" pInputText disabled />
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label for="dateCompte">Date ouverture compte</label>
+                    <input id="dateCompte" [value]="demande.dateCompte | date: 'dd/MM/yyyy' " type="text" pInputText
+                        disabled />
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label for="dateNaissance">Né le</label>
+                    <span class="p-float-label">
+                        <input id="dateNaissance" [value]="demande.dateNaissance | date: 'dd/MM/yyyy' " type="text"
+                            pInputText disabled />
+                    </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label for="sitFam">Situation familiale</label>
+                    <span class="p-float-label">
+                        <input id="sitFam" [value]="demande.sitFamiliale" type="text" pInputText disabled />
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ligne de credit -->
+    <div class="col-12">
+        <div class="card">
+            <h5>Ligne de crédit</h5>
+            <div class="p-fluid formgrid grid">
+                <div class="field col-12 md:col-6">
+                    <label for="typeCredit">Type de Crédit</label>
+                    <input id="typeCredit" [value]="demande.idTypeCredit | typeCredit | async" type="text" pInputText
+                        disabled />
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label for="montant">Montant</label>
+                    <input id="montant" [value]="demande.montant" type="text" pInputText disabled />
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label for="unite">Unité</label>
+                    <input id="typePiece" [value]="demande.unite" type="text" pInputText disabled />
+                </div>
+                <div class="field col-12 md:col-6" class="field col-12 md:col-6" *ngIf="demande.typePiece == 'CIN'">
+                    <label for="numEcheance">Nombre échéance</label>
+                    <input id="numEcheance" [value]="demande.nbreEcheance" type="text" pInputText disabled />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- liste des garanties -->
+    <div class="col-12">
+        <div class="card">
+            <p-table [value]="garanties" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Nature</th>
+                        <th>Type</th>
+                        <th>Montant</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-garantie>
+                    <tr>
+                        <td>{{garantie.idNatureGarantie | garantieNature | async}}</td>
+                        <td>{{garantie.idTypeGrt | typeGarantie | async}}</td>
+                        <td>{{garantie.montant | currency: " " }} TND</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

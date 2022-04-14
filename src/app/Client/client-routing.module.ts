@@ -7,7 +7,7 @@ import { CreditDetailsComponent } from './credit-details/credit-details.componen
 const routes: Routes = [
   { path: "demande", component: CreditFormComponent},
   { path: "consultation", component: CreditListComponent},
-  { path: "consultation/details", component: CreditDetailsComponent}
+  { path: "consultation/details/:id", component: CreditDetailsComponent}
 ];
 
 @NgModule({
