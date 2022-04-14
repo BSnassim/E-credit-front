@@ -10,7 +10,7 @@ export interface Demande {
     numPiece?: string;
     sitFamiliale?: string;
     typePiece?: string;
-    numCompte?: number;
+    numCompte?: string;
     dateCompte?: Date;
     nbreEcheance?: number;
     montant?: number;

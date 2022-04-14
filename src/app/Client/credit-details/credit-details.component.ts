@@ -1,3 +1,4 @@
+import { Garantie } from 'src/app/models/credit/garantie';
 import { CreditFormService } from 'src/app/Services/credit-form-service.service';
 import { Demande } from 'src/app/models/credit/info-personnel';
 import { Component, OnInit } from '@angular/core';
@@ -13,6 +14,8 @@ export class CreditDetailsComponent implements OnInit {
 
   demande = {} as Demande;
 
+  garanties = [] as any[];
+
   constructor(
     private breadcrumbService: AppBreadcrumbService,
     private route: ActivatedRoute,
@@ -26,7 +29,16 @@ export class CreditDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.getDemande(params.id);
+      this.getGaranties(params.id);
     })
+  }
+
+  getGaranties(id: number){
+    this.demandeService.getGarantiesByDemande(id).subscribe(
+      data =>{
+        this.garanties = data;
+      }
+    );
   }
 
   getDemande(id: number) {
