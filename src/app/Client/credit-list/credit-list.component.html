@@ -69,8 +69,9 @@
                         <p-tag styleClass="mr-2" icon="pi pi-info-circle" value="{{ demande.etat }}"></p-tag>
                     </td>
                     <td>
-                        <button pButton pRipple type="button" label="Voir Détails" class="p-button-raised p-button-info" [routerLink]="['details',demande.id]" ></button>
-                        <button pButton pRipple type="button" label="Info" class="p-button-raised p-button-info" [disabled]="true"></button>
+                        <button type="button" pButton icon="pi pi-bars" label="Actions" class="p-button-info"
+                            (click)="menu.toggle($event); getDemandeId(demande.id)"></button>
+                        <p-menu #menu [popup]="true" [model]="items" appendTo="body"></p-menu>
                     </td>
                 </tr>
             </ng-template>
