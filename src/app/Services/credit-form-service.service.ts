@@ -4,11 +4,12 @@ import { Subject } from "rxjs";
 import { tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { Garantie } from "../models/credit/garantie";
-import { Demande } from "../models/credit/info-personnel";
+import { Demande } from "../models/credit/demande";
 import { NatureGarantie } from "../models/credit/natureGarantie";
 import { PiecesJointes } from "../models/credit/piece-jointes";
-import { Credit } from "../models/credit/typeCredit";
+
 import { TypeGarantie } from "../models/credit/typeGarantie";
+import { TypeCredit } from "../models/credit/typeCredit";
 
 @Injectable({
     providedIn: "root",
@@ -26,27 +27,28 @@ export class CreditFormService {
         return this.http.post<Demande>(`${this.baseUrl}` + `/demande`, demande);
     }
 
-    getDemandesByUser(id:number){
-        return this.http.get<Demande[]>(this.baseUrl + '/demande/ByUser/' + id);
+    getDemandesByUser(id: number) {
+        return this.http.get<Demande[]>(this.baseUrl + "/demande/ByUser/" + id);
     }
 
-    getListDemande(){
-        return this.http.get<Demande[]>(this.baseUrl + '/demande');
+    getListDemande() {
+        return this.http.get<Demande[]>(this.baseUrl + "/demande");
     }
-  
+
     getDemandeExistsAPI(i: any) {
         return this.http.get<boolean>(
             `${this.baseUrl}` + `/demande/Exists/` + i
-        );}
+        );
+    }
 
     //type credit
 
     getTypeCreditAPI() {
-        return this.http.get<Credit[]>(`${this.baseUrl}` + `/typeCredit`);
+        return this.http.get<TypeCredit[]>(`${this.baseUrl}` + `/typeCredit`);
     }
-    
-    getTypeCreditById(id : number){
-        return this.http.get<Credit>(this.baseUrl + '/typeCredit/' + id);
+
+    getTypeCreditById(id: number) {
+        return this.http.get<TypeCredit>(this.baseUrl + "/typeCredit/" + id);
     }
 
     //garantie
@@ -83,7 +85,7 @@ export class CreditFormService {
 
     // phase
 
-    getListPhases(){
-        return this.http.get(this.baseUrl + '/phase');
+    getListPhases() {
+        return this.http.get(this.baseUrl + "/phase");
     }
 }

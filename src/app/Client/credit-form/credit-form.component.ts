@@ -2,17 +2,16 @@ import { Component, OnInit } from "@angular/core";
 import { MessageService, ConfirmationService } from "primeng/api";
 import { AppBreadcrumbService } from "src/app/main/app-breadcrumb/app.breadcrumb.service";
 import { Garantie } from "src/app/models/credit/garantie";
-import { Demande } from "src/app/models/credit/info-personnel";
-import { LigneCredit } from "src/app/models/credit/ligne-credit";
+import { Demande } from "src/app/models/credit/demande";
 import { NatureGarantie } from "src/app/models/credit/natureGarantie";
 import { PiecesJointes } from "src/app/models/credit/piece-jointes";
-import { Credit } from "src/app/models/credit/typeCredit";
 import { TypeGarantie } from "src/app/models/credit/typeGarantie";
 import { User } from "src/app/models/user";
 import { base64StringToBlob } from "blob-util";
 import { saveAs } from "file-saver";
 import { CreditFormService } from "src/app/Services/credit-form-service.service";
 import { TokenService } from "src/app/auth/services/token.service";
+import { TypeCredit } from "src/app/models/credit/typeCredit";
 
 @Component({
     selector: "app-credit-form",
@@ -23,19 +22,15 @@ import { TokenService } from "src/app/auth/services/token.service";
 export class CreditFormComponent implements OnInit {
     demande = {} as Demande;
 
-    ligne = {} as LigneCredit;
-
     garantie = {} as Garantie;
-
-    lignes = [] as LigneCredit[];
 
     garanties = [] as Garantie[];
 
-    typeC = {} as Credit;
+    typeC = {} as TypeCredit;
 
     user = {} as User;
 
-    typeCredit: Credit[];
+    typeCredit: TypeCredit[];
 
     typeGarantie: TypeGarantie[];
 
@@ -314,15 +309,17 @@ export class CreditFormComponent implements OnInit {
     }
     /*           ****************************************               */
 
-    // resetBT() {
-    //     this.demande = {};
-    //     this.messageService.add({
-    //         severity: "info",
-    //         summary: "Success",
-    //         detail: "Le formulaire est initialiser",
-    //         life: 3000,
-    //     });
-    // }
+    resetBT() {
+        this.demande = {};
+        this.typeC = {};
+        this.garantie = {};
+        this.messageService.add({
+            key: "tst",
+            severity: "info",
+            summary: "Success",
+            detail: "Le formulaire est initialiser",
+        });
+    }
 
     saveDemandeCredit(): void {
         this.submitAll = true;
@@ -338,6 +335,26 @@ export class CreditFormComponent implements OnInit {
                         severity: "error",
                         summary: "Erreur",
                         detail: "Vous-avez déja déposer une demande",
+                    });
+                } else if (
+                    !this.demande.nom ||
+                    !this.demande.prenom ||
+                    !this.demande.dateNaissance ||
+                    !this.demande.numPiece ||
+                    !this.demande.sitFamiliale ||
+                    !this.demande.typePiece ||
+                    !this.demande.numCompte ||
+                    !this.demande.dateCompte ||
+                    !this.demande.nbreEcheance ||
+                    !this.demande.montant ||
+                    !this.demande.unite ||
+                    !this.demande.pieces
+                ) {
+                    this.messageService.add({
+                        key: "tst",
+                        severity: "error",
+                        summary: "Erreur",
+                        detail: "Votre demande est pas encore rempli",
                     });
                 } else {
                     // console.log("!exists");

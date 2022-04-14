@@ -1,5 +1,5 @@
 /*           *************** LIGNE CREDIT ***************           */
-export interface Credit {
+export interface TypeCredit {
     libcredit?: string;
     idType?: number;
 }

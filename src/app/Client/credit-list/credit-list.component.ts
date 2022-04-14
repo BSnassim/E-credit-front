@@ -1,9 +1,10 @@
 import { TokenService } from "src/app/auth/services/token.service";
-import { Credit } from "src/app/models/credit/typeCredit";
+
 import { Component, OnInit } from "@angular/core";
 import { AppBreadcrumbService } from "src/app/main/app-breadcrumb/app.breadcrumb.service";
-import { Demande } from "src/app/models/credit/info-personnel";
+import { Demande } from "src/app/models/credit/demande";
 import { CreditFormService } from "src/app/Services/credit-form-service.service";
+import { TypeCredit } from "src/app/models/credit/typeCredit";
 
 @Component({
     selector: "app-credit-list",
@@ -15,7 +16,7 @@ export class CreditListComponent implements OnInit {
 
     listDemande: Demande[] = [];
 
-    listTypesCredit: Credit[] = [];
+    listTypesCredit: TypeCredit[] = [];
 
     displayList: {
         id: number;
