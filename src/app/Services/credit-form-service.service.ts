@@ -4,11 +4,12 @@ import { Observable, Subject } from "rxjs";
 import { tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { Garantie } from "../models/credit/garantie";
-import { Demande } from "../models/credit/info-personnel";
+import { Demande } from "../models/credit/demande";
 import { NatureGarantie } from "../models/credit/natureGarantie";
 import { PiecesJointes } from "../models/credit/piece-jointes";
-import { Credit } from "../models/credit/typeCredit";
+
 import { TypeGarantie } from "../models/credit/typeGarantie";
+import { TypeCredit } from "../models/credit/typeCredit";
 
 @Injectable({
     providedIn: "root",
@@ -26,31 +27,32 @@ export class CreditFormService {
         return this.http.post<Demande>(`${this.baseUrl}` + `/demande`, demande);
     }
 
-    getDemandesByUser(id:number){
-        return this.http.get<Demande[]>(this.baseUrl + '/demande/ByUser/' + id);
+    getDemandesByUser(id: number) {
+        return this.http.get<Demande[]>(this.baseUrl + "/demande/ByUser/" + id);
     }
 
-    getListDemande(){
-        return this.http.get<Demande[]>(this.baseUrl + '/demande');
+    getListDemande() {
+        return this.http.get<Demande[]>(this.baseUrl + "/demande");
     }
-  
+
     getDemandeExistsAPI(i: any) {
         return this.http.get<boolean>(
             `${this.baseUrl}` + `/demande/Exists/` + i
-        );}
+        );
+    }
 
-    getDemandeById(id:number){
-        return this.http.get<Demande>(this.baseUrl + '/demande/' + id);
+    getDemandeById(id: number) {
+        return this.http.get<Demande>(this.baseUrl + "/demande/" + id);
     }
 
     //type credit
 
-    getTypeCreditAPI(): Observable<Credit[]> {
-        return this.http.get<Credit[]>(`${this.baseUrl}` + `/typeCredit`);
+    getTypeCreditAPI() {
+        return this.http.get<TypeCredit[]>(`${this.baseUrl}` + `/typeCredit`);
     }
-    
-    getTypeCreditById(id : number): Observable<Credit>{
-        return this.http.get<Credit>(this.baseUrl + '/typeCredit/' + id);
+
+    getTypeCreditById(id: number) {
+        return this.http.get<TypeCredit>(this.baseUrl + "/typeCredit/" + id);
     }
 
     //garantie
@@ -71,8 +73,10 @@ export class CreditFormService {
         );
     }
 
-    getTypeGarantieById(id : number){
-        return this.http.get<TypeGarantie>(this.baseUrl + '/typeGarantie/' + id);
+    getTypeGarantieById(id: number) {
+        return this.http.get<TypeGarantie>(
+            this.baseUrl + "/typeGarantie/" + id
+        );
     }
 
     getNatureGarantieAPI() {
@@ -81,12 +85,16 @@ export class CreditFormService {
         );
     }
 
-    getNatureGarantieById(id : number){
-        return this.http.get<NatureGarantie>(this.baseUrl + '/natureGarantie/' + id);
+    getNatureGarantieById(id: number) {
+        return this.http.get<NatureGarantie>(
+            this.baseUrl + "/natureGarantie/" + id
+        );
     }
 
-    getGarantiesByDemande(id : number){
-        return this.http.get<Garantie[]>(this.baseUrl + '/garantie/ByDemande/' + id);
+    getGarantiesByDemande(id: number) {
+        return this.http.get<Garantie[]>(
+            this.baseUrl + "/garantie/ByDemande/" + id
+        );
     }
 
     //pieces jointes
@@ -99,7 +107,7 @@ export class CreditFormService {
 
     // phase
 
-    getListPhases(){
-        return this.http.get(this.baseUrl + '/phase');
+    getListPhases() {
+        return this.http.get(this.baseUrl + "/phase");
     }
 }

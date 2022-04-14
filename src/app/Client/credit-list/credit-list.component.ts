@@ -1,9 +1,10 @@
 import { TokenService } from "src/app/auth/services/token.service";
-import { Credit } from "src/app/models/credit/typeCredit";
+
 import { Component, OnInit } from "@angular/core";
 import { AppBreadcrumbService } from "src/app/main/app-breadcrumb/app.breadcrumb.service";
-import { Demande } from "src/app/models/credit/info-personnel";
+import { Demande } from "src/app/models/credit/demande";
 import { CreditFormService } from "src/app/Services/credit-form-service.service";
+import { TypeCredit } from "src/app/models/credit/typeCredit";
 import { Table } from "primeng/table";
 
 @Component({
@@ -12,7 +13,6 @@ import { Table } from "primeng/table";
     styleUrls: ["./credit-list.component.scss"],
 })
 export class CreditListComponent implements OnInit {
-
     listDemande: Demande[] = [];
 
     displayList: {
@@ -41,14 +41,13 @@ export class CreditListComponent implements OnInit {
     ngOnInit(): void {
         this.getUserId().then((result) => {
             this.userId = result.id;
-                this.getPhases().then((result2) => {
-                    this.phases = result2;
-                    this.getDemandes().then((result3) => {
-                        this.listDemande = result3;
-                        this.initList();
-                        this.loading = false;
-                    });
-                
+            this.getPhases().then((result2) => {
+                this.phases = result2;
+                this.getDemandes().then((result3) => {
+                    this.listDemande = result3;
+                    this.initList();
+                    this.loading = false;
+                });
             });
         });
     }

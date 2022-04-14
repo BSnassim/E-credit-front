@@ -13,6 +13,12 @@
                         pInputText
                         required
                     />
+                    <small
+                        *ngIf="submitAll && !demande.nom"
+                        id="nom"
+                        class="p-invalid"
+                        >Ce champ est nécessair.</small
+                    >
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="prenom">Prénom</label>
@@ -23,6 +29,12 @@
                         pInputText
                         required
                     />
+                    <small
+                        *ngIf="submitAll && !demande.prenom"
+                        id="prenom"
+                        class="p-invalid"
+                        >Ce champ est nécessair.</small
+                    >
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="typePiece">Type de pièce</label>
@@ -33,6 +45,12 @@
                         placeholder="Choisir"
                         required
                     ></p-dropdown>
+                    <small
+                        *ngIf="submitAll && !demande.typePiece"
+                        id="typePiece"
+                        class="p-invalid"
+                        >Ce champ est nécessair.</small
+                    >
                 </div>
                 <div
                     class="field col-12 md:col-6"
@@ -41,14 +59,12 @@
                     <label for="numCin">Numéro CIN</label>
                     <p-inputNumber
                         id="numCin"
-                        maxlength="10"
                         [(ngModel)]="demande.numPiece"
                         required
+                        minlength="10"
+                        maxlength="10"
                     ></p-inputNumber>
-                    <small
-                        *ngIf="demande.numPiece.length < 8"
-                        id="numCin"
-                        class="p-invalid"
+                    <small *ngIf="minlength < 8" id="numPiece" class="p-invalid"
                         >Ce champ doit comporter 8 chiffre.</small
                     >
                 </div>
@@ -59,18 +75,19 @@
                     <label for="numCin">Numéro Passport</label>
                     <input
                         id="numCin"
-                        maxlength="9"
                         [(ngModel)]="demande.numPiece"
                         type="text"
+                        minlength="9"
+                        maxlength="9"
                         pInputText
                         required
                     />
-                    <small
-                        *ngIf="submitAll && !demande.numPiece"
+                    <!-- <small
+                        *ngIf="demande.numPiece < 9"
                         id="numCin"
                         class="p-invalid"
-                        >Ce champ est nécessair.</small
-                    >
+                        >Ce champ doit comporter 9 caractères.</small
+                    > -->
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="numCompte">N° Compte</label>
@@ -90,7 +107,7 @@
                     <label for="dateCompte">Date ouverture compte</label>
                     <p-calendar
                         id="dateCompte"
-                        name="dateNaissance"
+                        name="dateCompte"
                         [showIcon]="true"
                         inputId="icon"
                         [(ngModel)]="demande.dateCompte"
@@ -135,6 +152,12 @@
                             required
                         ></p-dropdown>
                     </span>
+                    <small
+                        *ngIf="submitAll && !demande.sitFamiliale"
+                        id="situation"
+                        class="p-invalid"
+                        >Ce champ est nécessair.</small
+                    >
                 </div>
             </div>
         </div>
@@ -150,7 +173,7 @@
                     <span class="p-float-label">
                         <p-dropdown
                             (onChange)="findDocObligatoire()"
-                            id="credit"
+                            inputId="credit"
                             placeholder="Type"
                             [(ngModel)]="typeC"
                             [options]="typeCredit"
@@ -158,6 +181,12 @@
                             required
                         ></p-dropdown>
                     </span>
+                    <small
+                        *ngIf="submitAll && !typeC.libcredit"
+                        id="credit"
+                        class="p-invalid"
+                        >Ce champ est nécessair.</small
+                    >
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="montant">Montant</label>
@@ -169,6 +198,12 @@
                         currency="TND"
                         locale="tn-TN"
                     ></p-inputNumber>
+                    <small
+                        *ngIf="submitAll && !demande.montant"
+                        id="montant"
+                        class="p-invalid"
+                        >Ce champ est nécessair.</small
+                    >
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="unite">Unité</label>
@@ -182,6 +217,12 @@
                         >
                         </p-dropdown>
                     </span>
+                    <small
+                        *ngIf="submitAll && !demande.unite"
+                        id="unite"
+                        class="p-invalid"
+                        >Ce champ est nécessair.</small
+                    >
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="nbrEcheance">Nombre échéance</label>
@@ -190,6 +231,12 @@
                         [(ngModel)]="demande.nbreEcheance"
                         required
                     ></p-inputNumber>
+                    <small
+                        *ngIf="submitAll && !demande.nbreEcheance"
+                        id="nbreEcheance"
+                        class="p-invalid"
+                        >Ce champ est nécessair.</small
+                    >
                 </div>
             </div>
         </div>
@@ -489,6 +536,7 @@
         type="button"
         block="true"
         label="Initialiser"
+        (click)="resetBT()"
         class="p-button-secondary mr-2 mb-2"
     ></button>
 </div>
