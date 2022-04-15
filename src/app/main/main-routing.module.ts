@@ -1,12 +1,12 @@
+import { DashboardComponent } from './../dashboard/dashboard.component';
 import { ClientModule } from './../Client/client.module';
 import { UserModule } from './../user/user.module';
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {DashboardDemoComponent} from '../demo/view/dashboarddemo.component';
 import { AdminModule } from '../Admin/admin.module';
 
 export const mainRoutes: Routes = [
-    {path: '', component: DashboardDemoComponent},
+    {path: '', component: DashboardComponent},
     // place here child routes
   /*  {
         path: 'administration',

@@ -1,3 +1,4 @@
+import { User } from './../../models/user';
 import { Router } from '@angular/router';
 import { TokenService } from "src/app/auth/services/token.service";
 
@@ -32,7 +33,7 @@ export class CreditListComponent implements OnInit {
 
     phases: any;
 
-    userId: number;
+    user: User;
 
     loading: boolean = true;
 
@@ -60,7 +61,7 @@ export class CreditListComponent implements OnInit {
 
         ];
         this.getUserId().then((result) => {
-            this.userId = result.id;
+            this.user = result;
             this.getPhases().then((result2) => {
                 this.phases = result2;
                 this.getDemandes().then((result3) => {
@@ -97,11 +98,25 @@ export class CreditListComponent implements OnInit {
     }
 
     async getDemandes() {
-        const result = await this.creditService
-            .getDemandesByUser(this.userId)
-            .toPromise();
+        let access: boolean;
+        this.user.profil.habilitations.forEach(e => {
+            if (e.libelle == "ROLE_Traitement Demandes") {
+                access = true;
+            }
+        })
+        if (access) {
+            const result = await this.creditService
+                .getListDemande()
+                .toPromise();
+            return result;
+        }
+        else {
+            const result = await this.creditService
+                .getDemandesByUser(this.user.id)
+                .toPromise();
 
-        return result;
+            return result;
+        }
     }
 
     initList(): void {
