@@ -1,3 +1,4 @@
+import { Agence } from './credit/agence';
 import { Profil } from "./profil";
 
 export class User {
@@ -9,5 +10,5 @@ export class User {
     tel : number;
     dateNais : Date;
     profil : Profil;
-    
+    agence : Agence;
 }

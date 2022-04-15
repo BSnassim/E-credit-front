@@ -50,6 +50,8 @@
                         </th>
                         <th pSortableColumn="profil.libelle">Profil <p-sortIcon field="profil.libelle"></p-sortIcon>
                         </th>
+                        <th pSortableColumn="agence.nomAgence">Agence <p-sortIcon field="agence.nomAgence"></p-sortIcon>
+                        </th>
                         <th></th>
                     </tr>
                 </ng-template>
@@ -75,6 +77,9 @@
                         </td>
                         <td><span class="p-column-title">Profil</span>
                             {{user.profil.libelle}}
+                        </td>
+                        <td><span class="p-column-title">Agence</span>
+                            {{user.agence.nomAgence}}
                         </td>
                         <td class="flex justify-content-end">
                             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"

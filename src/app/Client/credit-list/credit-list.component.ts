@@ -49,7 +49,7 @@ export class CreditListComponent implements OnInit {
         this.items = [{
             label: 'Voir détails',
             icon: 'pi pi-external-link',
-            command: ()=>this.redirectToDetails()
+            command: () => this.redirectToDetails()
         },
         {
             label: 'Info',
@@ -72,12 +72,11 @@ export class CreditListComponent implements OnInit {
         });
     }
 
-    redirectToDetails(){
-        this.router.navigate( ["/credit/consultation/details", {id: this.demandeId }])
+    redirectToDetails() {
+        this.router.navigate(["/credit/consultation/details", { id: this.demandeId }])
     }
 
     getDemandeId(id: number) {
-        console.log(id);
         this.demandeId = id;
     }
 

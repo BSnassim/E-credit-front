@@ -42,6 +42,7 @@ export class ListUserComponent implements OnInit, OnDestroy {
       { field: 'tel', header: 'Telephone'},
       { field: 'dateN', header: 'Date de naissance'},
       { field: 'profil.libelle', header: 'Profil'},
+      { filed: 'profil.nomAgence', header: 'Agence'},
     ];
     this.getData();
     this.subscription = this.userService.refresh$.subscribe( () =>{

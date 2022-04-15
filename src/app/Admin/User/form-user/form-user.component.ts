@@ -1,3 +1,5 @@
+import { CreditFormService } from 'src/app/Services/credit-form-service.service';
+import { Agence } from './../../../models/credit/agence';
 import { TokenService } from './../../../auth/services/token.service';
 import { UserService } from './../../../Services/user.service';
 import { User } from './../../../models/user';
@@ -16,7 +18,11 @@ export class FormUserComponent implements OnInit {
 
   profils: Profil[];
 
+  agences: Agence[];
+
   selectedProfil: Profil;
+
+  selectedAgence: Agence;
 
   user: User = new User;
 
@@ -44,12 +50,18 @@ export class FormUserComponent implements OnInit {
 
   noSpecial = /^[a-zàâçéèêëîïôûùüÿñæœ .-]*$/i
 
-  constructor(private profilService: ProfilService, private userService: UserService, private tokenService: TokenService) { }
+  constructor(private profilService: ProfilService,
+    private userService: UserService,
+    private tokenService: TokenService,
+    private agenceService: CreditFormService) { }
 
   ngOnInit(): void {
     this.profilService.getProfils().subscribe(data => {
       this.profils = data;
     });
+    this.agenceService.getListAgences().subscribe(data => {
+      this.agences = data;
+    })
     if (this.userToEdit != null) {
       this.user.id = this.userToEdit.id;
       this.nom = this.userToEdit.nom;
@@ -58,6 +70,7 @@ export class FormUserComponent implements OnInit {
       this.email = this.userToEdit.email;
       this.tel = this.userToEdit.tel;
       this.selectedProfil = this.userToEdit.profil;
+      this.selectedAgence = this.userToEdit.agence;
     };
   };
 
@@ -69,6 +82,7 @@ export class FormUserComponent implements OnInit {
           this.errorEmail = "Email existe déjà";
         } else {
           this.user.profil = this.selectedProfil;
+          this.user.agence = this.selectedAgence;
           this.user.nom = this.nom;
           this.user.prenom = this.prenom;
           this.user.dateNais = this.dateN;
@@ -97,6 +111,7 @@ export class FormUserComponent implements OnInit {
       if (this.errorEmail == "" && this.errorPass == "") {
 
         this.user.profil = this.selectedProfil;
+        this.user.agence = this.selectedAgence;
         this.user.nom = this.nom;
         this.user.prenom = this.prenom;
         this.user.dateNais = this.dateN;
@@ -134,7 +149,8 @@ export class FormUserComponent implements OnInit {
 
   allValidated() {
     let empty = (this.tel == null || this.nom == '' || this.prenom == '' || this.email == ''
-      || this.password == '' || this.repeatedPass == '' || this.dateN == null || this.selectedProfil == null);
+      || this.password == '' || this.repeatedPass == '' || this.dateN == null ||
+      this.selectedProfil == null || this.selectedAgence == null);
     return (this.validateEmail() || this.validatePassword() != '' || this.validateNumbers(this.tel) || empty);
   }
 
