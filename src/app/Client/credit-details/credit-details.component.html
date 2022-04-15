@@ -62,7 +62,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="montant">Montant</label>
-                    <input id="montant" [value]="demande.montant" type="text" pInputText disabled />
+                    <input id="montant" [value]="(demande.montant | currency : ' ') + ' TND'" type="text" pInputText disabled />
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="unite">Unité</label>

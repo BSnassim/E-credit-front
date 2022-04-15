@@ -19,7 +19,7 @@
     </div>
     <div class="field col">
         <label>Profil</label>
-        <p-dropdown [options]="profils" dateFormat="y.mm.dd" optionLabel="libelle" [(ngModel)]="selectedProfil"
+        <p-dropdown [options]="profils" optionLabel="libelle" [(ngModel)]="selectedProfil"
             placeholder="Choisir un profil" [showClear]="true">
         </p-dropdown>
     </div>
@@ -35,6 +35,13 @@
         <input type="text" pInputText pKeyFilter="pnum" id="numTel" [(ngModel)]="tel"
             [ngClass]="{'invalid':validateNumbers(tel)}" required maxlength="8" />
     </div>
+</div>
+
+<div class="field">
+    <label>Agence</label>
+        <p-dropdown [options]="agences" optionLabel="nomAgence" [(ngModel)]="selectedAgence"
+            placeholder="Choisir une agence" [showClear]="true">
+        </p-dropdown>
 </div>
 
 <div class="p-fluid formgrid grid" *ngIf="userToEdit == null">

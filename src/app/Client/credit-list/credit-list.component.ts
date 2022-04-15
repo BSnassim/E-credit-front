@@ -1,11 +1,12 @@
+import { Router } from '@angular/router';
 import { TokenService } from "src/app/auth/services/token.service";
 
 import { Component, OnInit } from "@angular/core";
 import { AppBreadcrumbService } from "src/app/main/app-breadcrumb/app.breadcrumb.service";
 import { Demande } from "src/app/models/credit/demande";
 import { CreditFormService } from "src/app/Services/credit-form-service.service";
-import { TypeCredit } from "src/app/models/credit/typeCredit";
 import { Table } from "primeng/table";
+import { MenuItem } from "primeng/api";
 
 @Component({
     selector: "app-credit-list",
@@ -13,7 +14,12 @@ import { Table } from "primeng/table";
     styleUrls: ["./credit-list.component.scss"],
 })
 export class CreditListComponent implements OnInit {
+
     listDemande: Demande[] = [];
+
+    items: MenuItem[];
+
+    demandeId: number;
 
     displayList: {
         id: number;
@@ -33,12 +39,26 @@ export class CreditListComponent implements OnInit {
     constructor(
         private breadcrumbService: AppBreadcrumbService,
         private creditService: CreditFormService,
-        private tokenService: TokenService
+        private tokenService: TokenService,
+        private router: Router
     ) {
         this.breadcrumbService.setItems([{ label: "Liste des credits" }]);
     }
 
     ngOnInit(): void {
+        this.items = [{
+            label: 'Voir détails',
+            icon: 'pi pi-external-link',
+            command: () => this.redirectToDetails()
+        },
+        {
+            label: 'Info',
+            icon: 'pi pi-upload',
+            routerLink: '/fileupload',
+            disabled: true
+        }
+
+        ];
         this.getUserId().then((result) => {
             this.userId = result.id;
             this.getPhases().then((result2) => {
@@ -50,6 +70,14 @@ export class CreditListComponent implements OnInit {
                 });
             });
         });
+    }
+
+    redirectToDetails() {
+        this.router.navigate(["/credit/consultation/details", { id: this.demandeId }])
+    }
+
+    getDemandeId(id: number) {
+        this.demandeId = id;
     }
 
     clear(table: Table) {
