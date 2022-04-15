@@ -49,14 +49,14 @@ export class CreditListComponent implements OnInit {
     ngOnInit(): void {
         this.items = [{
             label: 'Voir détails',
-            icon: 'pi pi-external-link',
+            icon: 'pi pi-file',
             command: () => this.redirectToDetails()
         },
         {
             label: 'Info',
             icon: 'pi pi-upload',
-            routerLink: '/fileupload',
-            disabled: true
+            routerLink: '/',
+            visible: false
         }
 
         ];

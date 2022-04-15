@@ -62,7 +62,8 @@
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="montant">Montant</label>
-                    <input id="montant" [value]="(demande.montant | currency : ' ') + ' TND'" type="text" pInputText disabled />
+                    <input id="montant" [value]="(demande.montant | currency : ' ') + ' TND'" type="text" pInputText
+                        disabled />
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="unite">Unité</label>
@@ -113,6 +114,20 @@
                     </tr>
                 </ng-template>
             </p-table>
+        </div>
+    </div>
+    <!-- traitement du charge de l'agence -->
+    <div class="col-12 traitementbox grid" *ngIf="hasAccess()">
+        <div class="card">
+            <h5>Traitement du dossier</h5>
+            <p-button label="Accepter"></p-button>
+            <p-button label="Complément" (click)="showComplement()"></p-button>
+            <p-button label="Refuser"></p-button>
+        </div>
+        <div class="card" style="margin-left: 5px;" [hidden]="hidden">
+            <h5>Informations à demander</h5>
+            <textarea label pInputTextarea cols="80"></textarea>
+            <p-button label="Envoyer"></p-button>
         </div>
     </div>
 </div>
