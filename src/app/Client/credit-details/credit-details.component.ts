@@ -1,9 +1,9 @@
-import { Garantie } from "src/app/models/credit/garantie";
-import { CreditFormService } from "src/app/Services/credit-form-service.service";
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { AppBreadcrumbService } from "src/app/main/app-breadcrumb/app.breadcrumb.service";
-import { Demande } from "src/app/models/credit/demande";
+import { CreditFormService } from 'src/app/Services/credit-form-service.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AppBreadcrumbService } from 'src/app/main/app-breadcrumb/app.breadcrumb.service';
+import { Demande } from 'src/app/models/credit/demande';
+
 
 @Component({
     selector: "app-credit-details",
