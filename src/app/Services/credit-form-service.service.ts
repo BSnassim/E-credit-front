@@ -1,3 +1,4 @@
+import { Agence } from './../models/credit/agence';
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
@@ -109,5 +110,15 @@ export class CreditFormService {
 
     getListPhases() {
         return this.http.get(this.baseUrl + "/phase");
+    }
+
+    // agence
+
+    getListAgences() {
+        return this.http.get<Agence[]>(this.baseUrl + "/agence");
+    }
+
+    getAgenceById(id:number){
+        return this.http.get<Agence>(this.baseUrl + "/agence/" + id);
     }
 }
