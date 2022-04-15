@@ -106,6 +106,10 @@ export class CreditFormService {
         );
     }
 
+    getPiecesJointesByDemande(id:number){
+        return this.http.get<PiecesJointes[]>(this.baseUrl + '/piecesJointes/demande/' + id);
+    }
+
     // phase
 
     getListPhases() {

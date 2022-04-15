@@ -164,7 +164,7 @@
     <!-- liste des garanties -->
     <div class="col-12">
         <div class="card">
-            <h5>Ligne des garanties</h5>
+            <h5>Garanties proposées</h5>
             <p-table [value]="garanties" responsiveLayout="scroll">
                 <ng-template pTemplate="header">
                     <tr>
@@ -184,6 +184,24 @@
                         </td>
                         <td>{{ garantie.idTypeGrt | typeGarantie | async }}</td>
                         <td>{{ garantie.montant | currency: " " }} TND</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+    <!-- liste des pieces jointes -->
+    <div class="col-12">
+        <div class="card">
+            <h5>Pieces Jointes</h5>
+            <p-table [value]="pieces" respoinsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Nom du fichier</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-piece>
+                    <tr>
+                        <td>{{ piece.fileName }}</td>
                     </tr>
                 </ng-template>
             </p-table>

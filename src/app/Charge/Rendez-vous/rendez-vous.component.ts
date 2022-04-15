@@ -2,19 +2,12 @@ import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
-    templateUrl: "./app.calendar.component.html",
-    styles: [
-        `
-            @media screen and (max-width: 960px) {
-                :host ::ng-deep .fc-header-toolbar {
-                    display: flex;
-                    flex-wrap: wrap;
-                }
-            }
-        `,
-    ],
+    selector: "app-rendez-vous",
+    templateUrl: "./rendez-vous.component.html",
+    styleUrls: ["./rendez-vous.component.scss"],
+    providers: [],
 })
-export class AppCalendarComponent implements OnInit {
+export class RendezVousComponent implements OnInit {
     events: any[];
 
     options: any;
@@ -29,7 +22,7 @@ export class AppCalendarComponent implements OnInit {
 
     constructor(private http: HttpClient) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.getEvents().then((events) => {
             this.events = events;
             this.options = { ...this.options, ...{ events: events } };
