@@ -1,71 +1,110 @@
-import { User } from 'src/app/models/user';
-import { TokenService } from './../../auth/services/token.service';
-import { Component, OnInit } from '@angular/core';
-import { AppComponent } from '../../app.component';
-import { AppMainComponent } from '../app-main/app.main.component';
-import { TranslateService } from '@ngx-translate/core';
-import { MenuService } from './app.menu.service';
-import { MenuItem } from 'primeng/api';
+import { User } from "src/app/models/user";
+import { TokenService } from "./../../auth/services/token.service";
+import { Component, OnInit } from "@angular/core";
+import { AppComponent } from "../../app.component";
+import { AppMainComponent } from "../app-main/app.main.component";
+import { TranslateService } from "@ngx-translate/core";
+import { MenuService } from "./app.menu.service";
+import { MenuItem } from "primeng/api";
 
 @Component({
-    selector: 'app-menu',
-    templateUrl: './app.menu.component.html'
+    selector: "app-menu",
+    templateUrl: "./app.menu.component.html",
 })
 export class AppMenuComponent implements OnInit {
-
     public templateMenu: any[];
 
     userMenu = [];
 
-    constructor(public app: AppComponent,
+    constructor(
+        public app: AppComponent,
         public appMain: AppMainComponent,
         private translateService: TranslateService,
         private menuService: MenuService,
         private tokenService: TokenService
-    ) { }
+    ) {}
 
     ngOnInit() {
         // this.loadMenu();
         this.templateMenu = [
             {
-                label: 'Liste des menus', icon: 'pi pi-home', items: [{
-                    label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/']
-                }]
-            }
+                label: "Liste des menus",
+                icon: "pi pi-home",
+                items: [
+                    {
+                        label: "Dashboard",
+                        icon: "pi pi-fw pi-home",
+                        routerLink: ["/"],
+                    },
+                ],
+            },
         ];
-        this.tokenService.getUser().subscribe(data => {
-            data.profil.habilitations.forEach(e => {
-
+        this.tokenService.getUser().subscribe((data) => {
+            data.profil.habilitations.forEach((e) => {
                 if (e.libelle == "ROLE_Administration") {
                     this.templateMenu[0].items.push({
-                        label: 'Administration', icon: 'pi pi-fw pi-list', routerLink: ['/administration'],
+                        label: "Administration",
+                        icon: "pi pi-fw pi-list",
+                        routerLink: ["/administration"],
                         items: [
-                            { label: 'Gestion des utilisateurs', icon: 'pi pi-fw pi-users', routerLink: ['/administration/users'] },
-                            { label: 'Gestion des profils', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/administration/profils'] },
-                        ]
+                            {
+                                label: "Gestion des utilisateurs",
+                                icon: "pi pi-fw pi-users",
+                                routerLink: ["/administration/users"],
+                            },
+                            {
+                                label: "Gestion des profils",
+                                icon: "pi pi-fw pi-exclamation-triangle",
+                                routerLink: ["/administration/profils"],
+                            },
+                        ],
                     });
                 }
 
                 if (e.libelle == "ROLE_Demande Credit Client") {
                     this.templateMenu[0].items.push({
-                        label: 'Credit client', icon: 'pi pi-fw pi-money-bill', routerLink: ['/credit'],
+                        label: "Credit client",
+                        icon: "pi pi-fw pi-money-bill",
+                        routerLink: ["/credit"],
                         items: [
-                            { label: 'Demander un credit', icon: 'pi pi-fw pi-money-bill', routerLink: ['/credit/demande'] },
-                            { label: 'Consulter vos credits', icon: 'pi pi-fw pi-money-bill', routerLink: ['/credit/consultation'] }
-                        ]
+                            {
+                                label: "Demander un credit",
+                                icon: "pi pi-fw pi-money-bill",
+                                routerLink: ["/credit/demande"],
+                            },
+                            {
+                                label: "Consulter vos credits",
+                                icon: "pi pi-fw pi-money-bill",
+                                routerLink: ["/credit/consultation"],
+                            },
+                        ],
                     });
                 }
 
                 if (e.libelle == "ROLE_Traitement Demandes") {
                     this.templateMenu[0].items.push({
-                        label: 'Traitement des demandes', icon: 'pi pi-fw pi-folder', routerLink: ['/credit'],
+                        label: "Traitement des demandes",
+                        icon: "pi pi-fw pi-folder",
+                        routerLink: ["/credit"],
                         items: [
-                            { label: 'Liste des dossiers', icon: 'pi pi-fw pi-folder-open', routerLink: ['/credit/consultation'] },
-                            { label: 'Liste des rendez-vous', icon: 'pi pi-fw pi-calendar', routerLink: ['/'] }
-                        ]
+                            {
+                                label: "Liste des dossiers",
+                                icon: "pi pi-fw pi-folder-open",
+                                routerLink: ["/credit/consultation"],
+                            },
+                            {
+                                label: "Liste des rendez-vous",
+                                icon: "pi pi-fw pi-calendar",
+                                routerLink: ["/"],
+                            },
+                            {
+                                label: "Gestion des rendez-vous",
+                                icon: "pi pi-fw pi-calendar-plus",
+                                routerLink: ["/administration/rendez-vous"],
+                            },
+                        ],
                     });
                 }
-
             });
         });
 
@@ -114,6 +153,4 @@ export class AppMenuComponent implements OnInit {
        }
        return menuItem;
    }*/
-
-
 }

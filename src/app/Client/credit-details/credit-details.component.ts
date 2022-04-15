@@ -6,7 +6,6 @@ import { AppBreadcrumbService } from 'src/app/main/app-breadcrumb/app.breadcrumb
 import { Demande } from 'src/app/models/credit/demande';
 import { TokenService } from 'src/app/auth/services/token.service';
 
-
 @Component({
     selector: "app-credit-details",
     templateUrl: "./credit-details.component.html",

@@ -57,16 +57,19 @@
                     *ngIf="demande.typePiece == 'CIN'"
                 >
                     <label for="numCin">Numéro CIN</label>
-                    <p-inputNumber
+                    <input
+                        type="text"
+                        pInputText
+                        pKeyFilter="pnum"
                         id="numCin"
                         [(ngModel)]="demande.numPiece"
                         required
-                        minlength="10"
-                        maxlength="10"
-                    ></p-inputNumber>
-                    <small *ngIf="minlength < 8" id="numPiece" class="p-invalid"
+                        maxlength="8"
+                        minlength="8"
+                    />
+                    <!-- <small *ngIf="minlength < 8" id="numPiece" class="p-invalid"
                         >Ce champ doit comporter 8 chiffre.</small
-                    >
+                    > -->
                 </div>
                 <div
                     class="field col-12 md:col-6"
@@ -91,11 +94,16 @@
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="numCompte">N° Compte</label>
-                    <p-inputNumber
+                    <input
+                        type="text"
+                        pInputText
+                        pKeyFilter="pnum"
                         id="numCompte"
                         [(ngModel)]="demande.numCompte"
                         required
-                    ></p-inputNumber>
+                        maxlength="13"
+                        minlength="13"
+                    />
                     <small
                         *ngIf="submitAll && !demande.numCompte"
                         id="numCompte"
