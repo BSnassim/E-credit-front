@@ -9,4 +9,4 @@ import { RendezVousComponent } from "./Rendez-vous/rendez-vous.component";
     declarations: [RendezVousComponent],
     imports: [CommonModule, SharedModule, DialogModule, FullCalendarModule],
 })
-export class AdminModule {}
+export class ChargeModule {}

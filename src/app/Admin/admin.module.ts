@@ -4,12 +4,9 @@ import { CommonModule } from "@angular/common";
 import { AdminRoutingModule } from "./admin-routing.module";
 import { DialogModule } from "primeng/dialog";
 import { FullCalendarModule } from "@fullcalendar/angular";
-// import { RendezVousComponent } from "./Rendez-vous/rendez-vous.component";
 
 @NgModule({
-    declarations: [
-        // RendezVousComponent
-    ],
+    declarations: [],
     imports: [
         CommonModule,
         AdminRoutingModule,

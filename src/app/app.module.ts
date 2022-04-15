@@ -173,6 +173,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         CarouselModule,
         CascadeSelectModule,
         ChartModule,
+        ChargeModule,
         CheckboxModule,
         ChipModule,
         ChipsModule,
