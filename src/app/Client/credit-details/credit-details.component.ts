@@ -13,6 +13,8 @@ import { Demande } from 'src/app/models/credit/demande';
 export class CreditDetailsComponent implements OnInit {
     demande = {} as Demande;
 
+    pieces = [] as any[];
+
     garanties = [] as any[];
 
     constructor(
@@ -30,6 +32,7 @@ export class CreditDetailsComponent implements OnInit {
         this.route.params.subscribe((params) => {
             this.getDemande(params.id);
             this.getGaranties(params.id);
+            this.getPieces(params.id);
         });
     }
 
@@ -37,6 +40,12 @@ export class CreditDetailsComponent implements OnInit {
         this.demandeService.getGarantiesByDemande(id).subscribe((data) => {
             this.garanties = data;
         });
+    }
+
+    getPieces(id:number){
+        this.demandeService.getPiecesJointesByDemande(id).subscribe((data) =>{
+            this.pieces = data;
+        })
     }
 
     getDemande(id: number) {
