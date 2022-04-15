@@ -1,4 +1,3 @@
-import { Garantie } from "src/app/models/credit/garantie";
 import { CreditFormService } from "src/app/Services/credit-form-service.service";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";

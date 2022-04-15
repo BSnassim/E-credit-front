@@ -12,6 +12,7 @@ import { saveAs } from "file-saver";
 import { CreditFormService } from "src/app/Services/credit-form-service.service";
 import { TokenService } from "src/app/auth/services/token.service";
 import { TypeCredit } from "src/app/models/credit/typeCredit";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "app-credit-form",
@@ -71,6 +72,7 @@ export class CreditFormComponent implements OnInit {
     exists: boolean;
 
     constructor(
+        private router: Router,
         private tokenService: TokenService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
@@ -117,13 +119,6 @@ export class CreditFormComponent implements OnInit {
 
     typePiece: any[] = ["CIN", "Passeport"];
 
-    // if (typePiece = "CIN")
-    // {
-    //     this.cin = true;
-    // }else{
-    //     this.cin=false
-    // }
-
     /*           ********************************************               */
     /*           *************** LIGNE CREDIT ***************               */
 
@@ -132,7 +127,6 @@ export class CreditFormComponent implements OnInit {
     getTypeCredit() {
         this.creditFormService.getTypeCreditAPI().subscribe((response) => {
             this.typeCredit = response;
-            // console.log(this.typeCredit);
         });
     }
 
@@ -142,14 +136,12 @@ export class CreditFormComponent implements OnInit {
     getTypeGarantie() {
         this.creditFormService.getTypeGarantieAPI().subscribe((response) => {
             this.typeGarantie = response;
-            // console.log(this.typeGarantie);
         });
     }
 
     getNatureGarantie() {
         this.creditFormService.getNatureGarantieAPI().subscribe((response) => {
             this.natureGarantie = response;
-            // console.log(this.natureGarantie);
         });
     }
 
@@ -190,7 +182,6 @@ export class CreditFormComponent implements OnInit {
         this.garanties = [...this.garanties];
         this.GarantieDialog = false;
         this.garantie = {};
-        // console.log(this.garanties);
     }
 
     editGarantie(garantie: Garantie) {
@@ -267,7 +258,6 @@ export class CreditFormComponent implements OnInit {
                             ).length === 0
                         )
                             this.selected.push(document);
-                        // console.log(this.selected);
                     } else {
                         if (
                             !this.selected ||
@@ -286,7 +276,6 @@ export class CreditFormComponent implements OnInit {
                         this.propagateChange(this.selected);
                     }
                     this.demande.pieces = this.selected;
-                    // console.log(this.demande);
                 };
             });
         }
@@ -323,13 +312,10 @@ export class CreditFormComponent implements OnInit {
 
     saveDemandeCredit(): void {
         this.submitAll = true;
-        // console.log(this.demande);
-        // console.log(this.garanties);
         this.creditFormService
             .getDemandeExistsAPI(this.demande.numPiece)
             .subscribe((response) => {
                 if (response) {
-                    // console.log("exists");
                     this.messageService.add({
                         key: "tst",
                         severity: "error",
@@ -357,7 +343,6 @@ export class CreditFormComponent implements OnInit {
                         detail: "Votre demande est pas encore rempli",
                     });
                 } else {
-                    // console.log("!exists");
                     this.tokenService.getUser().subscribe((response) => {
                         this.user = response;
                         this.demande.idTypeCredit = this.typeC.idType;
@@ -372,6 +357,7 @@ export class CreditFormComponent implements OnInit {
                             detail: "Demande déposer avec succés",
                         });
                     });
+                    this.router.navigate(["/credit/consultation"]);
                 }
             });
     }
