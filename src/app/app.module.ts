@@ -141,6 +141,7 @@ import { TypeGarantiePipe } from "./pipes/type-garantie.pipe";
 import { GarantieNaturePipe } from "./pipes/garantie-nature.pipe";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { AppCalendarComponent } from "./pages/app.calendar.component";
+import { ChargeModule } from "./Charge/charge.module";
 
 FullCalendarModule.registerPlugins([
     dayGridPlugin,

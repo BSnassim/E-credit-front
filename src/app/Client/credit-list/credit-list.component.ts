@@ -1,3 +1,4 @@
+import { CryptojsService } from './../../Services/cryptojs.service';
 import { User } from './../../models/user';
 import { Router } from '@angular/router';
 import { TokenService } from "src/app/auth/services/token.service";
@@ -8,6 +9,7 @@ import { Demande } from "src/app/models/credit/demande";
 import { CreditFormService } from "src/app/Services/credit-form-service.service";
 import { Table } from "primeng/table";
 import { MenuItem } from "primeng/api";
+import { HttpUrlEncodingCodec } from '@angular/common/http';
 
 @Component({
     selector: "app-credit-list",
@@ -41,25 +43,13 @@ export class CreditListComponent implements OnInit {
         private breadcrumbService: AppBreadcrumbService,
         private creditService: CreditFormService,
         private tokenService: TokenService,
-        private router: Router
+        private router: Router,
+        private encrypter: CryptojsService
     ) {
         this.breadcrumbService.setItems([{ label: "Liste des credits" }]);
     }
 
     ngOnInit(): void {
-        this.items = [{
-            label: 'Voir détails',
-            icon: 'pi pi-file',
-            command: () => this.redirectToDetails()
-        },
-        {
-            label: 'Info',
-            icon: 'pi pi-upload',
-            routerLink: '/',
-            visible: false
-        }
-
-        ];
         this.getUserId().then((result) => {
             this.user = result;
             this.getPhases().then((result2) => {
@@ -68,13 +58,37 @@ export class CreditListComponent implements OnInit {
                     this.listDemande = result3;
                     this.initList();
                     this.loading = false;
+                    this.items = [{
+                        label: 'Voir détails',
+                        icon: 'pi pi-file',
+                        command: () => this.redirectToDetails()
+                    },
+                    {
+                        label: 'Info',
+                        icon: 'pi pi-upload',
+                        command: () => this.redirectToDetails(),
+                        visible: this.hasAccess()
+                    }
+
+                    ];
                 });
             });
         });
     }
 
+    hasAccess() {
+        let access: boolean = false;
+        this.user.profil.habilitations.forEach(e => {
+            if (e.libelle == "ROLE_Traitement Demandes") {
+                access = true;
+            }
+        })
+        return access;
+    }
+
     redirectToDetails() {
-        this.router.navigate(["/credit/consultation/details", { id: this.demandeId }])
+        let value = this.encrypter.encrypt(this.demandeId.toString());
+        this.router.navigate(["/credit/consultation/details", { id: value }])
     }
 
     getDemandeId(id: number) {
@@ -98,13 +112,7 @@ export class CreditListComponent implements OnInit {
     }
 
     async getDemandes() {
-        let access: boolean;
-        this.user.profil.habilitations.forEach(e => {
-            if (e.libelle == "ROLE_Traitement Demandes") {
-                access = true;
-            }
-        })
-        if (access) {
+        if (this.hasAccess()) {
             const result = await this.creditService
                 .getListDemande()
                 .toPromise();
