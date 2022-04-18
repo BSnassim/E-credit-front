@@ -1,3 +1,6 @@
+import { CryptojsService } from './../../Services/cryptojs.service';
+import { Profil } from './../../models/profil';
+import { Habilitation } from './../../models/habilitation';
 import { User } from './../../models/user';
 import { CreditFormService } from 'src/app/Services/credit-form-service.service';
 import { Component, OnInit } from '@angular/core';
@@ -20,25 +23,29 @@ export class CreditDetailsComponent implements OnInit {
 
     hidden: boolean = true;
 
-    user: User;
+    user = {} as User;
 
     constructor(
         private breadcrumbService: AppBreadcrumbService,
         private route: ActivatedRoute,
         private demandeService: CreditFormService,
-        private tokenService: TokenService
+        private tokenService: TokenService,
+        private encrypter: CryptojsService
     ) {
         this.breadcrumbService.setItems([
             { label: "Liste des credits", routerLink: ["credit/consultation"] },
             { label: "Details du demande" },
         ]);
+        this.user.profil = {} as Profil;
+        this.user.profil.habilitations = [];
     }
 
     ngOnInit(): void {
         this.route.params.subscribe((params) => {
-            this.getDemande(params.id);
-            this.getGaranties(params.id);
-            this.getPieces(params.id);
+            let value: number = +this.encrypter.decrypt(params.id);
+            this.getDemande(value);
+            this.getGaranties(value);
+            this.getPieces(value);
             this.getUser();
         });
     }
