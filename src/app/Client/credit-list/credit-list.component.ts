@@ -9,7 +9,6 @@ import { Demande } from "src/app/models/credit/demande";
 import { CreditFormService } from "src/app/Services/credit-form-service.service";
 import { Table } from "primeng/table";
 import { MenuItem } from "primeng/api";
-import { HttpUrlEncodingCodec } from '@angular/common/http';
 
 @Component({
     selector: "app-credit-list",
@@ -61,12 +60,12 @@ export class CreditListComponent implements OnInit {
                     this.items = [{
                         label: 'Voir détails',
                         icon: 'pi pi-file',
-                        command: () => this.redirectToDetails()
+                        command: () => this.redirectToDetails("info")
                     },
                     {
-                        label: 'Info',
+                        label: 'Traitement',
                         icon: 'pi pi-upload',
-                        command: () => this.redirectToDetails(),
+                        command: () => this.redirectToDetails("traitement"),
                         visible: this.hasAccess()
                     }
 
@@ -86,9 +85,9 @@ export class CreditListComponent implements OnInit {
         return access;
     }
 
-    redirectToDetails() {
+    redirectToDetails(param : string) {
         let value = this.encrypter.encrypt(this.demandeId.toString());
-        this.router.navigate(["/credit/consultation/details", { id: value }])
+        this.router.navigate(["/credit/consultation/details", { id: value, page:param }])
     }
 
     getDemandeId(id: number) {
