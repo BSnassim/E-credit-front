@@ -100,7 +100,7 @@ export class AppMenuComponent implements OnInit {
                             {
                                 label: "Gestion des rendez-vous",
                                 icon: "pi pi-fw pi-calendar-plus",
-                                routerLink: ["/administration/rendez-vous"],
+                                routerLink: ["/rdv/rendezvous"],
                             },
                         ],
                     });
