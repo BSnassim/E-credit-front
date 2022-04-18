@@ -2,9 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { RendezVousComponent } from "./Rendez-vous/rendez-vous.component";
 
-const routes: Routes = [
-    { path: "rendez-vous", component: RendezVousComponent },
-];
+const routes: Routes = [{ path: "rendezvous", component: RendezVousComponent }];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
