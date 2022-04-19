@@ -1,4 +1,4 @@
-import { Agence } from './../models/credit/agence';
+import { Agence } from "./../models/credit/agence";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
@@ -19,6 +19,7 @@ export class CreditFormService {
     private _refresh$ = new Subject<void>();
 
     baseUrl = environment.apiURL + "/credit";
+    baseUrl1 = environment.apiURL + "/gestionRdv";
 
     constructor(private http: HttpClient) {}
 
@@ -26,10 +27,6 @@ export class CreditFormService {
     postDemandeAPI(demande: Demande, listGarantie: Garantie[]) {
         demande.garantie = listGarantie;
         return this.http.post<Demande>(`${this.baseUrl}` + `/demande`, demande);
-    }
-
-    putDemande(demande: Demande){
-        return this.http.put<Demande>(this.baseUrl + '/demande', demande);
     }
 
     getDemandesByUser(id: number) {
@@ -110,8 +107,10 @@ export class CreditFormService {
         );
     }
 
-    getPiecesJointesByDemande(id:number){
-        return this.http.get<PiecesJointes[]>(this.baseUrl + '/piecesJointes/demande/' + id);
+    getPiecesJointesByDemande(id: number) {
+        return this.http.get<PiecesJointes[]>(
+            this.baseUrl + "/piecesJointes/demande/" + id
+        );
     }
 
     // phase
@@ -126,18 +125,11 @@ export class CreditFormService {
         return this.http.get<Agence[]>(this.baseUrl + "/agence");
     }
 
-    getAgenceById(id:number){
+    getAgenceById(id: number) {
         return this.http.get<Agence>(this.baseUrl + "/agence/" + id);
     }
 
-    // historique
-
-    
-    getAllHistorique(){
-        return this.http.get<any[]>(this.baseUrl + "/historique");
-    }
-
-    getAllHistoriqueByDemande(id: number){
-        return this.http.get<any[]>(this.baseUrl + "/historique/ByDemande/" + id);
+    getRdvAPI() {
+        return this.http.get<any>(this.baseUrl1 + "/rdv");
     }
 }

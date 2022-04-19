@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="card">
             <h5>Calendrier des rendez-vous</h5>
-            <full-calendar [options]="options"></full-calendar>
+            <full-calendar [options]="options" event="events"></full-calendar>
             <p-dialog
                 [(visible)]="eventDialog"
                 [style]="{ width: '450px' }"
@@ -13,43 +13,24 @@
                 <ng-template pTemplate="content">
                     <div class="p-fluid">
                         <div class="field">
-                            <label for="title">Title</label>
+                            <label for="title">Avec</label>
                             <input
                                 id="title"
                                 type="text"
                                 pInputText
-                                *ngIf="clickedEvent"
                                 [(ngModel)]="changedEvent.title"
                                 [required]="true"
                             />
                         </div>
                         <div class="field">
-                            <label for="start">From</label>
+                            <label for="start">Date et heure</label>
                             <p-calendar
                                 id="start"
-                                *ngIf="clickedEvent"
-                                [(ngModel)]="changedEvent.start"
+                                [(ngModel)]="changedEvent.dateRdv"
                                 [showTime]="true"
                                 appendTo="body"
+                                [timeOnly]="true"
                             ></p-calendar>
-                        </div>
-                        <div class="field">
-                            <label for="end">To</label>
-                            <p-calendar
-                                id="end"
-                                *ngIf="clickedEvent"
-                                [(ngModel)]="changedEvent.end"
-                                [showTime]="true"
-                                appendTo="body"
-                            ></p-calendar>
-                        </div>
-                        <div class="p-field-checkbox">
-                            <p-checkbox
-                                id="allday"
-                                *ngIf="clickedEvent"
-                                [(ngModel)]="changedEvent.allday"
-                            ></p-checkbox>
-                            <label for="allday">All Day</label>
                         </div>
                     </div>
                 </ng-template>
