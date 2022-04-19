@@ -3,7 +3,7 @@ import { Profil } from './../../models/profil';
 import { User } from './../../models/user';
 import { CreditFormService } from 'src/app/Services/credit-form-service.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppBreadcrumbService } from 'src/app/main/app-breadcrumb/app.breadcrumb.service';
 import { Demande } from 'src/app/models/credit/demande';
 import { TokenService } from 'src/app/auth/services/token.service';
@@ -16,6 +16,9 @@ import { ConfirmationService, ConfirmEventType, MenuItem, MessageService } from 
     providers: [ConfirmationService,MessageService]
 })
 export class CreditDetailsComponent implements OnInit {
+    
+    complement: string;
+
     position: string;
 
     demande = {} as Demande;
@@ -43,7 +46,8 @@ export class CreditDetailsComponent implements OnInit {
         private tokenService: TokenService,
         private encrypter: CryptojsService,
         private confirmationService: ConfirmationService,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private router: Router
     ) {
         this.breadcrumbService.setItems([
             { label: "Liste des credits", routerLink: ["credit/consultation"] },
@@ -154,7 +158,7 @@ export class CreditDetailsComponent implements OnInit {
                 dem.garantie = [];
                 dem.pieces = [];
                 this.demandeService.putDemande(dem).subscribe();
-
+                setTimeout(()=>{ this.router.navigate(["/credit/consultation"]);}, 2000);
             },
             reject: (type) => {
                 switch (type) {
@@ -167,7 +171,34 @@ export class CreditDetailsComponent implements OnInit {
                 }
             }
         });
-
-
     }
+
+    complementInfo(){
+        this.confirmationService.confirm({
+            message: 'Voulez vous vraiment envoyer cette demande?',
+            header: 'Confirmation',
+            icon: 'pi pi-info-circle',
+            accept: () => {
+                this.messageService.add({ severity: 'info', summary: 'Confirmé', detail: 'Informations envoyées' });
+                let dem = this.demande;
+                dem.idPhase = 4;
+                dem.garantie = [];
+                dem.pieces = [];
+                dem.complement = this.complement;
+                this.demandeService.putDemande(dem).subscribe();
+                setTimeout(()=>{ this.router.navigate(["/credit/consultation"]);}, 2000);
+            },
+            reject: (type) => {
+                switch (type) {
+                    case ConfirmEventType.REJECT:
+                        this.messageService.add({ severity: 'error', summary: 'Rejeté', detail: 'Vous avez rejeté' });
+                        break;
+                    case ConfirmEventType.CANCEL:
+                        this.messageService.add({ severity: 'warn', summary: 'Anuulé', detail: 'Vous avez annulé' });
+                        break;
+                }
+            }
+        });
+    }
+
 }
