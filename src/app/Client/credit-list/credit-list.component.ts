@@ -85,9 +85,9 @@ export class CreditListComponent implements OnInit {
         return access;
     }
 
-    redirectToDetails(param : string) {
+    redirectToDetails(param: string) {
         let value = this.encrypter.encrypt(this.demandeId.toString());
-        this.router.navigate(["/credit/consultation/details", { id: value, page:param }])
+        this.router.navigate(["/credit/consultation/details", { id: value, page: param }])
     }
 
     getDemandeId(id: number) {
@@ -113,7 +113,7 @@ export class CreditListComponent implements OnInit {
     async getDemandes() {
         if (this.hasAccess()) {
             const result = await this.creditService
-                .getListDemande()
+                .getDemandesByAgence(this.user.agence.idAgence)
                 .toPromise();
             return result;
         }
