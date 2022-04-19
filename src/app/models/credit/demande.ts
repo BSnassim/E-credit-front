@@ -18,6 +18,7 @@ export interface Demande {
     datePhase?: Date;
     idPhase?: number;
     idTypeCredit?: number;
+    complement?: string;
     garantie?: Garantie[];
     pieces?: PiecesJointes[];
     idUser?: number;
