@@ -3,6 +3,8 @@ import { Component, OnInit } from "@angular/core";
 import { DemandeRdv } from "src/app/models/demande-rdv";
 import { CreditFormService } from "src/app/Services/credit-form-service.service";
 import { environment } from "src/environments/environment";
+import { Calendar } from "@fullcalendar/core";
+import interactionPlugin from "@fullcalendar/interaction";
 
 @Component({
     selector: "app-rendez-vous",
@@ -35,9 +37,10 @@ export class RendezVousComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        // this.getRdv();
+        // this.events = this.rdv;
         this.getEvents().then((events) => {
-            this.events = events;
-            // console.log(this.events);
+            this.events = this.rdv;
             this.options = { ...this.options, ...{ events: events } };
         });
 
@@ -54,17 +57,14 @@ export class RendezVousComponent implements OnInit {
             selectMirror: true,
             dayMaxEvents: true,
             eventClick: (e) => {
-                console.log(e);
                 this.eventDialog = true;
                 this.clickedEvent = e.event;
-                console.log(this.clickedEvent);
                 this.changedEvent.title = this.clickedEvent.title;
                 this.changedEvent.dateRdv = this.clickedEvent.dateRdv;
             },
         };
 
         this.changedEvent = { title: "", dateRdv: null };
-        this.getRdv();
     }
 
     getRdv() {
@@ -73,6 +73,23 @@ export class RendezVousComponent implements OnInit {
             console.log(this.rdv);
         });
     }
+
+    // let calendar = new Calendar(calendarEl, {
+    //     plugins: [ interactionPlugin ],
+
+    // dateClick: function(info) {
+    //     alert('Clicked on: ' + info.dateStr);
+    //     alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+    //     alert('Current view: ' + info.view.type);
+    //     // change the day's background color just for fun
+    //     info.dayEl.style.backgroundColor = 'red';
+    //   }
+    // }
+    //   );
+
+    // let calendar = new Calendar(calendarEl, {
+    //     schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives'
+    //   });
 
     getEvents() {
         return this.http

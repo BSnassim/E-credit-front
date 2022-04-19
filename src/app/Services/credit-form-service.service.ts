@@ -47,8 +47,8 @@ export class CreditFormService {
         return this.http.get<Demande>(this.baseUrl + "/demande/" + id);
     }
 
-    putDemande(demande: Demande){
-        return this.http.put<Demande>(this.baseUrl + '/demande', demande);
+    putDemande(demande: Demande) {
+        return this.http.put<Demande>(this.baseUrl + "/demande", demande);
     }
 
     //type credit
@@ -141,12 +141,13 @@ export class CreditFormService {
 
     // historique
 
-    getAllHistorique(){
+    getAllHistorique() {
         return this.http.get<any[]>(this.baseUrl + "/historique");
     }
 
-    getAllHistoriqueByDemande(id: number){
-        return this.http.get<any[]>(this.baseUrl + "/historique/ByDemande/" + id);
+    getAllHistoriqueByDemande(id: number) {
+        return this.http.get<any[]>(
+            this.baseUrl + "/historique/ByDemande/" + id
+        );
     }
-
 }
