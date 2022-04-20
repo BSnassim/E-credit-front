@@ -68,7 +68,7 @@ export class CreditListComponent implements OnInit {
                         label: 'Traitement',
                         icon: 'pi pi-upload',
                         command: () => this.redirectToDetails("traitement"),
-                        visible: this.hasAccess()
+                        visible: (this.hasAccess() && this.canTreat())
                     },
                     {
                         label: 'Modifier',
@@ -105,6 +105,17 @@ export class CreditListComponent implements OnInit {
         return access;
     }
 
+    canTreat(){
+        let access: boolean = false;
+        if(this.demandeId){
+            let c = this.displayList.find((i) => i.id === this.demandeId);
+            if (c.phase != 6 && c.phase != 3 && c.phase != 2 ) {
+                access = true;
+            }
+        }
+        return access;
+    }
+
     redirectToDetails(param: string) {
         let value = this.encrypter.encrypt(this.demandeId.toString());
         this.router.navigate(["/credit/consultation/details", { id: value, page: param }]);
@@ -126,7 +137,7 @@ export class CreditListComponent implements OnInit {
             label: 'Traitement',
             icon: 'pi pi-upload',
             command: () => this.redirectToDetails("traitement"),
-            visible: this.hasAccess()
+            visible: (this.hasAccess() && this.canTreat())
         },
         {
             label: 'Modifier',
