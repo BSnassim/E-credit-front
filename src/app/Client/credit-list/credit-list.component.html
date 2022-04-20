@@ -3,7 +3,7 @@
         <p-table #dt1 [value]="displayList" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-gridlines" [paginator]="true"
             currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
-            [globalFilterFields]="['nomprenom','type','dateCreation','etat']">
+            [globalFilterFields]="['nomprenom','type','dateCreation','etat','enAttente']">
             <ng-template pTemplate="caption">
                 <div class="flex">
                     <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
@@ -11,7 +11,7 @@
                     <span class="p-input-icon-left ml-auto">
                         <i class="pi pi-search"></i>
                         <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
-                            placeholder="Search keyword" />
+                            placeholder="Recherche" />
                     </span>
                 </div>
             </ng-template>
@@ -48,6 +48,12 @@
                             <p-columnFilter type="text" field="etat" display="menu"></p-columnFilter>
                         </div>
                     </th>
+                    <th>
+                        <div class="flex justify-content-center align-items-center">
+                            En attente de
+                            <p-columnFilter type="text" field="enAttente" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
                     <th>Actions</th>
                 </tr>
             </ng-template>
@@ -67,6 +73,9 @@
                     </td>
                     <td>
                         <p-tag styleClass="mr-2" icon="pi pi-info-circle" value="{{ demande.etat }}"></p-tag>
+                    </td>
+                    <td>
+                        <p-tag styleClass="mr-2" icon="pi pi-info-circle" value="{{ demande.enAttente }}"></p-tag>
                     </td>
                     <td>
                         <button type="button" pButton icon="pi pi-bars" label="Actions" class="p-button-info"

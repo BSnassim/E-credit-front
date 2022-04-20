@@ -158,7 +158,7 @@ export class CreditDetailsComponent implements OnInit {
                 dem.garantie = [];
                 dem.pieces = [];
                 this.demandeService.putDemande(dem).subscribe();
-                setTimeout(()=>{ this.router.navigate(["/credit/consultation"]);}, 2000);
+                setTimeout(()=>{ this.router.navigate(["/credit/consultation"]);}, 1500);
             },
             reject: (type) => {
                 switch (type) {
@@ -186,7 +186,7 @@ export class CreditDetailsComponent implements OnInit {
                 dem.pieces = [];
                 dem.complement = this.complement;
                 this.demandeService.putDemande(dem).subscribe();
-                setTimeout(()=>{ this.router.navigate(["/credit/consultation"]);}, 2000);
+                setTimeout(()=>{ this.router.navigate(["/credit/consultation"]);}, 1500);
             },
             reject: (type) => {
                 switch (type) {
