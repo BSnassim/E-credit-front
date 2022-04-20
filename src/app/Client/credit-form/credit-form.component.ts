@@ -12,7 +12,8 @@ import { saveAs } from "file-saver";
 import { CreditFormService } from "src/app/Services/credit-form-service.service";
 import { TokenService } from "src/app/auth/services/token.service";
 import { TypeCredit } from "src/app/models/credit/typeCredit";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { CryptojsService } from "src/app/Services/cryptojs.service";
 
 @Component({
     selector: "app-credit-form",
@@ -71,25 +72,31 @@ export class CreditFormComponent implements OnInit {
 
     exists: boolean;
 
+    paramId: number;
+
+    modifying: boolean = false;
+
     constructor(
         private router: Router,
         private tokenService: TokenService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         private creditFormService: CreditFormService,
+        private route: ActivatedRoute,
+        private encrypter: CryptojsService,
         private breadcrumbService: AppBreadcrumbService
     ) {
         this.breadcrumbService.setItems([
             { label: "Credit" },
-            { label: "Demande", routerLink: ["creidt/demande"] },
+            { label: "Demande", routerLink: ["credit/demande"] },
         ]);
 
         this.disabled = false;
         this.fileMaxSize = null;
         this.loading = false;
         this.multiple = true;
-        this.propagateChange = (object: any) => {};
-        this.propagateValidator = () => {};
+        this.propagateChange = (object: any) => { };
+        this.propagateValidator = () => { };
         this.readOnly = false;
         this.required = false;
         this.style = { width: "100%" };
@@ -105,6 +112,7 @@ export class CreditFormComponent implements OnInit {
         this.getTypeCredit();
         this.getTypeGarantie();
         this.getNatureGarantie();
+        this.getParams();
 
         this.garantieCols = [
             { field: "nature", header: "Nature" },
@@ -311,55 +319,95 @@ export class CreditFormComponent implements OnInit {
     }
 
     saveDemandeCredit(): void {
-        this.submitAll = true;
-        this.creditFormService
-            .getDemandeExistsAPI(this.demande.numPiece)
-            .subscribe((response) => {
-                if (response) {
-                    this.messageService.add({
-                        key: "tst",
-                        severity: "error",
-                        summary: "Erreur",
-                        detail: "Vous-avez déja déposer une demande",
-                    });
-                } else if (
-                    !this.demande.nom ||
-                    !this.demande.prenom ||
-                    !this.demande.dateNaissance ||
-                    !this.demande.numPiece ||
-                    !this.demande.sitFamiliale ||
-                    !this.demande.typePiece ||
-                    !this.demande.numCompte ||
-                    !this.demande.dateCompte ||
-                    !this.demande.nbreEcheance ||
-                    !this.demande.montant ||
-                    !this.demande.unite ||
-                    !this.demande.pieces
-                ) {
-                    this.messageService.add({
-                        key: "tst",
-                        severity: "error",
-                        summary: "Erreur",
-                        detail: "Votre demande est pas encore rempli",
-                    });
-                } else {
-                    this.tokenService.getUser().subscribe((response) => {
-                        this.user = response;
-                        this.demande.idTypeCredit = this.typeC.idType;
-                        this.demande.idUser = this.user.id;
-                        this.creditFormService
-                            .postDemandeAPI(this.demande, this.garanties)
-                            .subscribe();
+        // IF MODIFYING A LOAN
+        if (this.modifying) {
+            if (
+                !this.demande.nom ||
+                !this.demande.prenom ||
+                !this.demande.dateNaissance ||
+                !this.demande.numPiece ||
+                !this.demande.sitFamiliale ||
+                !this.demande.typePiece ||
+                !this.demande.numCompte ||
+                !this.demande.dateCompte ||
+                !this.demande.nbreEcheance ||
+                !this.demande.montant ||
+                !this.demande.unite ||
+                !this.demande.pieces
+            ) {
+                this.messageService.add({
+                    key: "tst",
+                    severity: "error",
+                    summary: "Erreur",
+                    detail: "Votre demande est pas encore rempli",
+                });
+            } else {
+                this.demande.idTypeCredit = this.typeC.idType;
+                this.demande.garantie = this.garanties
+                this.demande.idPhase = 5;
+                this.creditFormService
+                    .putDemande(this.demande)
+                    .subscribe();
+                this.messageService.add({
+                    key: "tst",
+                    severity: "success",
+                    summary: "Succés",
+                    detail: "Demande changé avec succés",
+                });
+                setTimeout(() => { this.router.navigate(["/credit/consultation"]); }, 1500);
+            }
+            //IF INSERTING A NEW LOAN
+        } else {
+            this.submitAll = true;
+            this.creditFormService
+                .getDemandeExistsAPI(this.demande.numPiece)
+                .subscribe((response) => {
+                    if (response) {
                         this.messageService.add({
                             key: "tst",
-                            severity: "success",
-                            summary: "Succués",
-                            detail: "Demande déposer avec succés",
+                            severity: "error",
+                            summary: "Erreur",
+                            detail: "Vous-avez déja déposer une demande",
                         });
-                    });
-                    this.router.navigate(["/credit/consultation"]);
-                }
-            });
+                    } else if (
+                        !this.demande.nom ||
+                        !this.demande.prenom ||
+                        !this.demande.dateNaissance ||
+                        !this.demande.numPiece ||
+                        !this.demande.sitFamiliale ||
+                        !this.demande.typePiece ||
+                        !this.demande.numCompte ||
+                        !this.demande.dateCompte ||
+                        !this.demande.nbreEcheance ||
+                        !this.demande.montant ||
+                        !this.demande.unite ||
+                        !this.demande.pieces
+                    ) {
+                        this.messageService.add({
+                            key: "tst",
+                            severity: "error",
+                            summary: "Erreur",
+                            detail: "Votre demande est pas encore rempli",
+                        });
+                    } else {
+                        this.tokenService.getUser().subscribe((response) => {
+                            this.user = response;
+                            this.demande.idTypeCredit = this.typeC.idType;
+                            this.demande.idUser = this.user.id;
+                            this.creditFormService
+                                .postDemandeAPI(this.demande, this.garanties)
+                                .subscribe();
+                            this.messageService.add({
+                                key: "tst",
+                                severity: "success",
+                                summary: "Succés",
+                                detail: "Demande déposer avec succés",
+                            });
+                        });
+                        setTimeout(() => { this.router.navigate(["/credit/consultation"]); }, 1500);
+                    }
+                });
+        }
     }
 
     createId(): string {
@@ -370,5 +418,39 @@ export class CreditFormComponent implements OnInit {
             id += chars.charAt(Math.floor(Math.random() * chars.length));
         }
         return id;
+    }
+
+    // modification demande
+
+    getDemande(id: number) {
+        this.creditFormService.getDemandeById(id).subscribe((data) => {
+            this.demande = data;
+            let t = this.typeCredit.find((i) => i.idType === data.idTypeCredit);
+            this.typeC = t;
+        });
+    }
+
+    getGaranties(id: number) {
+        this.creditFormService.getGarantiesByDemande(id).subscribe((data) => {
+            this.garanties = data;
+        });
+    }
+
+    getPieces(id: number) {
+        this.creditFormService.getPiecesJointesByDemande(id).subscribe((data) => {
+            // this.pieces = data;
+        })
+    }
+
+    getParams() {
+        this.route.params.subscribe((params) => {
+            if (params.id) {
+                this.modifying = true;
+                let value: number = + this.encrypter.decrypt(params.id);
+                this.getDemande(value);
+                this.getGaranties(value);
+                this.getPieces(value);
+            }
+        });
     }
 }

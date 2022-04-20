@@ -30,6 +30,8 @@ export class CreditListComponent implements OnInit {
         dateCreation: Date;
         montant: number;
         etat: string;
+        enAttente: string;
+        phase: number;
     }[] = [];
 
     phases: any;
@@ -67,6 +69,12 @@ export class CreditListComponent implements OnInit {
                         icon: 'pi pi-upload',
                         command: () => this.redirectToDetails("traitement"),
                         visible: this.hasAccess()
+                    },
+                    {
+                        label: 'Modifier',
+                        icon: 'pi pi-upload',
+                        command: () => this.redirectToDetails("modification"),
+                        visible: this.needsComplement()
                     }
 
                     ];
@@ -85,13 +93,49 @@ export class CreditListComponent implements OnInit {
         return access;
     }
 
-    redirectToDetails(param : string) {
+    needsComplement(){
+        let access: boolean = false;
+        if(this.demandeId){
+        this.user.profil.habilitations.forEach(e => {
+            let c = this.displayList.find((i) => i.id === this.demandeId);
+            if (e.libelle == "ROLE_Demande Credit Client" && c.phase === 4 ) {
+                access = true;
+            }
+        })}
+        return access;
+    }
+
+    redirectToDetails(param: string) {
         let value = this.encrypter.encrypt(this.demandeId.toString());
-        this.router.navigate(["/credit/consultation/details", { id: value, page:param }])
+        this.router.navigate(["/credit/consultation/details", { id: value, page: param }]);
+    }
+
+    redirectToForm(){
+        let value = this.encrypter.encrypt(this.demandeId.toString());
+        this.router.navigate(["/credit/demande", { id: value}]);
     }
 
     getDemandeId(id: number) {
         this.demandeId = id;
+        this.items = [{
+            label: 'Voir détails',
+            icon: 'pi pi-file',
+            command: () => this.redirectToDetails("info")
+        },
+        {
+            label: 'Traitement',
+            icon: 'pi pi-upload',
+            command: () => this.redirectToDetails("traitement"),
+            visible: this.hasAccess()
+        },
+        {
+            label: 'Modifier',
+            icon: 'pi pi-upload',
+            command: () => this.redirectToForm(),
+            visible: this.needsComplement()
+        }
+
+        ];
     }
 
     clear(table: Table) {
@@ -113,7 +157,7 @@ export class CreditListComponent implements OnInit {
     async getDemandes() {
         if (this.hasAccess()) {
             const result = await this.creditService
-                .getListDemande()
+                .getDemandesByAgence(this.user.agence.idAgence)
                 .toPromise();
             return result;
         }
@@ -135,7 +179,9 @@ export class CreditListComponent implements OnInit {
                 dateCreation: e.datePhase,
                 montant: e.montant,
                 type: e.idTypeCredit,
-                etat: phase.enAttenteDe,
+                etat: phase.etape,
+                enAttente: phase.enAttenteDe,
+                phase: phase.id
             });
         });
     }

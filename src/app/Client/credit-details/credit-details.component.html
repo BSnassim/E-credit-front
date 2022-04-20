@@ -76,6 +76,7 @@
             </div>
         </div>
     </div>
+
     <!-- liste des garanties -->
     <div class="col-12">
         <div class="card">
@@ -153,8 +154,8 @@
         </div>
         <div class="card" style="margin-left: 5px;" [hidden]="hidden">
             <h5>Informations à demander</h5>
-            <textarea label pInputTextarea cols="80"></textarea>
-            <p-button label="Envoyer"></p-button>
+            <textarea label pInputTextarea cols="80" [(ngModel)]="complement"></textarea>
+            <p-button label="Envoyer" (click)="complementInfo()"></p-button>
         </div>
     </div>
 
