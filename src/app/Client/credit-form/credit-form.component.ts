@@ -332,8 +332,7 @@ export class CreditFormComponent implements OnInit {
                 !this.demande.dateCompte ||
                 !this.demande.nbreEcheance ||
                 !this.demande.montant ||
-                !this.demande.unite ||
-                !this.demande.pieces
+                !this.demande.unite
             ) {
                 this.messageService.add({
                     key: "tst",
