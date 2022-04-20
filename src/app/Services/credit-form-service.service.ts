@@ -8,7 +8,6 @@ import { Garantie } from "../models/credit/garantie";
 import { Demande } from "../models/credit/demande";
 import { NatureGarantie } from "../models/credit/natureGarantie";
 import { PiecesJointes } from "../models/credit/piece-jointes";
-
 import { TypeGarantie } from "../models/credit/typeGarantie";
 import { TypeCredit } from "../models/credit/typeCredit";
 
@@ -19,7 +18,6 @@ export class CreditFormService {
     private _refresh$ = new Subject<void>();
 
     baseUrl = environment.apiURL + "/credit";
-    baseUrl1 = environment.apiURL + "/gestionRdv";
 
     constructor(private http: HttpClient) {}
 
@@ -131,12 +129,6 @@ export class CreditFormService {
 
     getAgenceById(id: number) {
         return this.http.get<Agence>(this.baseUrl + "/agence/" + id);
-    }
-
-    //rdv
-
-    getRdvAPI() {
-        return this.http.get<any>(this.baseUrl1 + "/rdv");
     }
 
     // historique
