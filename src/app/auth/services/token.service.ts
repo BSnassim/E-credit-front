@@ -13,13 +13,13 @@ export class TokenService {
 
     constructor(private http: HttpClient, private router : Router) { }
     getToken(){
-        return localStorage.getItem('access token');
+        return sessionStorage.getItem('access token');
     }
     setToken(token: string){
-        localStorage.setItem('access token', token);
+        sessionStorage.setItem('access token', token);
     }
     removeToken(){
-        localStorage.removeItem('access token');
+        sessionStorage.removeItem('access token');
     }
 
     // Used to get the user details using his token
