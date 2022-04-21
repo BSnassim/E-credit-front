@@ -257,22 +257,10 @@
             </div>
         </div>
     </div>
-    <!-- /*           *******************************************           */ -->
-    <!-- /*           *************** OBSERVATION ***************           */ -->
 
-    <div class="col-12">
-        <div class="card">
-            <h5>Observation</h5>
-            <div class="p-fluid formgrid grid">
-                <div class="field col-12">
-                    <textarea id="commentaire" type="text" rows="4" pInputTextarea></textarea>
-                </div>
-            </div>
-        </div>
-    </div>
     <!--/*           ***********************************************           */-->
 
-<div class="flex align-items-center justify-content-center" *ngIf="page!='info' && page!='traitement' && hasAccess()==false">
+<div class="col-12 retour" *ngIf="page!='info' && page!='traitement' && hasAccess()==false">
     <p-toast key="tst"></p-toast>
     <button pButton pRipple type="button" block="true" (click)="saveDemandeCredit()" label="Sauvegarder"
         class="mr-2 mb-2"></button>
@@ -289,6 +277,7 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th>Date</th>
+                    <th>Fait par</th>
                     <th>Etat</th>
                     <th>En attente de</th>
                 </tr>
@@ -296,6 +285,7 @@
             <ng-template pTemplate="body" let-h>
                 <tr>
                     <td>{{h.date | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{h.byWho}}</td>
                     <td>{{h.phase }}</td>
                     <td>{{h.nextPhase }}</td>
 
@@ -320,8 +310,8 @@
 </div>
 
 <!-- return and validation button -->
-<div class="col-12 retour">
-    <p-button label="Envoyer" (click)="envoyer()" [disabled]="!etapeSuivante"></p-button>
+<div class="col-12 retour" *ngIf="page">
+    <p-button label="Envoyer" (click)="envoyer()" [disabled]="!etapeSuivante" *ngIf="hasAccess()"></p-button>
     <p-button [routerLink]="['/credit/consultation']" label="Retourner à la liste"></p-button>
 </div>
 

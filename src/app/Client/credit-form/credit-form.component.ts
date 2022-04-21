@@ -67,7 +67,7 @@ export class CreditFormComponent implements OnInit {
 
     style: any;
 
-    selected: PiecesJointes[];
+    selected = {} as PiecesJointes[];
 
     fileUpload: any;
 
@@ -81,7 +81,7 @@ export class CreditFormComponent implements OnInit {
 
     phases: any;
 
-    history: { date: Date, phase: string, nextPhase: string }[] = [];
+    history: { date: Date, phase: string, nextPhase: string, byWho: string }[] = [];
 
     complement: string;
 
@@ -384,6 +384,7 @@ export class CreditFormComponent implements OnInit {
                 this.demande.idTypeCredit = this.typeC.idType;
                 this.demande.garantie = this.garanties
                 this.demande.idPhase = 5;
+                this.demande.userName = this.user.nom + ' ' + this.user.prenom;
                 this.creditFormService
                     .putDemande(this.demande)
                     .subscribe();
@@ -433,6 +434,7 @@ export class CreditFormComponent implements OnInit {
                             this.user = response;
                             this.demande.idTypeCredit = this.typeC.idType;
                             this.demande.idUser = this.user.id;
+                            this.demande.userName = this.user.nom + ' ' + this.user.prenom;
                             this.creditFormService
                                 .postDemandeAPI(this.demande, this.garanties)
                                 .subscribe();
@@ -496,7 +498,8 @@ export class CreditFormComponent implements OnInit {
                 this.history.push({
                     date: e.datePhase,
                     phase: phase.etape,
-                    nextPhase: phase.enAttenteDe
+                    nextPhase: phase.enAttenteDe,
+                    byWho: e.userName
                 })
             })
 
@@ -547,6 +550,7 @@ export class CreditFormComponent implements OnInit {
                 dem.garantie = [];
                 dem.pieces = [];
                 dem.complement = this.complement;
+                dem.userName = this.user.nom + ' ' + this.user.prenom;
                 this.creditFormService.putDemande(dem).subscribe();
                 setTimeout(() => { this.router.navigate(["/credit/consultation"]); }, 1500);
             },
@@ -575,6 +579,7 @@ export class CreditFormComponent implements OnInit {
                 dem.idPhase = 3;
                 dem.garantie = [];
                 dem.pieces = [];
+                dem.userName = this.user.nom + ' ' + this.user.prenom;
                 this.creditFormService.putDemande(dem).subscribe();
                 setTimeout(() => { this.router.navigate(["/credit/consultation"]); }, 1500);
             },
