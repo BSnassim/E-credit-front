@@ -2,34 +2,47 @@
     <div class="col-12">
         <div class="card">
             <h5>Calendrier des rendez-vous</h5>
-            <full-calendar [options]="options" event="events"></full-calendar>
+            {{ currentDate }}
+            <full-calendar [options]="options"></full-calendar>
             <p-dialog
                 [(visible)]="eventDialog"
                 [style]="{ width: '450px' }"
-                header="Event Details"
+                header="Détails du rendez-vous"
+                changedEvent.start
                 [modal]="true"
                 [closable]="true"
             >
                 <ng-template pTemplate="content">
                     <div class="p-fluid">
                         <div class="field">
-                            <label for="title">Avec</label>
+                            <label for="title">Title</label>
                             <input
                                 id="title"
                                 type="text"
                                 pInputText
+                                *ngIf="clickedEvent"
                                 [(ngModel)]="changedEvent.title"
                                 [required]="true"
                             />
                         </div>
                         <div class="field">
-                            <label for="start">Date et heure</label>
+                            <label for="start">Le</label>
                             <p-calendar
                                 id="start"
-                                [(ngModel)]="changedEvent.dateRdv"
-                                [showTime]="true"
+                                *ngIf="clickedEvent"
+                                [(ngModel)]="changedEvent.start"
                                 appendTo="body"
+                            ></p-calendar>
+                        </div>
+                        <div class="field">
+                            <label for="end">Au</label>
+                            <p-calendar
+                                id="end"
+                                *ngIf="clickedEvent"
+                                [(ngModel)]="changedEvent.end"
+                                [showTime]="true"
                                 [timeOnly]="true"
+                                appendTo="body"
                             ></p-calendar>
                         </div>
                     </div>
