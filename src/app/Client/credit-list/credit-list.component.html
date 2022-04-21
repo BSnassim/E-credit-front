@@ -48,12 +48,6 @@
                             <p-columnFilter type="text" field="etat" display="menu"></p-columnFilter>
                         </div>
                     </th>
-                    <th>
-                        <div class="flex justify-content-center align-items-center">
-                            En attente de
-                            <p-columnFilter type="text" field="enAttente" display="menu"></p-columnFilter>
-                        </div>
-                    </th>
                     <th>Actions</th>
                 </tr>
             </ng-template>
@@ -72,10 +66,7 @@
                         {{ demande.montant | currency: " " }} TND
                     </td>
                     <td>
-                        <p-tag styleClass="mr-2" icon="pi pi-info-circle" value="{{ demande.etat }}"></p-tag>
-                    </td>
-                    <td>
-                        <p-tag styleClass="mr-2" icon="pi pi-info-circle" value="{{ demande.enAttente }}"></p-tag>
+                        {{ demande.etat }} {{ demande.enAttente }}
                     </td>
                     <td>
                         <button type="button" pButton icon="pi pi-bars" label="Actions" class="p-button-info"

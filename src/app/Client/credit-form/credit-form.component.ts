@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { MessageService, ConfirmationService } from "primeng/api";
+import { MessageService, ConfirmationService, MenuItem, ConfirmEventType } from "primeng/api";
 import { AppBreadcrumbService } from "src/app/main/app-breadcrumb/app.breadcrumb.service";
 import { Garantie } from "src/app/models/credit/garantie";
 import { Demande } from "src/app/models/credit/demande";
@@ -14,6 +14,7 @@ import { TokenService } from "src/app/auth/services/token.service";
 import { TypeCredit } from "src/app/models/credit/typeCredit";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CryptojsService } from "src/app/Services/cryptojs.service";
+import { Profil } from "src/app/models/profil";
 
 @Component({
     selector: "app-credit-form",
@@ -76,6 +77,22 @@ export class CreditFormComponent implements OnInit {
 
     modifying: boolean = false;
 
+    page: string;
+
+    phases: any;
+
+    history: { date: Date, phase: string, nextPhase: string }[] = [];
+
+    complement: string;
+
+    items: MenuItem[];
+
+    hidden: boolean = true;
+
+    etapeActuelle: string;
+
+    etapeSuivante: string;
+
     constructor(
         private router: Router,
         private tokenService: TokenService,
@@ -88,8 +105,24 @@ export class CreditFormComponent implements OnInit {
     ) {
         this.breadcrumbService.setItems([
             { label: "Credit" },
-            { label: "Demande", routerLink: ["credit/demande"] },
+            { label: "Demande" },
         ]);
+        this.items = [
+            {
+                label: 'Accepter',
+                icon: 'pi pi-check',
+            },
+            {
+                label: 'Complément',
+                icon: 'pi pi-refresh',
+                command: () => this.showComplement()
+            },
+            {
+                label: 'Refuser',
+                icon: 'pi pi-times',
+                command: () => this.refuseDemande()
+            },
+        ];
 
         this.disabled = false;
         this.fileMaxSize = null;
@@ -100,20 +133,17 @@ export class CreditFormComponent implements OnInit {
         this.readOnly = false;
         this.required = false;
         this.style = { width: "100%" };
+
+        this.user.profil = {} as Profil;
+        this.user.profil.habilitations = [];
     }
 
     ngOnInit(): void {
-        this.messageService.add({
-            key: "tst",
-            severity: "error",
-            summary: "Erreur",
-            detail: "Vous-avez déja déposer une demande",
-        });
         this.getTypeCredit();
         this.getTypeGarantie();
         this.getNatureGarantie();
         this.getParams();
-
+        this.getUser();
         this.garantieCols = [
             { field: "nature", header: "Nature" },
             { field: "type", header: "Type" },
@@ -314,7 +344,7 @@ export class CreditFormComponent implements OnInit {
             key: "tst",
             severity: "info",
             summary: "Success",
-            detail: "Le formulaire est initialiser",
+            detail: "Le formulaire est initialisé",
         });
     }
 
@@ -338,7 +368,7 @@ export class CreditFormComponent implements OnInit {
                     key: "tst",
                     severity: "error",
                     summary: "Erreur",
-                    detail: "Votre demande est pas encore rempli",
+                    detail: "Votre demande n'est pas encore rempli",
                 });
             } else {
                 this.demande.idTypeCredit = this.typeC.idType;
@@ -366,7 +396,7 @@ export class CreditFormComponent implements OnInit {
                             key: "tst",
                             severity: "error",
                             summary: "Erreur",
-                            detail: "Vous-avez déja déposer une demande",
+                            detail: "Vous-avez déja déposé une demande",
                         });
                     } else if (
                         !this.demande.nom ||
@@ -386,7 +416,7 @@ export class CreditFormComponent implements OnInit {
                             key: "tst",
                             severity: "error",
                             summary: "Erreur",
-                            detail: "Votre demande est pas encore rempli",
+                            detail: "Votre demande n'est pas encore rempli",
                         });
                     } else {
                         this.tokenService.getUser().subscribe((response) => {
@@ -425,6 +455,8 @@ export class CreditFormComponent implements OnInit {
         this.creditFormService.getDemandeById(id).subscribe((data) => {
             this.demande = data;
             let t = this.typeCredit.find((i) => i.idType === data.idTypeCredit);
+            let e = this.phases.find((i) => i.id === data.idPhase);
+            this.etapeActuelle = e.etape;
             this.typeC = t;
         });
     }
@@ -441,15 +473,115 @@ export class CreditFormComponent implements OnInit {
         })
     }
 
+    getPhases() {
+        this.creditFormService.getListPhases().subscribe(data => {
+            this.phases = data;
+        })
+    }
+
+    getHistory(id: number) {
+        this.creditFormService.getAllHistoriqueByDemande(id).subscribe(data => {
+            data.forEach(e => {
+                let phase = this.phases.find((i) => i.id === e.idPhase);
+                this.history.push({
+                    date: e.datePhase,
+                    phase: phase.etape,
+                    nextPhase: phase.enAttenteDe
+                })
+            })
+
+        });
+    }
+
+    getUser() {
+        this.tokenService.getUser().subscribe((data) => {
+            this.user = data;
+        });
+    }
+
     getParams() {
         this.route.params.subscribe((params) => {
             if (params.id) {
+                this.page = this.encrypter.decrypt(params.p);
                 this.modifying = true;
                 let value: number = + this.encrypter.decrypt(params.id);
+                this.getPhases();
                 this.getDemande(value);
                 this.getGaranties(value);
                 this.getPieces(value);
+                this.getHistory(value);
             }
         });
+    }
+
+    hasAccess() {
+        let access: boolean = false;
+        this.user.profil.habilitations.forEach(e => {
+            if (e.libelle == "ROLE_Traitement Demandes") {
+                access = true;
+            }
+        })
+        return access;
+    }
+
+    complementInfo(){
+        this.confirmationService.confirm({
+            key:"second",
+            message: 'Voulez vous vraiment envoyer cette demande?',
+            header: 'Confirmation',
+            icon: 'pi pi-info-circle',
+            accept: () => {
+                this.messageService.add({ key: "tst",severity: 'info', summary: 'Confirmé', detail: 'Informations envoyées' });
+                let dem = this.demande;
+                dem.idPhase = 4;
+                dem.garantie = [];
+                dem.pieces = [];
+                dem.complement = this.complement;
+                this.creditFormService.putDemande(dem).subscribe();
+                setTimeout(()=>{ this.router.navigate(["/credit/consultation"]);}, 1500);
+            },
+            reject: (type) => {
+                switch (type) {
+                    case ConfirmEventType.REJECT:
+                        this.messageService.add({ key: "sts",severity: 'error', summary: 'Rejeté', detail: 'Vous avez rejeté' });
+                        break;
+                    case ConfirmEventType.CANCEL:
+                        this.messageService.add({ key: "sts",severity: 'warn', summary: 'Anuulé', detail: 'Vous avez annulé' });
+                        break;
+                }
+            }
+        });
+    }
+
+    refuseDemande() {
+        this.confirmationService.confirm({
+            key:"second",
+            message: 'Voulez vous vraiment refuser cette demande?',
+            header: 'Confirmation',
+            icon: 'pi pi-info-circle',
+            accept: () => {
+                this.messageService.add({ severity: 'info', summary: 'Confirmé', detail: 'Demande refusée' });
+                let dem = this.demande;
+                dem.idPhase = 3;
+                dem.garantie = [];
+                dem.pieces = [];
+                this.creditFormService.putDemande(dem).subscribe();
+                setTimeout(()=>{ this.router.navigate(["/credit/consultation"]);}, 1500);
+            },
+            reject: (type) => {
+                switch (type) {
+                    case ConfirmEventType.REJECT:
+                        this.messageService.add({ key: "sts",severity: 'error', summary: 'Rejeté', detail: 'Vous avez rejeté' });
+                        break;
+                    case ConfirmEventType.CANCEL:
+                        this.messageService.add({ key: "sts",severity: 'warn', summary: 'Anuulé', detail: 'Vous avez annulé' });
+                        break;
+                }
+            }
+        });
+    }
+
+    showComplement() {
+        this.hidden = !this.hidden;
     }
 }
