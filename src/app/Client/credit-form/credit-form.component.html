@@ -96,7 +96,7 @@
                 <div class="field col-12 md:col-6">
                     <label for="montant">Montant</label>
                     <p-inputNumber id="montant" [(ngModel)]="demande.montant" mode="currency" required currency="TND"
-                        locale="tn-TN" ></p-inputNumber>
+                        locale="tn-TN" [disabled]="page=='traitement' || page=='info'"></p-inputNumber>
                     <small *ngIf="submitAll && !demande.montant" id="montant" class="p-invalid">Ce champ est
                         nécessair.</small>
                 </div>
@@ -134,7 +134,7 @@
                         <th>Type</th>
                         <th>Montant</th>
                         <th style="text-align: center">
-                            <button pButton pRipple icon="pi pi-plus"
+                            <button pButton pRipple icon="pi pi-plus" *ngIf="page!='info' && page!='traitement' && hasAccess()==false"
                                 class="p-button-rounded p-button-success mr-2 mb-2" (click)="newGarantie()"></button>
                         </th>
                     </tr>
@@ -154,9 +154,9 @@
                             {{ garantie.montant | currency: "TND" }}
                         </td>
                         <td style="text-align: center">
-                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-help mr-2"
+                            <button *ngIf="page!='info' && page!='traitement' && hasAccess()==false" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-help mr-2"
                                 (click)="editGarantie(garantie)"></button>
-                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                            <button *ngIf="page!='info' && page!='traitement' && hasAccess()==false" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
                                 (click)="deleteGarantie(garantie)"></button>
                         </td>
                     </tr>
@@ -257,45 +257,64 @@
             </div>
         </div>
     </div>
-    <!-- /*           *******************************************           */ -->
-    <!-- /*           *************** OBSERVATION ***************           */ -->
 
-    <div class="col-12">
-        <div class="card">
-            <h5>Observation</h5>
-            <div class="p-fluid formgrid grid">
-                <div class="field col-12">
-                    <textarea id="commentaire" type="text" rows="4" pInputTextarea></textarea>
-                </div>
-            </div>
-        </div>
-    </div>
     <!--/*           ***********************************************           */-->
-</div>
-<div class="flex align-items-center justify-content-center">
+
+<div class="col-12 retour" *ngIf="page!='info' && page!='traitement' && hasAccess()==false">
     <p-toast key="tst"></p-toast>
     <button pButton pRipple type="button" block="true" (click)="saveDemandeCredit()" label="Sauvegarder"
         class="mr-2 mb-2"></button>
-    <!-- [disabled]="
-            !demande.nom ||
-            !demande.prenom ||
-            !demande.dateNaissance ||
-            !demande.numPiece ||
-            !demande.sitFamiliale ||
-            !demande.typePiece ||
-            !demande.numCompte ||
-            !demande.dateCompte ||
-            !demande.nbreEcheance ||
-            !demande.montant ||
-            !demande.unite ||
-            !demande.pieces ||
-            !demande.garantie
-        " -->
-
     <button pButton pRipple type="button" block="true" label="Initialiser" (click)="resetBT()"
         class="p-button-secondary mr-2 mb-2"></button>
 </div>
 
-<!-- <br />
-{{ demande | json }}
-<br /> -->
+<!-- traitement credit + consultation -->
+<!-- historique du demande -->
+<div class="col-12" *ngIf="hasAccess()">
+    <div class="card">
+        <h5>Historique du dossier</h5>
+        <p-table [value]="history" respoinsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Date</th>
+                    <th>Fait par</th>
+                    <th>Etat</th>
+                    <th>En attente de</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-h>
+                <tr>
+                    <td>{{h.date | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{h.byWho}}</td>
+                    <td>{{h.phase }}</td>
+                    <td>{{h.nextPhase }}</td>
+
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+<!-- traitement du charge de l'agence -->
+<div class="col-12" *ngIf="hasAccess() && page == 'traitement'">
+    <div class="card c1">
+        <h5>Traitement du dossier</h5>
+        <p-confirmDialog key="second" acceptLabel="Oui" rejectLabel="Non" [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+        Etape actuelle: <span class="ea">{{etapeActuelle}}</span> <br>
+        Etape suivante: <p-splitButton class="ea" label="Choisir" [model]="items" styleClass="p-button-outlined p-button-primary mr-2 mb-2">
+        </p-splitButton> {{etapeSuivante}}
+        <div [hidden]="hidden">
+            <h6>Informations à demander</h6>
+            <textarea label pInputTextarea cols="80" [(ngModel)]="complement"></textarea><br>
+        </div>
+    </div>
+</div>
+
+<!-- return and validation button -->
+<div class="col-12 retour" *ngIf="page">
+    <p-button label="Envoyer" (click)="envoyer()" [disabled]="!etapeSuivante" *ngIf="hasAccess()"></p-button>
+    <p-button [routerLink]="['/credit/consultation']" label="Retourner à la liste"></p-button>
+</div>
+
+<p-toast key="sts"></p-toast>
+
+</div>

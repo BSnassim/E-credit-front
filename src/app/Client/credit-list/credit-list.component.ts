@@ -117,13 +117,9 @@ export class CreditListComponent implements OnInit {
     }
 
     redirectToDetails(param: string) {
-        let value = this.encrypter.encrypt(this.demandeId.toString());
-        this.router.navigate(["/credit/consultation/details", { id: value, page: param }]);
-    }
-
-    redirectToForm(){
-        let value = this.encrypter.encrypt(this.demandeId.toString());
-        this.router.navigate(["/credit/demande", { id: value}]);
+        let v1 = this.encrypter.encrypt(this.demandeId.toString());
+        let v2 = this.encrypter.encrypt(param);
+        this.router.navigate(["/credit/demande", { id: v1, p: v2 }]);
     }
 
     getDemandeId(id: number) {
@@ -142,7 +138,7 @@ export class CreditListComponent implements OnInit {
         {
             label: 'Modifier',
             icon: 'pi pi-upload',
-            command: () => this.redirectToForm(),
+            command: () => this.redirectToDetails("modification"),
             visible: this.needsComplement()
         }
 
