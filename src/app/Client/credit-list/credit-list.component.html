@@ -19,6 +19,12 @@
                 <tr>
                     <th>
                         <div class="flex justify-content-center align-items-center">
+                            ID
+                            <p-columnFilter type="text" field="id" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-center align-items-center">
                             Nom et Prenom
                             <p-columnFilter type="text" field="nomprenom" display="menu"></p-columnFilter>
                         </div>
@@ -53,6 +59,9 @@
             </ng-template>
             <ng-template pTemplate="body" let-demande>
                 <tr>
+                    <td>
+                        {{ demande.id}}
+                    </td>
                     <td>
                         {{ demande.nomprenom }}
                     </td>
