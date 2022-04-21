@@ -137,7 +137,14 @@ export class RendezVousComponent implements OnInit {
             });
     }
 
-    reset() {
+    supprimer() {
+        this.eventService.deleteRdvAPI(this.myRdv.idRdv).subscribe();
         this.eventDialog = false;
+        this.messageService.add({
+            key: "tst",
+            severity: "info",
+            summary: "Info Message",
+            detail: "Rendez-vous supprimer",
+        });
     }
 }
