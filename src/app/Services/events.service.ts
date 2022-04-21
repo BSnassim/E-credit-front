@@ -21,7 +21,11 @@ export class EventsService {
 
     // //rdv
     postRdvAPI(rdv: DemandeRdv) {
-        return this.http.post<DemandeRdv>(this.baseUrl1 + `/rdv`, rdv);
+        return this.http.post<DemandeRdv>(this.baseUrl1 + "/rdv", rdv);
+    }
+
+    deleteRdvAPI(id: number) {
+        return this.http.delete(this.baseUrl1 + "/rdv/" + id);
     }
 
     getRdvAPI() {

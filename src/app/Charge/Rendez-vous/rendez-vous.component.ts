@@ -1,13 +1,11 @@
-import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-import { CreditFormService } from "src/app/Services/credit-form-service.service";
 import { environment } from "src/environments/environment";
-import { Calendar, CalendarOptions } from "@fullcalendar/core";
-import interactionPlugin from "@fullcalendar/interaction";
 import { EventsService } from "src/app/Services/events.service";
 import { DatePipe } from "@angular/common";
 import { DemandeRdv } from "src/app/models/demande-rdv";
 import { MessageService } from "primeng/api";
+import { Router } from "@angular/router";
+import { Location } from "@angular/common";
 
 @Component({
     selector: "app-rendez-vous",
@@ -41,27 +39,14 @@ export class RendezVousComponent implements OnInit {
     constructor(
         private eventService: EventsService,
         private datePipe: DatePipe,
-        private messageService: MessageService
+        private messageService: MessageService,
+        public _router: Router,
+        public _location: Location
     ) {}
 
     ngOnInit() {
         this.getRdv();
 
-        // setTimeout(() => {
-        //     this.creditFormService.getRdvAPI().subscribe((response) => {
-        //         response.map((el) => {
-        //             el.title = el.title;
-        //             el.start = el.dateRdv;
-        //             el.end = el.dateRdv;
-        //             el.color = "#F00020";
-        //         });
-        //         this.events.push(response);
-        //         console.log(this.events);
-        //         //this.options = { ...this.options, ...{ events: this.events } };
-
-        //         console.log(this.options);
-        //     });
-        // }, 1000);
         setTimeout(() => {
             this.options = {
                 initialDate: this.datePipe.transform(
@@ -121,7 +106,7 @@ export class RendezVousComponent implements OnInit {
         this.date = new Date(arg.dateStr);
         // this.date = this.datePipe.transform(this.newDate, "yyyy-MM-dd");
         this.changedEvent = {
-            title: "rendez vous avec",
+            title: "Clients.name",
             start: this.date,
             end: null,
             allDay: null,
@@ -134,6 +119,7 @@ export class RendezVousComponent implements OnInit {
 
         this.myRdv.dateRdv = this.changedEvent.start;
         this.myRdv.title = this.changedEvent.title;
+        // this.myRdv.heur = this.changedEvent.;
         // this.myRdv.idDemande
         console.log(this.myRdv);
         this.eventService.postRdvAPI(this.myRdv).subscribe();
@@ -143,9 +129,22 @@ export class RendezVousComponent implements OnInit {
             summary: "Succués",
             detail: "Rendez-vous enregistrer avec succés",
         });
+        this._router
+            .navigateByUrl("/refresh", { skipLocationChange: true })
+            .then(() => {
+                console.log(decodeURI(this._location.path()));
+                this._router.navigate([decodeURI(this._location.path())]);
+            });
     }
 
-    reset() {
+    supprimer() {
+        this.eventService.deleteRdvAPI(this.myRdv.idRdv).subscribe();
         this.eventDialog = false;
+        this.messageService.add({
+            key: "tst",
+            severity: "info",
+            summary: "Info Message",
+            detail: "Rendez-vous supprimer",
+        });
     }
 }

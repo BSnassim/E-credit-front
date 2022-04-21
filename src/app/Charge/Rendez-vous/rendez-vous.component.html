@@ -2,7 +2,6 @@
     <div class="col-12">
         <div class="card">
             <h5>Calendrier des rendez-vous</h5>
-            {{ currentDate }}
             <full-calendar [options]="options"></full-calendar>
             <p-dialog
                 [(visible)]="eventDialog"
@@ -32,36 +31,27 @@
                                 *ngIf="clickedEvent"
                                 [(ngModel)]="changedEvent.start"
                                 appendTo="body"
-                            ></p-calendar>
-                        </div>
-                        <div class="field">
-                            <label for="end">Au</label>
-                            <p-calendar
-                                id="end"
-                                *ngIf="clickedEvent"
-                                [(ngModel)]="changedEvent.end"
                                 [showTime]="true"
-                                [timeOnly]="true"
-                                appendTo="body"
                             ></p-calendar>
                         </div>
                     </div>
                 </ng-template>
 
                 <ng-template pTemplate="footer">
+                    <p-toast key="tst"></p-toast>
                     <button
                         pButton
-                        label="Save"
+                        label="Enregistrer"
                         icon="pi pi-check"
                         class="p-button-text"
                         (click)="save()"
                     ></button>
                     <button
                         pButton
-                        label="Reset"
-                        icon="pi pi-refresh"
+                        label="Supprimer"
+                        icon="pi pi-times"
                         class="p-button-text"
-                        (click)="reset()"
+                        (click)="supprimer()"
                     ></button>
                 </ng-template>
             </p-dialog>
