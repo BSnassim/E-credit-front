@@ -111,16 +111,26 @@ export class CreditFormComponent implements OnInit {
             {
                 label: 'Accepter',
                 icon: 'pi pi-check',
+                command: () => {
+                    this.etapeSuivante = "Acceptation du demande"
+                    this.hideComplement(true);
+                }
             },
             {
                 label: 'Complément',
                 icon: 'pi pi-refresh',
-                command: () => this.showComplement()
+                command: () => {
+                    this.etapeSuivante = "Envoi de complément d'information"
+                    this.hideComplement(false);
+                }
             },
             {
                 label: 'Refuser',
                 icon: 'pi pi-times',
-                command: () => this.refuseDemande()
+                command: () => {
+                    this.etapeSuivante = "Rejet du demande"
+                    this.hideComplement(true);
+                }
             },
         ];
 
@@ -524,29 +534,29 @@ export class CreditFormComponent implements OnInit {
         return access;
     }
 
-    complementInfo(){
+    complementInfo() {
         this.confirmationService.confirm({
-            key:"second",
+            key: "second",
             message: 'Voulez vous vraiment envoyer cette demande?',
             header: 'Confirmation',
             icon: 'pi pi-info-circle',
             accept: () => {
-                this.messageService.add({ key: "tst",severity: 'info', summary: 'Confirmé', detail: 'Informations envoyées' });
+                this.messageService.add({ key: "tst", severity: 'info', summary: 'Confirmé', detail: 'Informations envoyées' });
                 let dem = this.demande;
                 dem.idPhase = 4;
                 dem.garantie = [];
                 dem.pieces = [];
                 dem.complement = this.complement;
                 this.creditFormService.putDemande(dem).subscribe();
-                setTimeout(()=>{ this.router.navigate(["/credit/consultation"]);}, 1500);
+                setTimeout(() => { this.router.navigate(["/credit/consultation"]); }, 1500);
             },
             reject: (type) => {
                 switch (type) {
                     case ConfirmEventType.REJECT:
-                        this.messageService.add({ key: "sts",severity: 'error', summary: 'Rejeté', detail: 'Vous avez rejeté' });
+                        this.messageService.add({ key: "sts", severity: 'error', summary: 'Rejeté', detail: 'Vous avez rejeté' });
                         break;
                     case ConfirmEventType.CANCEL:
-                        this.messageService.add({ key: "sts",severity: 'warn', summary: 'Anuulé', detail: 'Vous avez annulé' });
+                        this.messageService.add({ key: "sts", severity: 'warn', summary: 'Anuulé', detail: 'Vous avez annulé' });
                         break;
                 }
             }
@@ -555,7 +565,7 @@ export class CreditFormComponent implements OnInit {
 
     refuseDemande() {
         this.confirmationService.confirm({
-            key:"second",
+            key: "second",
             message: 'Voulez vous vraiment refuser cette demande?',
             header: 'Confirmation',
             icon: 'pi pi-info-circle',
@@ -566,22 +576,39 @@ export class CreditFormComponent implements OnInit {
                 dem.garantie = [];
                 dem.pieces = [];
                 this.creditFormService.putDemande(dem).subscribe();
-                setTimeout(()=>{ this.router.navigate(["/credit/consultation"]);}, 1500);
+                setTimeout(() => { this.router.navigate(["/credit/consultation"]); }, 1500);
             },
             reject: (type) => {
                 switch (type) {
                     case ConfirmEventType.REJECT:
-                        this.messageService.add({ key: "sts",severity: 'error', summary: 'Rejeté', detail: 'Vous avez rejeté' });
+                        this.messageService.add({ key: "sts", severity: 'error', summary: 'Rejeté', detail: 'Vous avez rejeté' });
                         break;
                     case ConfirmEventType.CANCEL:
-                        this.messageService.add({ key: "sts",severity: 'warn', summary: 'Anuulé', detail: 'Vous avez annulé' });
+                        this.messageService.add({ key: "sts", severity: 'warn', summary: 'Anuulé', detail: 'Vous avez annulé' });
                         break;
                 }
             }
         });
     }
 
-    showComplement() {
-        this.hidden = !this.hidden;
+    acceptDemande(){
+
+    }
+    
+    hideComplement(b:boolean) {
+        this.hidden = b;
+    }
+
+    envoyer(){
+        switch(this.etapeSuivante){
+            case "Envoi de complément d'information":
+                this.complementInfo();
+                break;
+            case "Rejet du demande":
+                this.refuseDemande();
+                break;
+            case "Acceptation du demande":
+                this.acceptDemande();
+        }
     }
 }

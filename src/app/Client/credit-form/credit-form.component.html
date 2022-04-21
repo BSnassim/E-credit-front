@@ -309,19 +309,19 @@
     <div class="card c1">
         <h5>Traitement du dossier</h5>
         <p-confirmDialog key="second" acceptLabel="Oui" rejectLabel="Non" [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
-        Etape actuelle: {{etapeActuelle}} <br>
-        Etape suivante: <p-splitButton label="Traitement" [model]="items" styleClass="p-button-outlined p-button-primary mr-2 mb-2">
-        </p-splitButton>
+        Etape actuelle: <span class="ea">{{etapeActuelle}}</span> <br>
+        Etape suivante: <p-splitButton class="ea" label="Choisir" [model]="items" styleClass="p-button-outlined p-button-primary mr-2 mb-2">
+        </p-splitButton> {{etapeSuivante}}
         <div [hidden]="hidden">
             <h6>Informations à demander</h6>
             <textarea label pInputTextarea cols="80" [(ngModel)]="complement"></textarea><br>
-            <p-button label="Envoyer" (click)="complementInfo()"></p-button>
         </div>
     </div>
 </div>
 
-<!-- return button -->
+<!-- return and validation button -->
 <div class="col-12 retour">
+    <p-button label="Envoyer" (click)="envoyer()" [disabled]="!etapeSuivante"></p-button>
     <p-button [routerLink]="['/credit/consultation']" label="Retourner à la liste"></p-button>
 </div>
 
