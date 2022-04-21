@@ -17,38 +17,38 @@
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th>
+                    <th  pSortableColumn="id">
                         <div class="flex justify-content-center align-items-center">
                             ID
                             <p-columnFilter type="text" field="id" display="menu"></p-columnFilter>
                         </div>
                     </th>
-                    <th>
+                    <th  pSortableColumn="nomprenom">
                         <div class="flex justify-content-center align-items-center">
                             Nom et Prenom
                             <p-columnFilter type="text" field="nomprenom" display="menu"></p-columnFilter>
                         </div>
                     </th>
-                    <th>
+                    <th  pSortableColumn="type">
                         <div class="flex justify-content-center align-items-center">
                             Type de credit
                             <p-columnFilter type="text" field="type" display="menu"></p-columnFilter>
                         </div>
                     </th>
-                    <th>
+                    <th  pSortableColumn="datecreation">
                         <div class="flex justify-content-center align-items-center">
                             Date du creation
                             <p-columnFilter type="date" field="dateCreation" display="menu"></p-columnFilter>
                         </div>
                     </th>
-                    <th>
+                    <th  pSortableColumn="montant">
                         <div class="flex justify-content-center align-items-center">
                             Montant
                             <p-columnFilter type="numeric" field="montant" display="menu" currency="TND">
                             </p-columnFilter>
                         </div>
                     </th>
-                    <th>
+                    <th  pSortableColumn="etat">
                         <div class="flex justify-content-center align-items-center">
                             Etat du dossier
                             <p-columnFilter type="text" field="etat" display="menu"></p-columnFilter>

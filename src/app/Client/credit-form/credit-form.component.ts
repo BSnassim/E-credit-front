@@ -91,7 +91,7 @@ export class CreditFormComponent implements OnInit {
 
     etapeActuelle: string;
 
-    etapeSuivante: string;
+    etapeSuivante= {} as {id:number, etape:string};
 
     constructor(
         private router: Router,
@@ -109,10 +109,10 @@ export class CreditFormComponent implements OnInit {
         ]);
         this.items = [
             {
-                label: 'Accepter',
+                label: 'Prise de RDV',
                 icon: 'pi pi-check',
                 command: () => {
-                    this.etapeSuivante = "Acceptation du demande"
+                    this.nextPhase(2);
                     this.hideComplement(true);
                 }
             },
@@ -120,7 +120,7 @@ export class CreditFormComponent implements OnInit {
                 label: 'Complément',
                 icon: 'pi pi-refresh',
                 command: () => {
-                    this.etapeSuivante = "Envoi de complément d'information"
+                    this.nextPhase(4);
                     this.hideComplement(false);
                 }
             },
@@ -128,7 +128,7 @@ export class CreditFormComponent implements OnInit {
                 label: 'Refuser',
                 icon: 'pi pi-times',
                 command: () => {
-                    this.etapeSuivante = "Rejet du demande"
+                    this.nextPhase(3);
                     this.hideComplement(true);
                 }
             },
@@ -600,20 +600,27 @@ export class CreditFormComponent implements OnInit {
 
     }
     
+    nextPhase(id:number){
+        this.etapeSuivante.id = id;
+        let phase = this.phases.find((i) => i.id === id);
+        this.etapeSuivante.etape = phase.etape;
+    }
+
     hideComplement(b:boolean) {
         this.hidden = b;
     }
 
     envoyer(){
-        switch(this.etapeSuivante){
-            case "Envoi de complément d'information":
+        switch(this.etapeSuivante.id){
+            case 4:
                 this.complementInfo();
                 break;
-            case "Rejet du demande":
+            case 3:
                 this.refuseDemande();
                 break;
-            case "Acceptation du demande":
+            case 2:
                 this.acceptDemande();
+                break;
         }
     }
 }
