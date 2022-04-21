@@ -135,7 +135,6 @@ import { ListUserComponent } from "./Admin/User/list-user/list-user.component";
 import { ProfileComponent } from "./user/profile/profile.component";
 import { CreditFormComponent } from "./Client/credit-form/credit-form.component";
 import { CreditListComponent } from "./Client/credit-list/credit-list.component";
-import { CreditDetailsComponent } from "./Client/credit-details/credit-details.component";
 import { TypeCreditPipePipe } from "./pipes/type-credit-pipe.pipe";
 import { TypeGarantiePipe } from "./pipes/type-garantie.pipe";
 import { GarantieNaturePipe } from "./pipes/garantie-nature.pipe";
@@ -280,7 +279,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         ProfileComponent,
         CreditFormComponent,
         CreditListComponent,
-        CreditDetailsComponent,
         TypeCreditPipePipe,
         TypeGarantiePipe,
         GarantieNaturePipe,

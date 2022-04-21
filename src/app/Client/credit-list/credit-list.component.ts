@@ -30,6 +30,8 @@ export class CreditListComponent implements OnInit {
         dateCreation: Date;
         montant: number;
         etat: string;
+        enAttente: string;
+        phase: number;
     }[] = [];
 
     phases: any;
@@ -66,7 +68,13 @@ export class CreditListComponent implements OnInit {
                         label: 'Traitement',
                         icon: 'pi pi-upload',
                         command: () => this.redirectToDetails("traitement"),
-                        visible: this.hasAccess()
+                        visible: (this.hasAccess() && this.canTreat())
+                    },
+                    {
+                        label: 'Modifier',
+                        icon: 'pi pi-upload',
+                        command: () => this.redirectToDetails("modification"),
+                        visible: this.needsComplement()
                     }
 
                     ];
@@ -85,13 +93,56 @@ export class CreditListComponent implements OnInit {
         return access;
     }
 
-    redirectToDetails(param : string) {
-        let value = this.encrypter.encrypt(this.demandeId.toString());
-        this.router.navigate(["/credit/consultation/details", { id: value, page:param }])
+    needsComplement(){
+        let access: boolean = false;
+        if(this.demandeId){
+        this.user.profil.habilitations.forEach(e => {
+            let c = this.displayList.find((i) => i.id === this.demandeId);
+            if (e.libelle == "ROLE_Demande Credit Client" && c.phase === 4 ) {
+                access = true;
+            }
+        })}
+        return access;
+    }
+
+    canTreat(){
+        let access: boolean = false;
+        if(this.demandeId){
+            let c = this.displayList.find((i) => i.id === this.demandeId);
+            if (c.phase != 6 && c.phase != 3 && c.phase != 2 ) {
+                access = true;
+            }
+        }
+        return access;
+    }
+
+    redirectToDetails(param: string) {
+        let v1 = this.encrypter.encrypt(this.demandeId.toString());
+        let v2 = this.encrypter.encrypt(param);
+        this.router.navigate(["/credit/demande", { id: v1, p: v2 }]);
     }
 
     getDemandeId(id: number) {
         this.demandeId = id;
+        this.items = [{
+            label: 'Voir détails',
+            icon: 'pi pi-file',
+            command: () => this.redirectToDetails("info")
+        },
+        {
+            label: 'Traitement',
+            icon: 'pi pi-upload',
+            command: () => this.redirectToDetails("traitement"),
+            visible: (this.hasAccess() && this.canTreat())
+        },
+        {
+            label: 'Modifier',
+            icon: 'pi pi-upload',
+            command: () => this.redirectToDetails("modification"),
+            visible: this.needsComplement()
+        }
+
+        ];
     }
 
     clear(table: Table) {
@@ -113,7 +164,7 @@ export class CreditListComponent implements OnInit {
     async getDemandes() {
         if (this.hasAccess()) {
             const result = await this.creditService
-                .getListDemande()
+                .getDemandesByAgence(this.user.agence.idAgence)
                 .toPromise();
             return result;
         }
@@ -132,10 +183,12 @@ export class CreditListComponent implements OnInit {
             this.displayList.push({
                 id: e.idDemande,
                 nomprenom: e.nom + " " + e.prenom,
-                dateCreation: e.datePhase,
+                dateCreation: new Date(e.datePhase),
                 montant: e.montant,
                 type: e.idTypeCredit,
-                etat: phase.enAttenteDe,
+                etat: phase.etape,
+                enAttente: phase.enAttenteDe,
+                phase: phase.id
             });
         });
     }

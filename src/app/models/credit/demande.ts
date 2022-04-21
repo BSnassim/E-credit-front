@@ -22,4 +22,5 @@ export interface Demande {
     garantie?: Garantie[];
     pieces?: PiecesJointes[];
     idUser?: number;
+    userName?: string;
 }

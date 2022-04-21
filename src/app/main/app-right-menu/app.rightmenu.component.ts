@@ -1,7 +1,9 @@
+
 import { Component } from "@angular/core";
 import { TokenService } from "src/app/auth/services/token.service";
 import { User } from "src/app/models/user";
 import { AppMainComponent } from "../app-main/app.main.component";
+
 
 @Component({
     selector: "app-rightmenu",
@@ -9,6 +11,7 @@ import { AppMainComponent } from "../app-main/app.main.component";
 })
 export class AppRightMenuComponent {
     date: Date;
+
 
     currentUser: User = new User();
 
@@ -25,5 +28,6 @@ export class AppRightMenuComponent {
         this.tokenService.getUser().subscribe((data) => {
             this.currentUser = data;
         });
+
     }
 }
