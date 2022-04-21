@@ -183,7 +183,7 @@ export class CreditListComponent implements OnInit {
             this.displayList.push({
                 id: e.idDemande,
                 nomprenom: e.nom + " " + e.prenom,
-                dateCreation: e.datePhase,
+                dateCreation: new Date(e.datePhase),
                 montant: e.montant,
                 type: e.idTypeCredit,
                 etat: phase.etape,
