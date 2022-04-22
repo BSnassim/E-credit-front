@@ -146,5 +146,11 @@ export class RendezVousComponent implements OnInit {
             summary: "Info Message",
             detail: "Rendez-vous supprimer",
         });
+        // this._router
+        //     .navigateByUrl("/refresh", { skipLocationChange: true })
+        //     .then(() => {
+        //         console.log(decodeURI(this._location.path()));
+        //         this._router.navigate([decodeURI(this._location.path())]);
+        //     });
     }
 }
