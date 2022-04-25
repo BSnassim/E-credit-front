@@ -1,6 +1,6 @@
-<div class="grid">
-    <!-- /*           *************** INFORMATION CLIENT ***************           */ -->
-    <div class="col-12">
+<!-- <div class="grid"> -->
+<!-- /*           *************** INFORMATION CLIENT ***************           */ -->
+<!-- <div class="col-12">
         <div class="card">
             <h5>Information Client</h5>
             <div class="p-fluid formgrid grid">
@@ -70,11 +70,11 @@
                         maxlength="8"
                         minlength="8"
                         [disabled]="modifying"
-                    />
-                    <!-- <small *ngIf="minlength < 8" id="numPiece" class="p-invalid"
+                    /> -->
+<!-- <small *ngIf="minlength < 8" id="numPiece" class="p-invalid"
                         >Ce champ doit comporter 8 chiffre.</small
                     > -->
-                </div>
+<!-- </div>
                 <div
                     class="field col-12 md:col-6"
                     *ngIf="demande.typePiece == 'Passeport'"
@@ -89,14 +89,14 @@
                         pInputText
                         required
                         [disabled]="modifying"
-                    />
-                    <!-- <small
+                    /> -->
+<!-- <small
                         *ngIf="demande.numPiece < 9"
                         id="numCin"
                         class="p-invalid"
                         >Ce champ doit comporter 9 caractères.</small
                     > -->
-                </div>
+<!-- </div>
                 <div class="field col-12 md:col-6">
                     <label for="numCompte">N° Compte</label>
                     <input
@@ -178,10 +178,10 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!-- /*           ********************************************           */ -->
-    <!-- /*           *************** LIGNE CREDIT ***************           */ -->
-    <div class="col-12">
+    </div> -->
+<!-- /*           ********************************************           */ -->
+<!-- /*           *************** LIGNE CREDIT ***************           */ -->
+<!-- <div class="col-12">
         <div class="card">
             <h5>Ligne de Crédit</h5>
             <div class="p-fluid formgrid grid">
@@ -260,11 +260,11 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <!-- /*           **********************************************           */ -->
-    <!-- /*           *************** PIECES JOINTES ***************           */ -->
-
+<!-- /*           **********************************************           */ -->
+<!-- /*           *************** PIECES JOINTES ***************           */ -->
+<!--
     <div class="col-12">
         <div class="card">
             <h5>Piéces Jointes</h5>
@@ -336,10 +336,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <!--/*           ***********************************************           */-->
-
+<!--/*           ***********************************************           */-->
+<!--
     <div
         class="col-12 retour"
         *ngIf="page != 'info' && page != 'traitement' && hasAccess() == false"
@@ -363,11 +363,11 @@
             (click)="resetBT()"
             class="p-button-secondary mr-2 mb-2"
         ></button>
-    </div>
+    </div> -->
 
-    <!-- traitement credit + consultation -->
-    <!-- historique du demande -->
-    <div class="col-12" *ngIf="hasAccess()">
+<!-- traitement credit + consultation -->
+<!-- historique du demande -->
+<!-- <div class="col-12" *ngIf="hasAccess()">
         <div class="card">
             <h5>Historique du dossier</h5>
             <p-table [value]="history" respoinsiveLayout="scroll">
@@ -391,42 +391,43 @@
         </div>
     </div>
     <!-- traitement du charge de l'agence -->
-    <div class="col-12" *ngIf="hasAccess() && page == 'traitement'">
-        <div class="card c1">
-            <h5>Traitement du dossier</h5>
-            <p-confirmDialog
-                key="second"
-                acceptLabel="Oui"
-                rejectLabel="Non"
-                [style]="{ width: '50vw' }"
-                [baseZIndex]="10000"
-                rejectButtonStyleClass="p-button-text"
-            ></p-confirmDialog>
-            Etape actuelle: <span class="ea">{{ etapeActuelle }}</span> <br />
-            Etape suivante:
-            <p-splitButton
-                class="ea"
-                label="Choisir"
-                [model]="items"
-                styleClass="p-button-outlined p-button-primary mr-2 mb-2"
-            >
-            </p-splitButton>
-            {{ etapeSuivante.etape }}
-            <div [hidden]="hidden">
-                <h6>Informations à demander</h6>
-                <textarea
-                    label
-                    pInputTextarea
-                    cols="80"
-                    [(ngModel)]="complement"
-                ></textarea
-                ><br />
-            </div>
+<div class="col-12" *ngIf="hasAccess() && page == 'traitement'">
+    <div class="card c1">
+        <h5>Traitement du dossier</h5>
+        <p-confirmDialog
+            key="second"
+            acceptLabel="Oui"
+            rejectLabel="Non"
+            [style]="{ width: '50vw' }"
+            [baseZIndex]="10000"
+            rejectButtonStyleClass="p-button-text"
+        ></p-confirmDialog>
+        Etape actuelle: <span class="ea">{{ etapeActuelle }}</span> <br />
+        Etape suivante:
+        <p-splitButton
+            class="ea"
+            label="Choisir"
+            [model]="items"
+            styleClass="p-button-outlined p-button-primary mr-2 mb-2"
+        >
+        </p-splitButton>
+        {{ etapeSuivante.etape }}
+        <div [hidden]="hidden">
+            <h6>Informations à demander</h6>
+            <textarea
+                label
+                pInputTextarea
+                cols="80"
+                [(ngModel)]="complement"
+            ></textarea
+            ><br />
         </div>
     </div>
+</div>
+-->
 
-    <!-- return and validation button -->
-    <div class="col-12 retour" *ngIf="page">
+<!-- return and validation button -->
+<!-- <div class="col-12 retour" *ngIf="page">
         <p-button
             label="Envoyer"
             (click)="envoyer()"
@@ -438,4 +439,4 @@
             label="Retourner à la liste"
         ></p-button>
     </div>
-</div>
+</div> -->
