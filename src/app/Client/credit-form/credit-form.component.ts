@@ -1,3 +1,4 @@
+import { NgxPermissionsService } from 'ngx-permissions';
 import { Component, OnInit } from "@angular/core";
 import { MessageService, ConfirmationService, MenuItem, ConfirmEventType } from "primeng/api";
 import { AppBreadcrumbService } from "src/app/main/app-breadcrumb/app.breadcrumb.service";
@@ -14,7 +15,6 @@ import { TokenService } from "src/app/auth/services/token.service";
 import { TypeCredit } from "src/app/models/credit/typeCredit";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CryptojsService } from "src/app/Services/cryptojs.service";
-import { Profil } from "src/app/models/profil";
 
 @Component({
     selector: "app-credit-form",
@@ -101,6 +101,7 @@ export class CreditFormComponent implements OnInit {
         private creditFormService: CreditFormService,
         private route: ActivatedRoute,
         private encrypter: CryptojsService,
+        private permissionsService: NgxPermissionsService,
         private breadcrumbService: AppBreadcrumbService
     ) {
         this.breadcrumbService.setItems([
@@ -143,9 +144,6 @@ export class CreditFormComponent implements OnInit {
         this.readOnly = false;
         this.required = false;
         this.style = { width: "100%" };
-
-        this.user.profil = {} as Profil;
-        this.user.profil.habilitations = [];
     }
 
     ngOnInit(): void {
@@ -529,11 +527,9 @@ export class CreditFormComponent implements OnInit {
 
     hasAccess() {
         let access: boolean = false;
-        this.user.profil.habilitations.forEach(e => {
-            if (e.libelle == "ROLE_Traitement Demandes") {
+            if (this.permissionsService.getPermissions().hasOwnProperty('ROLE_Traitement Demandes')) {
                 access = true;
             }
-        })
         return access;
     }
 

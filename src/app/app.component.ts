@@ -1,3 +1,5 @@
+import { NgxPermissionsService } from 'ngx-permissions';
+import { AuthService } from './auth/services/auth.service';
 import {Component, OnInit} from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 
@@ -18,11 +20,14 @@ export class AppComponent implements OnInit{
 
     colorScheme = 'dark';
 
-    constructor(private primengConfig: PrimeNGConfig) {
+    constructor(private primengConfig: PrimeNGConfig, 
+        private authService: AuthService, 
+        private permissionsService: NgxPermissionsService) {
     }
 
     ngOnInit() {
         this.primengConfig.ripple = true;
         this.ripple = true;
+        this.permissionsService.loadPermissions(this.authService.getPermissions());
     }
 }

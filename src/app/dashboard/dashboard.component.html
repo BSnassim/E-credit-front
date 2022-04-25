@@ -1,3 +1,9 @@
-<div class="grid">
-    <p>this is a dashboard</p>
+<div class="grid" *ngxPermissionsOnly="'ROLE_Administration'">
+    <p>this is an admin dashboard</p>
+</div>
+<div class="grid" *ngxPermissionsOnly="'ROLE_Traitement Demandes'">
+    <p>this is a manager dashboard</p>
+</div>
+<div class="grid" *ngxPermissionsOnly="'ROLE_Demande Credit Client'">
+    <p>this is a client dashboard</p>
 </div>

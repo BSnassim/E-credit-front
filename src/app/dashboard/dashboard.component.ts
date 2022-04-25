@@ -1,3 +1,5 @@
+import { NgxPermissionsService } from 'ngx-permissions';
+import { NgxRolesService } from 'ngx-permissions';
 import { Component, OnInit } from '@angular/core';
 import { AppBreadcrumbService } from '../main/app-breadcrumb/app.breadcrumb.service';
 
@@ -9,8 +11,7 @@ import { AppBreadcrumbService } from '../main/app-breadcrumb/app.breadcrumb.serv
 export class DashboardComponent implements OnInit {
 
   constructor(
-    private breadcrumbService: AppBreadcrumbService,
-) {
+    private breadcrumbService: AppBreadcrumbService,) {
     this.breadcrumbService.setItems([
         { label: "Dashboard", routerLink: ["/"] },
     ]);
