@@ -1,4 +1,4 @@
-import { User } from "src/app/models/user";
+import { NgxPermissionsService } from 'ngx-permissions';
 import { TokenService } from "./../../auth/services/token.service";
 import { Component, OnInit } from "@angular/core";
 import { AppComponent } from "../../app.component";
@@ -12,7 +12,7 @@ import { MenuItem } from "primeng/api";
     templateUrl: "./app.menu.component.html",
 })
 export class AppMenuComponent implements OnInit {
-    public templateMenu: any[];
+    public templateMenu: MenuItem[];
 
     userMenu = [];
 
@@ -21,8 +21,8 @@ export class AppMenuComponent implements OnInit {
         public appMain: AppMainComponent,
         private translateService: TranslateService,
         private menuService: MenuService,
-        private tokenService: TokenService
-    ) {}
+        private permissionService: NgxPermissionsService
+    ) { }
 
     ngOnInit() {
         // this.loadMenu();
@@ -36,15 +36,10 @@ export class AppMenuComponent implements OnInit {
                         icon: "pi pi-fw pi-home",
                         routerLink: ["/"],
                     },
-                ],
-            },
-        ];
-        this.tokenService.getUser().subscribe((data) => {
-            data.profil.habilitations.forEach((e) => {
-                if (e.libelle == "ROLE_Administration") {
-                    this.templateMenu[0].items.push({
+                    {
                         label: "Administration",
                         icon: "pi pi-fw pi-list",
+                        visible:this.permissionService.getPermissions().hasOwnProperty('ROLE_Administration'),
                         routerLink: ["/administration"],
                         items: [
                             {
@@ -58,13 +53,11 @@ export class AppMenuComponent implements OnInit {
                                 routerLink: ["/administration/profils"],
                             },
                         ],
-                    });
-                }
-
-                if (e.libelle == "ROLE_Demande Credit Client") {
-                    this.templateMenu[0].items.push({
+                    },
+                    {
                         label: "Credit client",
                         icon: "pi pi-fw pi-money-bill",
+                        visible:this.permissionService.getPermissions().hasOwnProperty('ROLE_Demande Credit Client'),
                         routerLink: ["/credit"],
                         items: [
                             {
@@ -78,13 +71,11 @@ export class AppMenuComponent implements OnInit {
                                 routerLink: ["/credit/consultation"],
                             },
                         ],
-                    });
-                }
-
-                if (e.libelle == "ROLE_Traitement Demandes") {
-                    this.templateMenu[0].items.push({
+                    },
+                    {
                         label: "Traitement des demandes",
                         icon: "pi pi-fw pi-folder",
+                        visible:this.permissionService.getPermissions().hasOwnProperty('ROLE_Traitement Demandes'),
                         routerLink: ["/credit"],
                         items: [
                             {
@@ -103,10 +94,10 @@ export class AppMenuComponent implements OnInit {
                                 routerLink: ["/rdv/rendezvous"],
                             },
                         ],
-                    });
-                }
-            });
-        });
+                    }
+                ],
+            },
+        ];
 
         this.userMenu = this.templateMenu;
         //Place here static menu items

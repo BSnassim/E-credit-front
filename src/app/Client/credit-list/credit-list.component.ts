@@ -1,3 +1,4 @@
+import { NgxPermissionsService } from 'ngx-permissions';
 import { CryptojsService } from './../../Services/cryptojs.service';
 import { User } from './../../models/user';
 import { Router } from '@angular/router';
@@ -45,6 +46,7 @@ export class CreditListComponent implements OnInit {
         private creditService: CreditFormService,
         private tokenService: TokenService,
         private router: Router,
+        private permissionsService: NgxPermissionsService,
         private encrypter: CryptojsService
     ) {
         this.breadcrumbService.setItems([{ label: "Liste des credits" }]);
@@ -85,31 +87,28 @@ export class CreditListComponent implements OnInit {
 
     hasAccess() {
         let access: boolean = false;
-        this.user.profil.habilitations.forEach(e => {
-            if (e.libelle == "ROLE_Traitement Demandes") {
+            if (this.permissionsService.getPermissions().hasOwnProperty('ROLE_Traitement Demandes')) {
                 access = true;
             }
-        })
         return access;
     }
 
-    needsComplement(){
+    needsComplement() {
         let access: boolean = false;
-        if(this.demandeId){
-        this.user.profil.habilitations.forEach(e => {
+        if (this.demandeId) {
             let c = this.displayList.find((i) => i.id === this.demandeId);
-            if (e.libelle == "ROLE_Demande Credit Client" && c.phase === 4 ) {
+            if(this.permissionsService.getPermissions().hasOwnProperty('ROLE_Demande Credit Client') && c.phase === 4){
                 access = true;
             }
-        })}
+        }
         return access;
     }
 
-    canTreat(){
+    canTreat() {
         let access: boolean = false;
-        if(this.demandeId){
+        if (this.demandeId) {
             let c = this.displayList.find((i) => i.id === this.demandeId);
-            if (c.phase != 6 && c.phase != 3 && c.phase != 2 ) {
+            if (c.phase != 6 && c.phase != 3 && c.phase != 2) {
                 access = true;
             }
         }
