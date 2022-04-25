@@ -5,7 +5,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { LoginUser } from "../../models/LoginUser";
 import { AuthService } from "../services/auth.service";
 import { TokenService } from "../services/token.service";
-import { NgxRolesService } from "ngx-permissions";
+import { NgxPermissionsService } from "ngx-permissions";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         private translateService: TranslateService,
         private authService: AuthService,
         private tokenService: TokenService,
-        private permissionsService: NgxRolesService,
+        private permissionsService: NgxPermissionsService,
         private router: Router
     ) {}
 
@@ -54,9 +54,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                 (response) => {
                     this.tokenService.setToken(response.token);
                     // Add roles to permission service
-                    // tslint:disable-next-line:max-line-length
-                    // response.roles.forEach(role => this.permissionsService.addRoleWithPermissions(role.name, role.permissions.map((permission) => role.name + '_' + permission)));
-                    // console.log(this.permissionsService.getRoles());
+                    this.authService.savePermissions(response.roles);
+                    this.permissionsService.loadPermissions(this.authService.getPermissions());
                     this.router.navigate(["/"]);
                 },
                 (error) => {
