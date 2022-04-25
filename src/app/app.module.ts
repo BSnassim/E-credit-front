@@ -265,7 +265,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         AppInlineMenuComponent,
         AppTopbarComponent,
         AppFooterComponent,
-        // DashboardDemoComponent,
         AppCalendarComponent,
         AppInvoiceComponent,
         AppHelpComponent,

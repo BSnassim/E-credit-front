@@ -84,11 +84,6 @@ export class AppMenuComponent implements OnInit {
                                 routerLink: ["/credit/consultation"],
                             },
                             {
-                                label: "Liste des rendez-vous",
-                                icon: "pi pi-fw pi-calendar",
-                                routerLink: ["/"],
-                            },
-                            {
                                 label: "Gestion des rendez-vous",
                                 icon: "pi pi-fw pi-calendar-plus",
                                 routerLink: ["/rdv/rendezvous"],

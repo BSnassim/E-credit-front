@@ -21,11 +21,11 @@ export const mainRoutes: Routes = [
     { path: "user", loadChildren: () => UserModule },
     {
         path: "credit", loadChildren: () => ClientModule,
-        canActivate: [NgxPermissionsGuard], data: { permissions: { except: 'ROLE_Administration' } }
+        canActivate: [NgxPermissionsGuard], data: { permissions: { only: ['ROLE_Demande Credit Client','ROLE_Traitement Demandes'] } }
     },
     {
         path: "rdv", loadChildren: () => ChargeModule,
-        canActivate: [NgxPermissionsGuard], data: { permissions: { only: 'ROLE_Traitement Demandes Credit' } }
+        canActivate: [NgxPermissionsGuard], data: { permissions: { only: 'ROLE_Traitement Demandes' } }
     },
 ];
 
