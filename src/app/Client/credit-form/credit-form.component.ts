@@ -23,6 +23,8 @@ import { CryptojsService } from "src/app/Services/cryptojs.service";
     providers: [MessageService, ConfirmationService],
 })
 export class CreditFormComponent implements OnInit {
+    calendarDialog: boolean;
+
     demande = {} as Demande;
 
     garantie = {} as Garantie;
@@ -592,8 +594,42 @@ export class CreditFormComponent implements OnInit {
         });
     }
 
-    acceptDemande(){
+    priseRDV(){
+        this.calendarDialog = true;
+    }
 
+    closeDialog($event){
+        this.calendarDialog = false;
+    }
+
+    acceptDemande(){
+        this.confirmationService.confirm({
+            key: "second",
+            message: 'Voulez vous vraiment fixer un rendez-vous pour cette demande?',
+            header: 'Confirmation',
+            icon: 'pi pi-info-circle',
+            accept: () => {
+                this.messageService.add({ severity: 'info', summary: 'Confirmé', detail: 'Demande en etat prise de RDV' });
+                let dem = this.demande;
+                dem.idPhase = 2;
+                dem.garantie = [];
+                dem.pieces = [];
+                dem.userName = this.user.nom + ' ' + this.user.prenom;
+                let res = this.encrypter.encrypt(dem.idDemande.toString())
+                this.creditFormService.putDemande(dem).subscribe();
+                setTimeout(() => { this.router.navigate(["/rdv/rendezvous",{ id: res}]); }, 1500);
+            },
+            reject: (type) => {
+                switch (type) {
+                    case ConfirmEventType.REJECT:
+                        this.messageService.add({ key: "sts", severity: 'error', summary: 'Rejeté', detail: 'Vous avez rejeté' });
+                        break;
+                    case ConfirmEventType.CANCEL:
+                        this.messageService.add({ key: "sts", severity: 'warn', summary: 'Anuulé', detail: 'Vous avez annulé' });
+                        break;
+                }
+            }
+        });
     }
     
     nextPhase(id:number){
@@ -615,7 +651,7 @@ export class CreditFormComponent implements OnInit {
                 this.refuseDemande();
                 break;
             case 2:
-                this.acceptDemande();
+                this.priseRDV();
                 break;
         }
     }
