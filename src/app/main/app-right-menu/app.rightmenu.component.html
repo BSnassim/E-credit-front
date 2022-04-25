@@ -20,16 +20,16 @@
             <span class="user-name"
                 >{{ currentUser.nom }} {{ currentUser.prenom }}</span
             >
-
         </div>
 
         <div class="daily-plan-wrapper">
-            <span class="today-date">14 Sunday, Jun 2020</span>
-            <ul>
+            <span class="today-date">{{ currentDate }}</span>
+            <ul *ngFor="let event of events">
                 <li>
-                    <span class="event-time">1:00 PM - 2:00 PM</span>
+                    <span class="event-time">{{ event.dateRdv }}</span>
                     <span class="event-topic"
-                        >Rendez vous avec le chargé de la banque</span
+                        >Rendez vous avec le chargé de la banque pour la demande
+                        N° {{ event.idDemande }}</span
                     >
                 </li>
             </ul>
