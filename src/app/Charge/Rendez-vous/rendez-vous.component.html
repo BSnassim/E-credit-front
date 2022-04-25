@@ -5,6 +5,7 @@
             <full-calendar [options]="options"></full-calendar>
             <p-dialog
                 [(visible)]="eventDialog"
+                [draggable]="false"
                 [style]="{ width: '450px' }"
                 header="Détails du rendez-vous"
                 changedEvent.start
