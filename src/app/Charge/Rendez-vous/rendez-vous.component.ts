@@ -70,12 +70,16 @@ export class RendezVousComponent implements OnInit {
                     this.changedEvent.title = this.clickedEvent.title;
                     this.changedEvent.start = this.clickedEvent.start;
                     this.changedEvent.end = this.clickedEvent.end;
+                    this.changedEvent.id = this.clickedEvent.id;
+
+                    console.log("clickedEvent", e.event);
                 },
             };
         }, 1000);
         this.datePipe.transform(this.currentDate, "dd/MM/yyyy");
 
         this.changedEvent = {
+            id: null,
             title: "",
             start: null,
             end: "",
@@ -89,6 +93,7 @@ export class RendezVousComponent implements OnInit {
                 el.title = el.title;
                 el.start = el.dateRdv;
                 el.end = el.dateRdv;
+                el.id = el.idRdv;
                 /// el.color = "#F00020";
             });
             this.events.push(response);
@@ -106,6 +111,7 @@ export class RendezVousComponent implements OnInit {
         this.date = new Date(arg.dateStr);
         // this.date = this.datePipe.transform(this.newDate, "yyyy-MM-dd");
         this.changedEvent = {
+            id: null,
             title: "Clients.name",
             start: this.date,
             end: null,
@@ -119,8 +125,11 @@ export class RendezVousComponent implements OnInit {
 
         this.myRdv.dateRdv = this.changedEvent.start;
         this.myRdv.title = this.changedEvent.title;
-        // this.myRdv.heur = this.changedEvent.;
         // this.myRdv.idDemande
+        this.myRdv.idRdv = this.changedEvent.id;
+        // this.myRdv.heur = this.changedEvent.;
+
+        this.myRdv.idUser = 2;
         console.log(this.myRdv);
         this.eventService.postRdvAPI(this.myRdv).subscribe();
         this.messageService.add({
@@ -138,7 +147,7 @@ export class RendezVousComponent implements OnInit {
     }
 
     supprimer() {
-        this.eventService.deleteRdvAPI(this.myRdv.idRdv).subscribe();
+        this.eventService.deleteRdvAPI(this.clickedEvent.id).subscribe();
         this.eventDialog = false;
         this.messageService.add({
             key: "tst",
@@ -146,5 +155,11 @@ export class RendezVousComponent implements OnInit {
             summary: "Info Message",
             detail: "Rendez-vous supprimer",
         });
+        this._router
+            .navigateByUrl("/refresh", { skipLocationChange: true })
+            .then(() => {
+                console.log(decodeURI(this._location.path()));
+                this._router.navigate([decodeURI(this._location.path())]);
+            });
     }
 }

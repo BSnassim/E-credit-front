@@ -1,6 +1,6 @@
-<div class="grid">
-    <!-- /*           *************** INFORMATION CLIENT ***************           */ -->
-    <div class="col-12">
+<!-- <div class="grid"> -->
+<!-- /*           *************** INFORMATION CLIENT ***************           */ -->
+<!-- <div class="col-12">
         <div class="card">
             <h5>Information Client</h5>
             <div class="p-fluid formgrid grid">
@@ -70,11 +70,11 @@
                         maxlength="8"
                         minlength="8"
                         [disabled]="modifying"
-                    />
-                    <!-- <small *ngIf="minlength < 8" id="numPiece" class="p-invalid"
+                    /> -->
+<!-- <small *ngIf="minlength < 8" id="numPiece" class="p-invalid"
                         >Ce champ doit comporter 8 chiffre.</small
                     > -->
-                </div>
+<!-- </div>
                 <div
                     class="field col-12 md:col-6"
                     *ngIf="demande.typePiece == 'Passeport'"
@@ -89,14 +89,14 @@
                         pInputText
                         required
                         [disabled]="modifying"
-                    />
-                    <!-- <small
+                    /> -->
+<!-- <small
                         *ngIf="demande.numPiece < 9"
                         id="numCin"
                         class="p-invalid"
                         >Ce champ doit comporter 9 caractères.</small
                     > -->
-                </div>
+<!-- </div>
                 <div class="field col-12 md:col-6">
                     <label for="numCompte">N° Compte</label>
                     <input
@@ -178,10 +178,10 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!-- /*           ********************************************           */ -->
-    <!-- /*           *************** LIGNE CREDIT ***************           */ -->
-    <div class="col-12">
+    </div> -->
+<!-- /*           ********************************************           */ -->
+<!-- /*           *************** LIGNE CREDIT ***************           */ -->
+<!-- <div class="col-12">
         <div class="card">
             <h5>Ligne de Crédit</h5>
             <div class="p-fluid formgrid grid">
@@ -260,193 +260,11 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <!-- /*           ****************************************           */ -->
-    <!-- /*           *************** GARANTIE ***************           */ -->
-
-    <div class="col-12">
-        <div class="card">
-            <h5>Garantie Proposées</h5>
-            <p-table
-                [value]="garanties"
-                [columns]="garantieCols"
-                dataKey="id"
-                styleClass="p-datatable-customers"
-                [rowHover]="true"
-                [rows]="3"
-                [paginator]="true"
-            >
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th>Nature</th>
-                        <th>Type</th>
-                        <th>Montant</th>
-                        <th style="text-align: center">
-                            <button
-                                pButton
-                                pRipple
-                                icon="pi pi-plus"
-                                *ngIf="
-                                    page != 'info' &&
-                                    page != 'traitement' &&
-                                    hasAccess() == false
-                                "
-                                class="p-button-rounded p-button-success mr-2 mb-2"
-                                (click)="newGarantie()"
-                            ></button>
-                        </th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-garantie>
-                    <tr>
-                        <td>
-                            <span class="p-column-title">Nature</span>
-                            {{ garantie.nature.libelleNature }}
-                        </td>
-                        <td>
-                            <span class="p-column-title">Type</span>
-                            {{ garantie.type.libType }}
-                        </td>
-                        <td>
-                            <span class="p-column-title">Montant</span>
-                            {{ garantie.montant | currency: "TND" }}
-                        </td>
-                        <td style="text-align: center">
-                            <button
-                                *ngIf="
-                                    page != 'info' &&
-                                    page != 'traitement' &&
-                                    hasAccess() == false
-                                "
-                                pButton
-                                pRipple
-                                icon="pi pi-pencil"
-                                class="p-button-rounded p-button-help mr-2"
-                                (click)="editGarantie(garantie)"
-                            ></button>
-                            <button
-                                *ngIf="
-                                    page != 'info' &&
-                                    page != 'traitement' &&
-                                    hasAccess() == false
-                                "
-                                pButton
-                                pRipple
-                                icon="pi pi-trash"
-                                class="p-button-rounded p-button-warning"
-                                (click)="deleteGarantie(garantie)"
-                            ></button>
-                        </td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="summary">
-                    <div
-                        class="flex align-items-center justify-content-between"
-                    >
-                        En total il y a
-                        {{ garantie ? garanties?.length : 0 }} garanties.
-                    </div>
-                </ng-template>
-            </p-table>
-        </div>
-
-        <p-dialog
-            [(visible)]="GarantieDialog"
-            [style]="{ width: '450px' }"
-            header="Ajouter garantie"
-            [modal]="true"
-            styleClass="p-fluid"
-        >
-            <ng-template pTemplate="content">
-                <div class="field">
-                    <label for="nature">Nature Garantie</label>
-                    <span class="p-float-label">
-                        <p-dropdown
-                            inputId="nature"
-                            [autoDisplayFirst]="false"
-                            [options]="natureGarantie"
-                            optionLabel="libelleNature"
-                            [(ngModel)]="garantie.nature"
-                            placeholder="Nature"
-                            required
-                        >
-                        </p-dropdown>
-                    </span>
-                    <br />
-                    <p-message
-                        severity="error"
-                        *ngIf="submitted && !garantie.nature"
-                        text="Ce champ est nécessair."
-                    >
-                    </p-message>
-                    <br />
-                    <label for="type">Type Garantie</label>
-                    <span class="p-float-label">
-                        <p-dropdown
-                            inputId="type"
-                            [autoDisplayFirst]="false"
-                            [options]="typeGarantie"
-                            optionLabel="libType"
-                            [(ngModel)]="garantie.type"
-                            placeholder="Type"
-                            required
-                        >
-                        </p-dropdown>
-                    </span>
-                    <br />
-                    <p-message
-                        severity="error"
-                        *ngIf="submitted && !garantie.type"
-                        text="Ce champ est nécessair."
-                    >
-                    </p-message>
-                    <br />
-                    <label for="montant">Montant</label>
-                    <p-inputNumber
-                        id="montant"
-                        [(ngModel)]="garantie.montant"
-                        mode="currency"
-                        currency="TND"
-                        locale="tn-TN"
-                        required
-                    ></p-inputNumber>
-                    <br />
-                    <br />
-                    <p-message
-                        severity="error"
-                        *ngIf="submitted && !garantie.montant"
-                        text="Ce champ est nécessair."
-                    >
-                    </p-message>
-                </div>
-            </ng-template>
-
-            <ng-template pTemplate="footer">
-                <button
-                    pButton
-                    pRipple
-                    label="Annuler"
-                    icon="pi pi-times"
-                    class="p-button-text"
-                    (click)="hideGarantieDialog()"
-                ></button>
-                <button
-                    pButton
-                    pRipple
-                    label="Ajouter"
-                    icon="pi pi-check"
-                    class="p-button-text"
-                    (click)="saveGarantie()"
-                ></button>
-            </ng-template>
-        </p-dialog>
-        <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
-    </div>
-
-    <!-- /*           **********************************************           */ -->
-    <!-- /*           *************** PIECES JOINTES ***************           */ -->
-
+<!-- /*           **********************************************           */ -->
+<!-- /*           *************** PIECES JOINTES ***************           */ -->
+<!--
     <div class="col-12">
         <div class="card">
             <h5>Piéces Jointes</h5>
@@ -518,10 +336,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <!--/*           ***********************************************           */-->
-
+<!--/*           ***********************************************           */-->
+<!--
     <div
         class="col-12 retour"
         *ngIf="page != 'info' && page != 'traitement' && hasAccess() == false"
@@ -545,11 +363,11 @@
             (click)="resetBT()"
             class="p-button-secondary mr-2 mb-2"
         ></button>
-    </div>
+    </div> -->
 
-    <!-- traitement credit + consultation -->
-    <!-- historique du demande -->
-    <div class="col-12" *ngIf="hasAccess()">
+<!-- traitement credit + consultation -->
+<!-- historique du demande -->
+<!-- <div class="col-12" *ngIf="hasAccess()">
         <div class="card">
             <h5>Historique du dossier</h5>
             <p-table [value]="history" respoinsiveLayout="scroll">
@@ -573,42 +391,43 @@
         </div>
     </div>
     <!-- traitement du charge de l'agence -->
-    <div class="col-12" *ngIf="hasAccess() && page == 'traitement'">
-        <div class="card c1">
-            <h5>Traitement du dossier</h5>
-            <p-confirmDialog
-                key="second"
-                acceptLabel="Oui"
-                rejectLabel="Non"
-                [style]="{ width: '50vw' }"
-                [baseZIndex]="10000"
-                rejectButtonStyleClass="p-button-text"
-            ></p-confirmDialog>
-            Etape actuelle: <span class="ea">{{ etapeActuelle }}</span> <br />
-            Etape suivante:
-            <p-splitButton
-                class="ea"
-                label="Choisir"
-                [model]="items"
-                styleClass="p-button-outlined p-button-primary mr-2 mb-2"
-            >
-            </p-splitButton>
-            {{ etapeSuivante.etape }}
-            <div [hidden]="hidden">
-                <h6>Informations à demander</h6>
-                <textarea
-                    label
-                    pInputTextarea
-                    cols="80"
-                    [(ngModel)]="complement"
-                ></textarea
-                ><br />
-            </div>
+<div class="col-12" *ngIf="hasAccess() && page == 'traitement'">
+    <div class="card c1">
+        <h5>Traitement du dossier</h5>
+        <p-confirmDialog
+            key="second"
+            acceptLabel="Oui"
+            rejectLabel="Non"
+            [style]="{ width: '50vw' }"
+            [baseZIndex]="10000"
+            rejectButtonStyleClass="p-button-text"
+        ></p-confirmDialog>
+        Etape actuelle: <span class="ea">{{ etapeActuelle }}</span> <br />
+        Etape suivante:
+        <p-splitButton
+            class="ea"
+            label="Choisir"
+            [model]="items"
+            styleClass="p-button-outlined p-button-primary mr-2 mb-2"
+        >
+        </p-splitButton>
+        {{ etapeSuivante.etape }}
+        <div [hidden]="hidden">
+            <h6>Informations à demander</h6>
+            <textarea
+                label
+                pInputTextarea
+                cols="80"
+                [(ngModel)]="complement"
+            ></textarea
+            ><br />
         </div>
     </div>
+</div>
+-->
 
-    <!-- return and validation button -->
-    <div class="col-12 retour" *ngIf="page">
+<!-- return and validation button -->
+<!-- <div class="col-12 retour" *ngIf="page">
         <p-button
             label="Envoyer"
             (click)="envoyer()"
@@ -620,6 +439,4 @@
             label="Retourner à la liste"
         ></p-button>
     </div>
-
-    <p-toast key="sts"></p-toast>
-</div>
+</div> -->
