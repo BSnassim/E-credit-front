@@ -1,3 +1,5 @@
+import { TokenService } from 'src/app/auth/services/token.service';
+import { User } from 'src/app/models/user';
 import { Subscription } from 'rxjs';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
 import { environment } from "src/environments/environment";
@@ -15,11 +17,10 @@ import { Location } from "@angular/common";
     providers: [DatePipe, MessageService],
 })
 export class RendezVousComponent implements OnInit, OnDestroy {
-    @Input() userId: number;
     @Input() demandeId: number;
     @Output() closeDialog = new EventEmitter<boolean>();
 
-    baseUrl = environment.apiURL + "/gestionRdv";
+    user: User;
 
     events: any = [];
 
@@ -45,6 +46,7 @@ export class RendezVousComponent implements OnInit, OnDestroy {
         private eventService: EventsService,
         private datePipe: DatePipe,
         private messageService: MessageService,
+        private tokenService: TokenService,
         public _router: Router,
         public _location: Location
     ) { }
@@ -54,6 +56,7 @@ export class RendezVousComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.getUser();
         this.getRdv();
         this.subscription = this.eventService.refresh$.subscribe(() => {
             this.getRdv();
@@ -68,6 +71,12 @@ export class RendezVousComponent implements OnInit, OnDestroy {
             end: "",
             allDay: null,
         };
+    }
+
+    getUser() {
+        this.tokenService.getUser().subscribe((data) => {
+            this.user = data;
+        });
     }
 
     getRdv() {
@@ -136,35 +145,64 @@ export class RendezVousComponent implements OnInit, OnDestroy {
     }
 
     save() {
-        this.eventDialog = false;
+        if (this.demandeId != null) {
+            this.eventDialog = false;
+            this.myRdv.dateRdv = this.changedEvent.start;
+            this.myRdv.title = this.changedEvent.title;
+            this.myRdv.idDemande = this.demandeId;
+            // this.myRdv.heur = this.changedEvent.;
 
-        this.myRdv.dateRdv = this.changedEvent.start;
-        this.myRdv.title = this.changedEvent.title;
-        this.myRdv.idDemande = this.demandeId;
-        this.myRdv.idRdv = this.changedEvent.id;
-        // this.myRdv.heur = this.changedEvent.;
+            this.myRdv.idUser = this.user.id;
 
-        this.myRdv.idUser = this.userId;
+            this.eventService.postRdvAPI(this.myRdv).subscribe();
+            this.messageService.add({
+                key: "tst",
+                severity: "success",
+                summary: "Succès",
+                detail: "Rendez-vous enregistrer avec succès",
+            });
+            this.closeDialog.emit(false);
+        } else if (this.changedEvent.id != null) {
+            this.eventDialog = false;
+            this.myRdv.dateRdv = this.changedEvent.start;
+            this.myRdv.title = this.changedEvent.title;
+            this.myRdv.idDemande = this.demandeId;
+            this.myRdv.idRdv = this.changedEvent.id;
+            // this.myRdv.heur = this.changedEvent.;
 
-        this.eventService.postRdvAPI(this.myRdv).subscribe();
-        this.messageService.add({
-            key: "tst",
-            severity: "success",
-            summary: "Succès",
-            detail: "Rendez-vous enregistrer avec succès",
-        });
-        this.closeDialog.emit(false);
+            this.myRdv.idUser = this.user.id;
+
+            this.eventService.postRdvAPI(this.myRdv).subscribe();
+            this.messageService.add({
+                key: "tst",
+                severity: "success",
+                summary: "Succès",
+                detail: "Rendez-vous modifié avec succès",
+            });
+        }
+        else {
+            this.messageService.add({
+                key: "tst",
+                severity: "error",
+                summary: "Accés refusé",
+                detail: "Vous ne pouvez pas fixer un rendez-vous sans une demande"
+            })
+        }
     }
 
     supprimer() {
-        this.eventService.deleteRdvAPI(this.clickedEvent.id).subscribe();
-        this.eventDialog = false;
-        this.messageService.add({
-            key: "tst",
-            severity: "info",
-            summary: "Info Message",
-            detail: "Rendez-vous supprimé",
-        });
+        if (this.changedEvent.id != null) {
+            this.eventService.deleteRdvAPI(this.clickedEvent.id).subscribe();
+            this.eventDialog = false;
+            this.messageService.add({
+                key: "tst",
+                severity: "info",
+                summary: "Info Message",
+                detail: "Rendez-vous supprimé",
+            });
+        } else{
+            this.eventDialog = false;
+        }
     }
 
 }
