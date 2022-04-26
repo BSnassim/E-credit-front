@@ -86,6 +86,7 @@ export class RendezVousComponent implements OnInit, OnDestroy {
                 el.start = el.dateRdv;
                 el.end = el.dateRdv;
                 el.id = el.idRdv;
+                el.idDemande = el.idDemande;
                 /// el.color = "#F00020";
             });
             this.events = [];
@@ -115,6 +116,7 @@ export class RendezVousComponent implements OnInit, OnDestroy {
                         this.changedEvent.start = this.clickedEvent.start;
                         this.changedEvent.end = this.clickedEvent.end;
                         this.changedEvent.id = this.clickedEvent.id;
+                    
                     },
                 };
             }, 1);
@@ -129,6 +131,7 @@ export class RendezVousComponent implements OnInit, OnDestroy {
         if (newEvent.getTime() < this.currentDate.setHours(0, 0, 0, 0)) {
             this.eventDialog = false;
         } else {
+      
             this.eventDialog = true;
             this.clickedEvent = arg.event;
             this.date = new Date(arg.dateStr);
@@ -163,23 +166,22 @@ export class RendezVousComponent implements OnInit, OnDestroy {
             });
             this.closeDialog.emit(false);
         } else if (this.changedEvent.id != null) {
-            this.eventDialog = false;
             this.myRdv.dateRdv = this.changedEvent.start;
             this.myRdv.title = this.changedEvent.title;
-            this.myRdv.idDemande = this.demandeId;
             this.myRdv.idRdv = this.changedEvent.id;
             // this.myRdv.heur = this.changedEvent.;
-
             this.myRdv.idUser = this.user.id;
-
+            let e = this.events[0].find((i) => i.idRdv == this.changedEvent.id);
+            this.myRdv.idDemande = e.idDemande;
             this.eventService.postRdvAPI(this.myRdv).subscribe();
             this.messageService.add({
-                key: "tst",
-                severity: "success",
-                summary: "Succès",
-                detail: "Rendez-vous modifié avec succès",
-            });
-        }
+                    key: "tst",
+                    severity: "success",
+                    summary: "Succès",
+                    detail: "Rendez-vous modifié avec succès",
+                });
+            this.eventDialog = false;
+            }
         else {
             this.messageService.add({
                 key: "tst",
