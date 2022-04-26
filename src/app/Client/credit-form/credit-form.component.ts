@@ -93,7 +93,7 @@ export class CreditFormComponent implements OnInit {
 
     etapeActuelle: string;
 
-    etapeSuivante= {} as {id:number, etape:string};
+    etapeSuivante = {} as { id: number, etape: string };
 
     constructor(
         private router: Router,
@@ -529,9 +529,9 @@ export class CreditFormComponent implements OnInit {
 
     hasAccess() {
         let access: boolean = false;
-            if (this.permissionsService.getPermissions().hasOwnProperty('ROLE_Traitement Demandes')) {
-                access = true;
-            }
+        if (this.permissionsService.getPermissions().hasOwnProperty('ROLE_Traitement Demandes')) {
+            access = true;
+        }
         return access;
     }
 
@@ -594,30 +594,14 @@ export class CreditFormComponent implements OnInit {
         });
     }
 
-    priseRDV(){
-        this.calendarDialog = true;
-    }
-
-    closeDialog($event){
-        this.calendarDialog = false;
-    }
-
-    acceptDemande(){
+    priseRDV() {
         this.confirmationService.confirm({
             key: "second",
-            message: 'Voulez vous vraiment fixer un rendez-vous pour cette demande?',
+            message: 'Voulez vous vraiment fixer un RDV pour cette demande?',
             header: 'Confirmation',
             icon: 'pi pi-info-circle',
             accept: () => {
-                this.messageService.add({ severity: 'info', summary: 'Confirmé', detail: 'Demande en etat prise de RDV' });
-                let dem = this.demande;
-                dem.idPhase = 2;
-                dem.garantie = [];
-                dem.pieces = [];
-                dem.userName = this.user.nom + ' ' + this.user.prenom;
-                let res = this.encrypter.encrypt(dem.idDemande.toString())
-                this.creditFormService.putDemande(dem).subscribe();
-                setTimeout(() => { this.router.navigate(["/rdv/rendezvous",{ id: res}]); }, 1500);
+                this.calendarDialog = true;
             },
             reject: (type) => {
                 switch (type) {
@@ -631,19 +615,36 @@ export class CreditFormComponent implements OnInit {
             }
         });
     }
-    
-    nextPhase(id:number){
+
+    closeDialog($event) {
+        this.calendarDialog = false;
+        this.acceptDemande();
+    }
+
+    acceptDemande() {
+        let dem = this.demande;
+        dem.idPhase = 2;
+        dem.garantie = [];
+        dem.pieces = [];
+        dem.userName = this.user.nom + ' ' + this.user.prenom;
+        let res = this.encrypter.encrypt(dem.idDemande.toString())
+        this.creditFormService.putDemande(dem).subscribe();
+        this.messageService.add({ severity: 'info', summary: 'Confirmé', detail: 'Rendez-vous décidé' });
+        setTimeout(() => { this.router.navigate(["/credit/consultation"]); }, 1500);
+    }
+
+    nextPhase(id: number) {
         this.etapeSuivante.id = id;
         let phase = this.phases.find((i) => i.id === id);
         this.etapeSuivante.etape = phase.etape;
     }
 
-    hideComplement(b:boolean) {
+    hideComplement(b: boolean) {
         this.hidden = b;
     }
 
-    envoyer(){
-        switch(this.etapeSuivante.id){
+    envoyer() {
+        switch (this.etapeSuivante.id) {
             case 4:
                 this.complementInfo();
                 break;
