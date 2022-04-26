@@ -621,5 +621,14 @@
         ></p-button>
     </div>
 
+    <p-dialog [(visible)]="calendarDialog" [style]="{width: '800px', height:'800px'}"
+            [modal]="true" styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <app-rendez-vous (closeDialog)="closeDialog($event)"[demandeId]="demande.idDemande" [userId]="user.id"></app-rendez-vous>
+            </ng-template>
+            <ng-template pTemplate="footer">
+            </ng-template>
+        </p-dialog>
+
     <p-toast key="sts"></p-toast>
 </div>

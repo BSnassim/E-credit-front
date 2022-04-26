@@ -4,7 +4,6 @@ import { RendezVousComponent } from "./Rendez-vous/rendez-vous.component";
 
 const routes: Routes = [
     { path: "rendezvous", component: RendezVousComponent },
-    { path: "refresh", component: RendezVousComponent },
 ];
 
 @NgModule({
