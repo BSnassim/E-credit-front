@@ -34,8 +34,6 @@ export class RendezVousComponent implements OnInit {
 
     myRdv = {} as DemandeRdv;
 
-    // newDate = Date.now();
-
     constructor(
         private eventService: EventsService,
         private datePipe: DatePipe,
@@ -105,19 +103,23 @@ export class RendezVousComponent implements OnInit {
     }
 
     handleDateClick(arg) {
-        this.eventDialog = true;
-        this.clickedEvent = arg.event;
-        console.log("rendez vous avec", arg.dateStr);
-        this.date = new Date(arg.dateStr);
-        // this.date = this.datePipe.transform(this.newDate, "yyyy-MM-dd");
-        this.changedEvent = {
-            id: null,
-            title: "Clients.name",
-            start: this.date,
-            end: null,
-            allDay: null,
-        };
-        this.clickedEvent = true;
+        let newEvent = new Date(arg.dateStr);
+        if (newEvent.getTime() < this.currentDate.setHours(0, 0, 0, 0)) {
+            this.eventDialog = false;
+        } else {
+            this.eventDialog = true;
+            this.clickedEvent = arg.event;
+            this.date = new Date(arg.dateStr);
+            // this.date = this.datePipe.transform(this.newDate, "yyyy-MM-dd");
+            this.changedEvent = {
+                id: null,
+                title: "Clients.name",
+                start: this.date,
+                end: null,
+                allDay: null,
+            };
+            this.clickedEvent = true;
+        }
     }
 
     save() {
