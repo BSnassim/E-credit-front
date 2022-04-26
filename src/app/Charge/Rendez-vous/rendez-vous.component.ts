@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Subscription } from 'rxjs';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { EventsService } from "src/app/Services/events.service";
 import { DatePipe } from "@angular/common";
@@ -13,7 +14,11 @@ import { Location } from "@angular/common";
     styleUrls: ["./rendez-vous.component.scss"],
     providers: [DatePipe, MessageService],
 })
-export class RendezVousComponent implements OnInit {
+export class RendezVousComponent implements OnInit, OnDestroy {
+    @Input() userId: number;
+    @Input() demandeId: number;
+    @Output() closeDialog = new EventEmitter<boolean>();
+
     baseUrl = environment.apiURL + "/gestionRdv";
 
     events: any = [];
@@ -34,46 +39,26 @@ export class RendezVousComponent implements OnInit {
 
     myRdv = {} as DemandeRdv;
 
+    subscription: Subscription;
+
     constructor(
         private eventService: EventsService,
         private datePipe: DatePipe,
         private messageService: MessageService,
         public _router: Router,
         public _location: Location
-    ) {}
+    ) { }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+    }
 
     ngOnInit() {
         this.getRdv();
+        this.subscription = this.eventService.refresh$.subscribe(() => {
+            this.getRdv();
+        })
 
-        setTimeout(() => {
-            this.options = {
-                initialDate: this.datePipe.transform(
-                    this.currentDate,
-                    "dd/MM/yyyy"
-                ),
-                dateClick: this.handleDateClick.bind(this),
-                headerToolbar: {
-                    left: "prev,next today",
-                    center: "title",
-                    right: "dayGridMonth,timeGridWeek,timeGridDay",
-                },
-                editable: true,
-                selectable: true,
-                selectMirror: true,
-                dayMaxEvents: true,
-                events: this.events[0],
-                eventClick: (e) => {
-                    this.eventDialog = true;
-                    this.clickedEvent = e.event;
-                    this.changedEvent.title = this.clickedEvent.title;
-                    this.changedEvent.start = this.clickedEvent.start;
-                    this.changedEvent.end = this.clickedEvent.end;
-                    this.changedEvent.id = this.clickedEvent.id;
-
-                    console.log("clickedEvent", e.event);
-                },
-            };
-        }, 1000);
         this.datePipe.transform(this.currentDate, "dd/MM/yyyy");
 
         this.changedEvent = {
@@ -94,11 +79,39 @@ export class RendezVousComponent implements OnInit {
                 el.id = el.idRdv;
                 /// el.color = "#F00020";
             });
+            this.events = [];
             this.events.push(response);
-            console.log(this.events);
+
+            setTimeout(() => {
+                this.options = {
+                    initialDate: this.datePipe.transform(
+                        this.currentDate,
+                        "dd/MM/yyyy"
+                    ),
+                    dateClick: this.handleDateClick.bind(this),
+                    headerToolbar: {
+                        left: "prev,next today",
+                        center: "title",
+                        right: "dayGridMonth,timeGridWeek,timeGridDay",
+                    },
+                    editable: true,
+                    selectable: true,
+                    selectMirror: true,
+                    dayMaxEvents: true,
+                    events: this.events[0],
+                    eventClick: (e) => {
+                        this.eventDialog = true;
+                        this.clickedEvent = e.event;
+                        this.changedEvent.title = this.clickedEvent.title;
+                        this.changedEvent.start = this.clickedEvent.start;
+                        this.changedEvent.end = this.clickedEvent.end;
+                        this.changedEvent.id = this.clickedEvent.id;
+                    },
+                };
+            }, 1);
             this.options = { ...this.options, ...{ events: this.events } };
 
-            console.log(this.options);
+
         });
     }
 
@@ -127,25 +140,20 @@ export class RendezVousComponent implements OnInit {
 
         this.myRdv.dateRdv = this.changedEvent.start;
         this.myRdv.title = this.changedEvent.title;
-        // this.myRdv.idDemande
+        this.myRdv.idDemande = this.demandeId;
         this.myRdv.idRdv = this.changedEvent.id;
         // this.myRdv.heur = this.changedEvent.;
 
-        this.myRdv.idUser = 2;
-        console.log(this.myRdv);
+        this.myRdv.idUser = this.userId;
+
         this.eventService.postRdvAPI(this.myRdv).subscribe();
         this.messageService.add({
             key: "tst",
             severity: "success",
-            summary: "Succués",
-            detail: "Rendez-vous enregistrer avec succés",
+            summary: "Succès",
+            detail: "Rendez-vous enregistrer avec succès",
         });
-        this._router
-            .navigateByUrl("/refresh", { skipLocationChange: true })
-            .then(() => {
-                console.log(decodeURI(this._location.path()));
-                this._router.navigate([decodeURI(this._location.path())]);
-            });
+        this.closeDialog.emit(false);
     }
 
     supprimer() {
@@ -155,13 +163,8 @@ export class RendezVousComponent implements OnInit {
             key: "tst",
             severity: "info",
             summary: "Info Message",
-            detail: "Rendez-vous supprimer",
+            detail: "Rendez-vous supprimé",
         });
-        this._router
-            .navigateByUrl("/refresh", { skipLocationChange: true })
-            .then(() => {
-                console.log(decodeURI(this._location.path()));
-                this._router.navigate([decodeURI(this._location.path())]);
-            });
     }
+
 }
