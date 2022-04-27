@@ -69,7 +69,7 @@ export class CreditFormComponent implements OnInit {
 
     style: any;
 
-    selected = {} as PiecesJointes[];
+    selected = [] as PiecesJointes[];
 
     fileUpload: any;
 
@@ -481,7 +481,7 @@ export class CreditFormComponent implements OnInit {
 
     getPieces(id: number) {
         this.creditFormService.getPiecesJointesByDemande(id).subscribe((data) => {
-            // this.pieces = data;
+            this.selected = data;
         })
     }
 
