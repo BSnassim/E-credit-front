@@ -18,6 +18,7 @@ import { Location } from "@angular/common";
 })
 export class RendezVousComponent implements OnInit, OnDestroy {
     @Input() demandeId: number;
+    @Input() clientName: string;
     @Output() closeDialog = new EventEmitter<boolean>();
 
     user: User;
@@ -116,7 +117,7 @@ export class RendezVousComponent implements OnInit, OnDestroy {
                         this.changedEvent.start = this.clickedEvent.start;
                         this.changedEvent.end = this.clickedEvent.end;
                         this.changedEvent.id = this.clickedEvent.id;
-                    
+
                     },
                 };
             }, 1);
@@ -131,14 +132,15 @@ export class RendezVousComponent implements OnInit, OnDestroy {
         if (newEvent.getTime() < this.currentDate.setHours(0, 0, 0, 0)) {
             this.eventDialog = false;
         } else {
-      
+
             this.eventDialog = true;
             this.clickedEvent = arg.event;
             this.date = new Date(arg.dateStr);
+            this.date.setHours(8,30,0,0);
             // this.date = this.datePipe.transform(this.newDate, "yyyy-MM-dd");
             this.changedEvent = {
                 id: null,
-                title: "Clients.name",
+                title: this.clientName,
                 start: this.date,
                 end: null,
                 allDay: null,
@@ -175,13 +177,13 @@ export class RendezVousComponent implements OnInit, OnDestroy {
             this.myRdv.idDemande = e.idDemande;
             this.eventService.postRdvAPI(this.myRdv).subscribe();
             this.messageService.add({
-                    key: "tst",
-                    severity: "success",
-                    summary: "Succès",
-                    detail: "Rendez-vous modifié avec succès",
-                });
+                key: "tst",
+                severity: "success",
+                summary: "Succès",
+                detail: "Rendez-vous modifié avec succès",
+            });
             this.eventDialog = false;
-            }
+        }
         else {
             this.messageService.add({
                 key: "tst",
@@ -202,7 +204,7 @@ export class RendezVousComponent implements OnInit, OnDestroy {
                 summary: "Info Message",
                 detail: "Rendez-vous supprimé",
             });
-        } else{
+        } else {
             this.eventDialog = false;
         }
     }
