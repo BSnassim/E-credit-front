@@ -32,6 +32,7 @@ export class CreditListComponent implements OnInit {
         montant: number;
         etat: string;
         enAttente: string;
+        gsm: number;
         phase: number;
     }[] = [];
 
@@ -187,7 +188,8 @@ export class CreditListComponent implements OnInit {
                 type: e.idTypeCredit,
                 etat: phase.etape,
                 enAttente: phase.enAttenteDe,
-                phase: phase.id
+                phase: phase.id,
+                gsm: e.gsm
             });
         });
     }
