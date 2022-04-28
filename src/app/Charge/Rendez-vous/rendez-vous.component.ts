@@ -1,3 +1,5 @@
+import { TokenService } from "src/app/auth/services/token.service";
+import { User } from "src/app/models/user";
 import { Subscription } from "rxjs";
 import {
     Component,
@@ -7,13 +9,10 @@ import {
     OnInit,
     Output,
 } from "@angular/core";
-import { environment } from "src/environments/environment";
 import { EventsService } from "src/app/Services/events.service";
 import { DatePipe } from "@angular/common";
 import { DemandeRdv } from "src/app/models/demande-rdv";
 import { MessageService } from "primeng/api";
-import { Router } from "@angular/router";
-import { Location } from "@angular/common";
 
 @Component({
     selector: "app-rendez-vous",
@@ -22,11 +21,11 @@ import { Location } from "@angular/common";
     providers: [DatePipe, MessageService],
 })
 export class RendezVousComponent implements OnInit, OnDestroy {
-    @Input() userId: number;
     @Input() demandeId: number;
+    @Input() clientName: string;
     @Output() closeDialog = new EventEmitter<boolean>();
 
-    baseUrl = environment.apiURL + "/gestionRdv";
+    user: User;
 
     events: any = [];
 
@@ -52,8 +51,7 @@ export class RendezVousComponent implements OnInit, OnDestroy {
         private eventService: EventsService,
         private datePipe: DatePipe,
         private messageService: MessageService,
-        public _router: Router,
-        public _location: Location
+        private tokenService: TokenService
     ) {}
 
     ngOnDestroy(): void {
@@ -61,6 +59,7 @@ export class RendezVousComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.getUser();
         this.getRdv();
         this.subscription = this.eventService.refresh$.subscribe(() => {
             this.getRdv();
@@ -77,6 +76,12 @@ export class RendezVousComponent implements OnInit, OnDestroy {
         };
     }
 
+    getUser() {
+        this.tokenService.getUser().subscribe((data) => {
+            this.user = data;
+        });
+    }
+
     getRdv() {
         this.eventService.getRdvAPI().subscribe((response) => {
             response.map((el) => {
@@ -84,6 +89,7 @@ export class RendezVousComponent implements OnInit, OnDestroy {
                 el.start = el.dateRdv;
                 el.end = el.dateRdv;
                 el.id = el.idRdv;
+                el.idDemande = el.idDemande;
                 /// el.color = "#F00020";
             });
             this.events = [];
@@ -128,10 +134,11 @@ export class RendezVousComponent implements OnInit, OnDestroy {
             this.eventDialog = true;
             this.clickedEvent = arg.event;
             this.date = new Date(arg.dateStr);
+            this.date.setHours(8, 30, 0, 0);
             // this.date = this.datePipe.transform(this.newDate, "yyyy-MM-dd");
             this.changedEvent = {
                 id: null,
-                title: "Clients.name",
+                title: this.clientName,
                 start: this.date,
                 end: null,
                 allDay: null,
@@ -141,34 +148,61 @@ export class RendezVousComponent implements OnInit, OnDestroy {
     }
 
     save() {
-        this.eventDialog = false;
+        if (this.demandeId != null) {
+            this.eventDialog = false;
+            this.myRdv.dateRdv = this.changedEvent.start;
+            this.myRdv.title = this.changedEvent.title;
+            this.myRdv.idDemande = this.demandeId;
+            // this.myRdv.heur = this.changedEvent.;
 
-        this.myRdv.dateRdv = this.changedEvent.start;
-        this.myRdv.title = this.changedEvent.title;
-        this.myRdv.idDemande = this.demandeId;
-        this.myRdv.idRdv = this.changedEvent.id;
-        // this.myRdv.heur = this.changedEvent.;
+            this.myRdv.idUser = this.user.id;
 
-        this.myRdv.idUser = this.userId;
-
-        this.eventService.postRdvAPI(this.myRdv).subscribe();
-        this.messageService.add({
-            key: "tst",
-            severity: "success",
-            summary: "Succès",
-            detail: "Rendez-vous enregistrer avec succès",
-        });
-        this.closeDialog.emit(false);
+            this.eventService.postRdvAPI(this.myRdv).subscribe();
+            this.messageService.add({
+                key: "tst",
+                severity: "success",
+                summary: "Succès",
+                detail: "Rendez-vous enregistrer avec succès",
+            });
+            this.closeDialog.emit(false);
+        } else if (this.changedEvent.id != null) {
+            this.myRdv.dateRdv = this.changedEvent.start;
+            this.myRdv.title = this.changedEvent.title;
+            this.myRdv.idRdv = this.changedEvent.id;
+            // this.myRdv.heur = this.changedEvent.;
+            this.myRdv.idUser = this.user.id;
+            let e = this.events[0].find((i) => i.idRdv == this.changedEvent.id);
+            this.myRdv.idDemande = e.idDemande;
+            this.eventService.postRdvAPI(this.myRdv).subscribe();
+            this.messageService.add({
+                key: "tst",
+                severity: "success",
+                summary: "Succès",
+                detail: "Rendez-vous modifié avec succès",
+            });
+            this.eventDialog = false;
+        } else {
+            this.messageService.add({
+                key: "tst",
+                severity: "error",
+                summary: "Accés refusé",
+                detail: "Vous ne pouvez pas fixer un rendez-vous sans une demande",
+            });
+        }
     }
 
     supprimer() {
-        this.eventService.deleteRdvAPI(this.clickedEvent.id).subscribe();
-        this.eventDialog = false;
-        this.messageService.add({
-            key: "tst",
-            severity: "info",
-            summary: "Info Message",
-            detail: "Rendez-vous supprimé",
-        });
+        if (this.changedEvent.id != null) {
+            this.eventService.deleteRdvAPI(this.clickedEvent.id).subscribe();
+            this.eventDialog = false;
+            this.messageService.add({
+                key: "tst",
+                severity: "info",
+                summary: "Info Message",
+                detail: "Rendez-vous supprimé",
+            });
+        } else {
+            this.eventDialog = false;
+        }
     }
 }
