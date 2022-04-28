@@ -1,5 +1,12 @@
-import { Subscription } from 'rxjs';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
+import { Subscription } from "rxjs";
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+} from "@angular/core";
 import { environment } from "src/environments/environment";
 import { EventsService } from "src/app/Services/events.service";
 import { DatePipe } from "@angular/common";
@@ -47,7 +54,7 @@ export class RendezVousComponent implements OnInit, OnDestroy {
         private messageService: MessageService,
         public _router: Router,
         public _location: Location
-    ) { }
+    ) {}
 
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
@@ -57,7 +64,7 @@ export class RendezVousComponent implements OnInit, OnDestroy {
         this.getRdv();
         this.subscription = this.eventService.refresh$.subscribe(() => {
             this.getRdv();
-        })
+        });
 
         this.datePipe.transform(this.currentDate, "dd/MM/yyyy");
 
@@ -110,8 +117,6 @@ export class RendezVousComponent implements OnInit, OnDestroy {
                 };
             }, 1);
             this.options = { ...this.options, ...{ events: this.events } };
-
-
         });
     }
 
@@ -166,5 +171,4 @@ export class RendezVousComponent implements OnInit, OnDestroy {
             detail: "Rendez-vous supprimé",
         });
     }
-
 }
