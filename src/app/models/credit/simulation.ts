@@ -19,4 +19,5 @@ export class Simulation {
 	  salaire: number;
 	  autreRevenu: number;
 	  sitLogement: string;
+	  resultat: string;
 }
