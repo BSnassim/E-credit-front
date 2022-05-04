@@ -131,12 +131,19 @@
         </div>
     </div>
 
+    <p-toast></p-toast>
+
 </div>
 
 <div class="buttonResultat">
-    <button pButton pRipple label="Voir resultat"></button>
+    <button pButton pRipple label="Voir resultat" (click)="submit()"></button>
 </div>
 
-<p-dialog visible="" modal="true">
-    Resultat :
+<p-dialog [(visible)]='showResultat' [draggable]=false [resizable]=false modal="true">
+    <b>Résultat de simulation :</b>
+    <div class="success" *ngIf="resultat>=50"><div class="tup"><i class="pi pi-thumbs-up"></i></div><p>Eligible</p></div>
+    <div class="failure" *ngIf="resultat<50"><div class="tdown"><i class="pi pi-thumbs-down"></i></div><p>Ineligible</p></div>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Confirmer" icon="pi pi-check" class="p-button-text"></button>
+    </ng-template>
 </p-dialog>
