@@ -1,63 +1,131 @@
 <div class="grid flex justify-content-center align-items-center">
     <div class="card">
-        <p-table #dt1 [value]="displayList" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
-            [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-gridlines" [paginator]="true"
+        <p-table
+            #dt1
+            [value]="displayList"
+            dataKey="id"
+            [rows]="10"
+            [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            [loading]="loading"
+            styleClass="p-datatable-gridlines"
+            [paginator]="true"
             currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
-            [globalFilterFields]="['nomprenom','type','dateCreation','etat','enAttente','gsm']">
+            [globalFilterFields]="[
+                'nomprenom',
+                'type',
+                'dateCreation',
+                'etat',
+                'enAttente',
+                'gsm'
+            ]"
+        >
             <ng-template pTemplate="caption">
                 <div class="flex">
-                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
-                        (click)="clear(dt1)"></button>
+                    <button
+                        pButton
+                        label="Clear"
+                        class="p-button-outlined"
+                        icon="pi pi-filter-slash"
+                        (click)="clear(dt1)"
+                    ></button>
                     <span class="p-input-icon-left ml-auto">
                         <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
-                            placeholder="Recherche" />
+                        <input
+                            pInputText
+                            type="text"
+                            (input)="
+                                dt1.filterGlobal(
+                                    $event.target.value,
+                                    'contains'
+                                )
+                            "
+                            placeholder="Recherche"
+                        />
                     </span>
                 </div>
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th  pSortableColumn="id">
-                        <div class="flex justify-content-center align-items-center">
+                    <th pSortableColumn="id">
+                        <div
+                            class="flex justify-content-center align-items-center"
+                        >
                             ID
-                            <p-columnFilter type="text" field="id" display="menu"></p-columnFilter>
+                            <p-columnFilter
+                                type="text"
+                                field="id"
+                                display="menu"
+                            ></p-columnFilter>
                         </div>
                     </th>
-                    <th  pSortableColumn="nomprenom">
-                        <div class="flex justify-content-center align-items-center">
+                    <th pSortableColumn="nomprenom">
+                        <div
+                            class="flex justify-content-center align-items-center"
+                        >
                             Nom et Prenom
-                            <p-columnFilter type="text" field="nomprenom" display="menu"></p-columnFilter>
+                            <p-columnFilter
+                                type="text"
+                                field="nomprenom"
+                                display="menu"
+                            ></p-columnFilter>
                         </div>
                     </th>
-                    <th  pSortableColumn="gsm">
-                        <div class="flex justify-content-center align-items-center">
+                    <th pSortableColumn="gsm">
+                        <div
+                            class="flex justify-content-center align-items-center"
+                        >
                             GSM
-                            <p-columnFilter type="text" field="gsm" display="menu"></p-columnFilter>
+                            <p-columnFilter
+                                type="text"
+                                field="gsm"
+                                display="menu"
+                            ></p-columnFilter>
                         </div>
                     </th>
-                    <th  pSortableColumn="type">
-                        <div class="flex justify-content-center align-items-center">
+                    <th pSortableColumn="type">
+                        <div
+                            class="flex justify-content-center align-items-center"
+                        >
                             Type de credit
-                            
                         </div>
                     </th>
-                    <th  pSortableColumn="datecreation">
-                        <div class="flex justify-content-center align-items-center">
+                    <th pSortableColumn="datecreation">
+                        <div
+                            class="flex justify-content-center align-items-center"
+                        >
                             Date du creation
-                            <p-columnFilter type="date" field="dateCreation" display="menu"></p-columnFilter>
+                            <p-columnFilter
+                                type="date"
+                                field="dateCreation"
+                                display="menu"
+                            ></p-columnFilter>
                         </div>
                     </th>
-                    <th  pSortableColumn="montant">
-                        <div class="flex justify-content-center align-items-center">
+                    <th pSortableColumn="montant">
+                        <div
+                            class="flex justify-content-center align-items-center"
+                        >
                             Montant
-                            <p-columnFilter type="numeric" field="montant" display="menu" currency="TND">
+                            <p-columnFilter
+                                type="numeric"
+                                field="montant"
+                                display="menu"
+                                currency="TND"
+                            >
                             </p-columnFilter>
                         </div>
                     </th>
-                    <th  pSortableColumn="etat">
-                        <div class="flex justify-content-center align-items-center">
+                    <th pSortableColumn="etat">
+                        <div
+                            class="flex justify-content-center align-items-center"
+                        >
                             Etat du dossier
-                            <p-columnFilter type="text" field="etat" display="menu"></p-columnFilter>
+                            <p-columnFilter
+                                type="text"
+                                field="etat"
+                                display="menu"
+                            ></p-columnFilter>
                         </div>
                     </th>
                     <th>Actions</th>
@@ -66,7 +134,7 @@
             <ng-template pTemplate="body" let-demande>
                 <tr>
                     <td>
-                        {{ demande.id}}
+                        {{ demande.id }}
                     </td>
                     <td>
                         {{ demande.nomprenom }}
@@ -80,16 +148,25 @@
                     <td>
                         {{ demande.dateCreation | date: "dd/MM/yyyy" }}
                     </td>
+                    <td>{{ demande.montant | currency: " " }} TND</td>
+                    <td>{{ demande.etat }} {{ demande.enAttente }}</td>
                     <td>
-                        {{ demande.montant | currency: " " }} TND
-                    </td>
-                    <td>
-                        {{ demande.etat }} {{ demande.enAttente }}
-                    </td>
-                    <td>
-                        <button type="button" pButton icon="pi pi-bars" label="Actions" class="p-button-info"
-                            (click)="menu.toggle($event); getDemandeId(demande.id)"></button>
-                        <p-menu #menu [popup]="true" [model]="items" appendTo="body"></p-menu>
+                        <button
+                            type="button"
+                            pButton
+                            icon="pi pi-bars"
+                            label="Actions"
+                            class="p-button-info"
+                            (click)="
+                                menu.toggle($event); getDemandeId(demande.id)
+                            "
+                        ></button>
+                        <p-menu
+                            #menu
+                            [popup]="true"
+                            [model]="items"
+                            appendTo="body"
+                        ></p-menu>
                     </td>
                 </tr>
             </ng-template>

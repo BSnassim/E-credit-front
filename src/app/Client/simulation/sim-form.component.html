@@ -1,12 +1,11 @@
 <div class="grid">
-    <div class="col-12 ">
+    <div class="col-12">
         <div class="card">
             <h5>Informations personnels</h5>
             <div class="p-fluid formgrid grid">
                 <div class="field col-6">
                     <label>Nom</label>
                     <input type="text" pInputText required />
-
                 </div>
                 <div class="field col-6">
                     <label>Prénom</label>
@@ -15,61 +14,113 @@
 
                 <div class="field col-6">
                     <label>Type Piéce identité</label>
-                    <p-dropdown inputId="typePiece" [options]="pieceOptions" optionLabel="name" placeholder="Choisir"
-                        [(ngModel)]="selectedPiece" required></p-dropdown>
+                    <p-dropdown
+                        inputId="typePiece"
+                        [options]="pieceOptions"
+                        optionLabel="name"
+                        placeholder="Choisir"
+                        [(ngModel)]="selectedPiece"
+                        required
+                    ></p-dropdown>
                 </div>
 
                 <div class="field col-6">
                     <label>Numéro Piéce identité</label>
-                    <input type="text" pInputText pKeyFilter="pnum" required [maxLength]="" />
+                    <input
+                        type="text"
+                        pInputText
+                        pKeyFilter="pnum"
+                        required
+                        [maxLength]=""
+                    />
                 </div>
 
                 <div class="field col-6">
                     <label>Numéro de compte</label>
-                    <input type="text" pInputText pKeyFilter="pnum" required maxlength="13" minlength="13" />
+                    <input
+                        type="text"
+                        pInputText
+                        pKeyFilter="pnum"
+                        required
+                        maxlength="13"
+                        minlength="13"
+                    />
                 </div>
 
                 <div class="field col-3">
                     <label>Date d'ouverture du compte</label>
-                    <p-calendar name="dateCompte" [showIcon]="true" inputId="icon" required>
+                    <p-calendar
+                        name="dateCompte"
+                        [showIcon]="true"
+                        inputId="icon"
+                        required
+                    >
                     </p-calendar>
                 </div>
 
                 <div class="field col-3">
                     <label>Date de naissance</label>
                     <span class="p-float-label">
-                        <p-calendar name="dateNaissance" [showIcon]="true" inputId="icon" required>
+                        <p-calendar
+                            name="dateNaissance"
+                            [showIcon]="true"
+                            inputId="icon"
+                            required
+                        >
                         </p-calendar>
                     </span>
                 </div>
 
                 <div class="field col-6">
                     <label>Situation familiale</label>
-                    <p-dropdown [options]="familialeOptions" [(ngModel)]="selectedFamiliale" optionLabel="name"
-                        placeholder="Choisir"></p-dropdown>
+                    <p-dropdown
+                        [options]="familialeOptions"
+                        [(ngModel)]="selectedFamiliale"
+                        optionLabel="name"
+                        placeholder="Choisir"
+                    ></p-dropdown>
                 </div>
 
                 <div class="field col-6">
                     <label>Situation medicale</label>
-                    <p-dropdown [options]="medicaleOptions" [(ngModel)]="selectedMedicale" optionLabel="name"
-                        placeholder="Choisir"></p-dropdown>
+                    <p-dropdown
+                        [options]="medicaleOptions"
+                        [(ngModel)]="selectedMedicale"
+                        optionLabel="name"
+                        placeholder="Choisir"
+                    ></p-dropdown>
                 </div>
 
                 <div class="field col-6">
                     <label>Statut professionnel</label>
-                    <p-dropdown [options]="emploiOptions" [(ngModel)]="selectedEmploi" optionLabel="name"
-                        placeholder="Choisir"></p-dropdown>
+                    <p-dropdown
+                        [options]="emploiOptions"
+                        [(ngModel)]="selectedEmploi"
+                        optionLabel="name"
+                        placeholder="Choisir"
+                    ></p-dropdown>
                 </div>
 
                 <div class="field col-6">
                     <label>GSM</label>
                     <div class="p-inputgroup">
-                        <button type="button" pButton class="no-click" label="+216"></button>
-                        <input type="text" pInputText showIcon="test" pKeyFilter="pnum" required maxlength="8"
-                            minlength="8" />
+                        <button
+                            type="button"
+                            pButton
+                            class="no-click"
+                            label="+216"
+                        ></button>
+                        <input
+                            type="text"
+                            pInputText
+                            showIcon="test"
+                            pKeyFilter="pnum"
+                            required
+                            maxlength="8"
+                            minlength="8"
+                        />
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -80,21 +131,34 @@
             <div class="p-fluid formgrid grid">
                 <div class="field col-6">
                     <label>Type de credit</label>
-                    <p-dropdown [options]="typesCredit" [(ngModel)]="selectedCredit" optionLabel="libcredit"
-                        placeholder="Choisir"></p-dropdown>
+                    <p-dropdown
+                        [options]="typesCredit"
+                        [(ngModel)]="selectedCredit"
+                        optionLabel="libcredit"
+                        placeholder="Choisir"
+                    ></p-dropdown>
                 </div>
                 <div class="field col-6">
                     <label>Montant</label>
-                    <p-inputNumber mode="currency" required currency="TND" locale="tn-TN"></p-inputNumber>
+                    <p-inputNumber
+                        mode="currency"
+                        required
+                        currency="TND"
+                        locale="tn-TN"
+                    ></p-inputNumber>
                 </div>
                 <div class="field col-6">
                     <label>Nombre d'écheances</label>
-                    <input type="text" pInputText>
+                    <input type="text" pInputText />
                 </div>
                 <div class="field col-6">
                     <label>Par</label>
-                    <p-dropdown [options]="echeanceOptions" [(ngModel)]="selectedEcheance" optionLabel="name"
-                        placeholder="Choisir"></p-dropdown>
+                    <p-dropdown
+                        [options]="echeanceOptions"
+                        [(ngModel)]="selectedEcheance"
+                        optionLabel="name"
+                        placeholder="Choisir"
+                    ></p-dropdown>
                 </div>
             </div>
         </div>
@@ -106,27 +170,38 @@
             <div class="p-fluid formgrid grid">
                 <div class="field col-6">
                     <label>Salaire mensuel</label>
-                    <p-inputNumber mode="currency" required currency="TND" locale="tn-TN"></p-inputNumber>
+                    <p-inputNumber
+                        mode="currency"
+                        required
+                        currency="TND"
+                        locale="tn-TN"
+                    ></p-inputNumber>
                 </div>
                 <div class="field col-6">
                     <label>Autre revenu</label>
-                    <p-inputNumber mode="currency" required currency="TND" locale="tn-TN"></p-inputNumber>
+                    <p-inputNumber
+                        mode="currency"
+                        required
+                        currency="TND"
+                        locale="tn-TN"
+                    ></p-inputNumber>
                 </div>
                 <div class="field col-12">
                     <label>Situation logement</label>
-                    <p-dropdown [options]="logementOptions" [(ngModel)]="selectedLogement" optionLabel="name"
-                        placeholder="Choisir"></p-dropdown>
+                    <p-dropdown
+                        [options]="logementOptions"
+                        [(ngModel)]="selectedLogement"
+                        optionLabel="name"
+                        placeholder="Choisir"
+                    ></p-dropdown>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 
 <div class="buttonResultat">
     <button pButton pRipple label="Voir resultat"></button>
 </div>
 
-<p-dialog visible="" modal="true">
-    text
-</p-dialog>
+<p-dialog visible="" modal="true"> text </p-dialog>
