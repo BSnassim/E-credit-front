@@ -27,20 +27,11 @@
                     <label for="numCin">Numéro CIN</label>
                     <input type="text" pInputText pKeyFilter="pnum" id="numCin" [(ngModel)]="demande.numPiece" required
                         maxlength="8" minlength="8" [disabled]="modifying" />
-                    <!-- <small *ngIf="minlength < 8" id="numPiece" class="p-invalid"
-                        >Ce champ doit comporter 8 chiffre.</small
-                    > -->
                 </div>
                 <div class="field col-12 md:col-6" *ngIf="demande.typePiece == 'Passeport'">
                     <label for="numCin">Numéro Passport</label>
                     <input id="numCin" [(ngModel)]="demande.numPiece" type="text" minlength="9" maxlength="9" pInputText
                         required [disabled]="modifying" />
-                    <!-- <small
-                        *ngIf="demande.numPiece < 9"
-                        id="numCin"
-                        class="p-invalid"
-                        >Ce champ doit comporter 9 caractères.</small
-                    > -->
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="numCompte">N° Compte</label>
@@ -184,8 +175,8 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="GarantieDialog" [style]="{ width: '450px', height:'500px' }" header="Ajouter garantie" [modal]="true"
-            styleClass="p-fluid">
+        <p-dialog [(visible)]="GarantieDialog" [style]="{ width: '450px', height:'500px' }" header="Ajouter garantie"
+            [modal]="true" styleClass="p-fluid">
             <ng-template pTemplate="content">
                 <div class="field">
                     <label for="nature">Nature Garantie</label>
@@ -266,8 +257,9 @@
                     <button pButton class="p-button-text" [label]="'- ' + file.fileName" style="width: fit-content"
                         type="button" (click)="onDownload(file)"></button>
                     &nbsp;
-                    <button [disabled]="modifying" *ngIf="!readOnly" pButton class="p-button-rounded p-button-danger p-button-text"
-                        icon="pi pi-times" type="button" (click)="onDelete(file)"></button>
+                    <button [disabled]="modifying" *ngIf="!readOnly" pButton
+                        class="p-button-rounded p-button-danger p-button-text" icon="pi pi-times" type="button"
+                        (click)="onDelete(file)"></button>
                 </div>
             </div>
         </div>

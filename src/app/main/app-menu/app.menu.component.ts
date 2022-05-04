@@ -62,12 +62,17 @@ export class AppMenuComponent implements OnInit {
                         items: [
                             {
                                 label: "Demander un credit",
-                                icon: "pi pi-fw pi-money-bill",
+                                icon: "pi pi-fw pi-dollar",
                                 routerLink: ["/credit/demande"],
                             },
                             {
+                                label: "Simulation",
+                                icon: "pi pi-fw pi-dollar",
+                                routerLink: ["/credit/simulation"],
+                            },
+                            {
                                 label: "Consulter vos credits",
-                                icon: "pi pi-fw pi-money-bill",
+                                icon: "pi pi-fw pi-briefcase",
                                 routerLink: ["/credit/consultation"],
                             },
                         ],

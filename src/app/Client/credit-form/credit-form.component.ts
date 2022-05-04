@@ -163,14 +163,14 @@ export class CreditFormComponent implements OnInit {
 
     /*           *************** INFORMATION CLIENT ***************         */
 
-    sitFam: any[] = ["Mariée", "Célibataire", "Divorsé"];
+    sitFam: any[] = ["Marié(e)", "Célibataire", "Divorcé(e)", "Veuf(ve)"];
 
     typePiece: any[] = ["CIN", "Passeport"];
 
     /*           ********************************************               */
     /*           *************** LIGNE CREDIT ***************               */
 
-    unite: any[] = ["Jour", "Mois", "Année"];
+    unite: any[] = [ "Mois", "Année"];
 
     getTypeCredit() {
         this.creditFormService.getTypeCreditAPI().subscribe((response) => {

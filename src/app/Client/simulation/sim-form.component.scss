@@ -1,3 +1,10 @@
+.buttonResultat{
+    display:flex;
+    justify-content: center;
+}
+.no-click {
+    pointer-events: none;
+}
 ::ng-deep .p-datepicker-month {
     background-color: black;
     color:white;
@@ -6,20 +13,4 @@
 ::ng-deep .p-datepicker-year {
     background-color: black;
     color:white;
-}
-.traitementbox{
-    width: fit-content;
-}
-p-button{
-    margin: 10px;
-}
-.retour{
-    display: flex;
-    justify-content: center;
-}
-.c1{
-    line-height: 1cm;
-}
-.ea{
-    margin-left: 10px;
 }

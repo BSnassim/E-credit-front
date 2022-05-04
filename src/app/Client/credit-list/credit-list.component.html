@@ -3,7 +3,7 @@
         <p-table #dt1 [value]="displayList" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-gridlines" [paginator]="true"
             currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
-            [globalFilterFields]="['nomprenom','type','dateCreation','etat','enAttente']">
+            [globalFilterFields]="['nomprenom','type','dateCreation','etat','enAttente','gsm']">
             <ng-template pTemplate="caption">
                 <div class="flex">
                     <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
@@ -27,6 +27,12 @@
                         <div class="flex justify-content-center align-items-center">
                             Nom et Prenom
                             <p-columnFilter type="text" field="nomprenom" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th  pSortableColumn="gsm">
+                        <div class="flex justify-content-center align-items-center">
+                            GSM
+                            <p-columnFilter type="text" field="gsm" display="menu"></p-columnFilter>
                         </div>
                     </th>
                     <th  pSortableColumn="type">
@@ -64,6 +70,9 @@
                     </td>
                     <td>
                         {{ demande.nomprenom }}
+                    </td>
+                    <td>
+                        {{ demande.gsm }}
                     </td>
                     <td>
                         {{ demande.type | typeCredit | async }}

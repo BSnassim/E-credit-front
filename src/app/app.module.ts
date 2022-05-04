@@ -1,3 +1,4 @@
+import { SimFormComponent } from './Client/simulation/sim-form.component';
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import {
@@ -285,6 +286,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         GarantieNaturePipe,
         DashboardComponent,
         RendezVousComponent,
+        SimFormComponent
     ],
     providers: [
         {

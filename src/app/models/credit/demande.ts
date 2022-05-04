@@ -23,4 +23,5 @@ export interface Demande {
     pieces?: PiecesJointes[];
     idUser?: number;
     userName?: string;
+    gsm?: number;
 }
