@@ -97,7 +97,7 @@
                     <label for="unite">Unité</label>
                     <span class="p-float-label">
                         <p-dropdown inputId="unite" [options]="unite" [(ngModel)]="demande.unite" placeholder="Par"
-                            required [disabled]="modifying">
+                            required [disabled]="modifying" (onChange)="demande.nbreEcheance=null">
                         </p-dropdown>
                     </span>
                     <small *ngIf="submitAll && !demande.unite" id="unite" class="p-invalid">Ce champ est
@@ -105,7 +105,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="nbrEcheance">Nombre échéance</label>
-                    <p-inputNumber id="nbrEcheance" [(ngModel)]="demande.nbreEcheance" required [disabled]="modifying">
+                    <p-inputNumber id="nbrEcheance" maxlength="3" [max]="(demande.unite=='Mois'?360:30)" [(ngModel)]="demande.nbreEcheance" required [disabled]="modifying">
                     </p-inputNumber>
                     <small *ngIf="submitAll && !demande.nbreEcheance" id="nbreEcheance" class="p-invalid">Ce champ est
                         nécessair.</small>

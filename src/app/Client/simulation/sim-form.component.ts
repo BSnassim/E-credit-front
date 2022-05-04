@@ -14,22 +14,22 @@ import { TypeCredit } from 'src/app/models/credit/typeCredit';
 export class SimFormComponent implements OnInit {
 
     echeanceOptions = [{id:1, name:'Mois'}, {id:2, name:'An'}];
-    selectedEcheance:any;
+    selectedEcheance={} as {id:number, name:string};
 
     familialeOptions = [{id:1, name:"Marié(e)"}, {id:2, name:"Célibataire"}, {id:3, name:"Divorcé(e)"}, {id:4, name:"Veuf(ve)"}];
-    selectedFamiliale:any;
+    selectedFamiliale={} as {id:number, name:string};
 
     emploiOptions = [{id:1, name:'Salarié'}, {id:2, name:"Fonction libérale"}, {id:3, name:"Retraité"}, {id:4, name:"Rentier"}];
-    selectedEmploi:any;
+    selectedEmploi={} as {id:number, name:string};
 
     medicaleOptions = [{id:1, name:'Bon santé'}, {id:2, name:"Maladie chronique"}];
-    selectedMedicale:any;
+    selectedMedicale={} as {id:number, name:string};
 
     logementOptions = [{id:1, name:'Locataire'}, {id:2, name:"Propriétaire"}];
-    selectedLogement:any;
+    selectedLogement={} as {id:number, name:string};
 
     pieceOptions = [{id:1, name:'CIN'}, {id:2, name:"Passeport"}];
-    selectedPiece:any;
+    selectedPiece={} as {id:number, name:string};
     
     typesCredit: TypeCredit[];
     selectedCredit:TypeCredit;
