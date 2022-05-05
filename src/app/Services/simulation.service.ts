@@ -14,11 +14,11 @@ export class SimulationService {
   constructor(private http: HttpClient) { }
 
   saveSimulation(sim: Simulation){
-    return this.http.post<Simulation>(URL, sim);
+    return this.http.post<number>(URL, sim);
   }
 
-  getSimulationByUser(id: number): Observable<Simulation[]> {
-    return this.http.get<Simulation[]>(URL + "/" + id);
+  getSimulationById(id: number): Observable<Simulation> {
+    return this.http.get<Simulation>(URL + "/" + id);
   }
 
   calculateSimulation(sim: Simulation) {
