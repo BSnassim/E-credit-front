@@ -88,7 +88,7 @@
                     </td>
                     <td>
                         <button type="button" pButton icon="pi pi-bars" label="Actions" class="p-button-info"
-                            (click)="menu.toggle($event); getDemandeId(demande.id)"></button>
+                            (click)="menu.toggle($event); getDemandeId(demande.id,demande.idSimulation)"></button>
                         <p-menu #menu [popup]="true" [model]="items" appendTo="body"></p-menu>
                     </td>
                 </tr>
