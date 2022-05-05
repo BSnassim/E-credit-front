@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { tap } from "rxjs/operators";
-import { environment } from "src/environments/environment.dev";
+import { environment } from "src/environments/environment";
 import { Profil } from "../models/profil";
 
 const URL = environment.adminURL + "/profils";

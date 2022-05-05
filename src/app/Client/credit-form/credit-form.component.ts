@@ -465,11 +465,13 @@ export class CreditFormComponent implements OnInit {
 
     getDemande(id: number) {
         this.creditFormService.getDemandeById(id).subscribe((data) => {
+            if(data == null){ this.router.navigate(['notfound'])}
+            else{
             this.demande = data;
             let t = this.typeCredit.find((i) => i.idType === data.idTypeCredit);
             let e = this.phases.find((i) => i.id === data.idPhase);
             this.etapeActuelle = e.etape;
-            this.typeC = t;
+            this.typeC = t;}
         });
     }
 

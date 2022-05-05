@@ -3,9 +3,10 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { CreditFormComponent } from "./credit-form/credit-form.component";
 import { SimFormComponent } from "./simulation/sim-form.component";
+import { NgxPermissionsGuard } from "ngx-permissions";
 
 const routes: Routes = [
-    { path: "demande", component: CreditFormComponent },
+    {path: "demande", component: CreditFormComponent },
     { path: "consultation", component: CreditListComponent },
     { path: "simulation", component: SimFormComponent },
 ];
@@ -14,4 +15,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
-export class ClientRoutingModule {}
+export class ClientRoutingModule { }
