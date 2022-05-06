@@ -11,19 +11,20 @@ import { User } from "src/app/models/user";
 export class TokenService {
     baseUrl = environment.apiURL + "/authenticate";
 
-    constructor(private http: HttpClient, private router : Router) { }
-    getToken(){
-        return sessionStorage.getItem('access token');
+    constructor(private http: HttpClient, private router: Router) {}
+    getToken() {
+        return sessionStorage.getItem("access token");
     }
-    setToken(token: string){
-        sessionStorage.setItem('access token', token);
+    setToken(token: string) {
+        sessionStorage.setItem("access token", token);
     }
-    removeToken(){
-        sessionStorage.removeItem('access token');
+    removeToken() {
+        sessionStorage.removeItem("access token");
     }
 
     // Used to get the user details using his token
     getUser(): Observable<User> {
+        console.log(this.getToken());
         return this.http.get<User>(
             this.baseUrl + "/getUserByToken/" + this.getToken()
         );

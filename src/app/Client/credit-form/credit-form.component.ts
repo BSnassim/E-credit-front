@@ -1,3 +1,4 @@
+import { SimulationService } from './../../Services/simulation.service';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { Component, OnInit } from "@angular/core";
 import { MessageService, ConfirmationService, MenuItem, ConfirmEventType } from "primeng/api";
@@ -101,6 +102,7 @@ export class CreditFormComponent implements OnInit {
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         private creditFormService: CreditFormService,
+        private simulationService: SimulationService,
         private route: ActivatedRoute,
         private encrypter: CryptojsService,
         private permissionsService: NgxPermissionsService,
@@ -514,6 +516,24 @@ export class CreditFormComponent implements OnInit {
         });
     }
 
+    getSim(id : number){
+        this.simulationService.getSimulationById(id).subscribe( data =>{
+            if(data == null){ this.router.navigate(['notfound'])}
+            else{
+            this.demande.nom = data.nom;
+            this.demande.prenom = data.prenom;
+            this.demande.dateCompte = data.dateCompte;
+            this.demande.dateNaissance = data.dateNaissance;
+            this.demande.gsm = data.gsm;
+            this.demande.numCompte = data.numCompte;
+            this.demande.numPiece = data.numPiece;
+            this.demande.typePiece = data.typePiece;
+            this.demande.sitFamiliale = data.sitFamiliale;
+            this.demande.idSimulation = data.idSim;
+            }
+        });
+    }
+
     getParams() {
         this.route.params.subscribe((params) => {
             if (params.id) {
@@ -525,6 +545,11 @@ export class CreditFormComponent implements OnInit {
                 this.getGaranties(value);
                 this.getPieces(value);
                 this.getHistory(value);
+            } else if (params.id1) {
+                let v: number = + this.encrypter.decrypt(params.id1);
+                this.getSim(v);
+            } else {
+                this.router.navigate(['notfound']);
             }
         });
     }

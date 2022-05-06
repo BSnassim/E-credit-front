@@ -6,6 +6,7 @@
                 <div class="field col-6">
                     <label>Nom</label>
                     <input
+                        [disabled]="details"
                         [(ngModel)]="simulation.nom"
                         type="text"
                         pKeyFilter="alpha"
@@ -16,6 +17,7 @@
                 <div class="field col-6">
                     <label>Prénom</label>
                     <input
+                        [disabled]="details"
                         [(ngModel)]="simulation.prenom"
                         type="text"
                         pKeyFilter="alpha"
@@ -27,6 +29,7 @@
                 <div class="field col-6">
                     <label>Type Piéce identité</label>
                     <p-dropdown
+                        [disabled]="details"
                         (onChange)="simulation.numPiece = null"
                         inputId="typePiece"
                         [options]="pieceOptions"
@@ -40,6 +43,7 @@
                 <div class="field col-6">
                     <label>Numéro Piéce identité</label>
                     <input
+                        [disabled]="details"
                         [(ngModel)]="simulation.numPiece"
                         *ngIf="selectedPiece.id == 1"
                         type="text"
@@ -49,6 +53,7 @@
                         [maxLength]="8"
                     />
                     <input
+                        [disabled]="details"
                         [(ngModel)]="simulation.numPiece"
                         *ngIf="selectedPiece.id == 2"
                         type="text"
@@ -62,6 +67,7 @@
                 <div class="field col-6">
                     <label>Numéro de compte</label>
                     <input
+                        [disabled]="details"
                         [(ngModel)]="simulation.numCompte"
                         type="text"
                         pInputText
@@ -75,6 +81,7 @@
                 <div class="field col-3">
                     <label>Date d'ouverture du compte</label>
                     <p-calendar
+                        [disabled]="details"
                         [(ngModel)]="simulation.dateCompte"
                         name="dateCompte"
                         [showIcon]="true"
@@ -88,6 +95,7 @@
                     <label>Date de naissance</label>
                     <span class="p-float-label">
                         <p-calendar
+                            [disabled]="details"
                             [(ngModel)]="simulation.dateNaissance"
                             name="dateNaissance"
                             [showIcon]="true"
@@ -101,6 +109,7 @@
                 <div class="field col-6">
                     <label>Situation familiale</label>
                     <p-dropdown
+                        [disabled]="details"
                         [options]="familialeOptions"
                         [(ngModel)]="selectedFamiliale"
                         optionLabel="name"
@@ -111,6 +120,7 @@
                 <div class="field col-6">
                     <label>Situation medicale</label>
                     <p-dropdown
+                        [disabled]="details"
                         [options]="medicaleOptions"
                         [(ngModel)]="selectedMedicale"
                         optionLabel="name"
@@ -121,6 +131,7 @@
                 <div class="field col-6">
                     <label>Statut professionnel</label>
                     <p-dropdown
+                        [disabled]="details"
                         [options]="emploiOptions"
                         [(ngModel)]="selectedEmploi"
                         optionLabel="name"
@@ -132,12 +143,14 @@
                     <label>GSM</label>
                     <div class="p-inputgroup">
                         <button
+                            [disabled]="details"
                             type="button"
                             pButton
                             class="no-click"
                             label="+216"
                         ></button>
                         <input
+                            [disabled]="details"
                             [(ngModel)]="simulation.gsm"
                             type="text"
                             pInputText
@@ -160,6 +173,7 @@
                 <div class="field col-6">
                     <label>Type de credit</label>
                     <p-dropdown
+                        [disabled]="details"
                         [options]="typesCredit"
                         [(ngModel)]="selectedCredit"
                         optionLabel="libcredit"
@@ -169,6 +183,7 @@
                 <div class="field col-6">
                     <label>Montant</label>
                     <p-inputNumber
+                        [disabled]="details"
                         [(ngModel)]="simulation.montant"
                         mode="currency"
                         required
@@ -179,6 +194,7 @@
                 <div class="field col-6">
                     <label>Nombre d'écheances</label>
                     <p-inputNumber
+                        [disabled]="details"
                         [(ngModel)]="simulation.nbreEcheance"
                         [max]="selectedEcheance.id == 2 ? 30 : 360"
                         maxlength="3"
@@ -187,6 +203,7 @@
                 <div class="field col-6">
                     <label>Par</label>
                     <p-dropdown
+                        [disabled]="details"
                         (onChange)="simulation.nbreEcheance = null"
                         [options]="echeanceOptions"
                         [(ngModel)]="selectedEcheance"
@@ -205,6 +222,7 @@
                 <div class="field col-6">
                     <label>Salaire mensuel</label>
                     <p-inputNumber
+                        [disabled]="details"
                         [(ngModel)]="simulation.salaire"
                         mode="currency"
                         required
@@ -215,6 +233,7 @@
                 <div class="field col-6">
                     <label>Autre revenu</label>
                     <p-inputNumber
+                        [disabled]="details"
                         [(ngModel)]="simulation.autreRevenu"
                         mode="currency"
                         required
@@ -225,6 +244,7 @@
                 <div class="field col-12">
                     <label>Situation logement</label>
                     <p-dropdown
+                        [disabled]="details"
                         [options]="logementOptions"
                         [(ngModel)]="selectedLogement"
                         optionLabel="name"
@@ -239,7 +259,12 @@
 </div>
 
 <div class="buttonResultat">
-    <button pButton pRipple label="Voir resultat" (click)="submit()"></button>
+    <p-button [routerLink]="['/']" label="Retour"></p-button>
+    <p-button
+        label="Simuler"
+        (click)="submit()"
+        *ngxPermissionsOnly="'ROLE_Demande Credit Client'"
+    ></p-button>
 </div>
 
 <p-dialog
@@ -258,6 +283,7 @@
         <p>Ineligible</p>
     </div>
     <ng-template pTemplate="footer">
+        <<<<<<< HEAD
         <button
             pButton
             pRipple
@@ -265,5 +291,16 @@
             icon="pi pi-check"
             class="p-button-text"
         ></button>
+        =======
+        <button
+            *ngIf="resultat >= 50"
+            pButton
+            pRipple
+            label="Passer au demande"
+            (click)="toDemande()"
+            icon="pi pi-check"
+            class="p-button-text"
+        ></button>
+        >>>>>>> origin/master
     </ng-template>
 </p-dialog>

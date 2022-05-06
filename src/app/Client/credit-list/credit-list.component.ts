@@ -23,6 +23,7 @@ export class CreditListComponent implements OnInit {
     items: MenuItem[];
 
     demandeId: number;
+    idSim: number;
 
     displayList: {
         id: number;
@@ -34,6 +35,7 @@ export class CreditListComponent implements OnInit {
         enAttente: string;
         gsm: number;
         phase: number;
+        idSimulation:number;
     }[] = [];
 
     phases: any;
@@ -72,6 +74,12 @@ export class CreditListComponent implements OnInit {
                         icon: 'pi pi-upload',
                         command: () => this.redirectToDetails("traitement"),
                         visible: (this.hasAccess() && this.canTreat())
+                    },
+                    {
+                        label: 'Voir simulation',
+                        icon: 'pi pi-file',
+                        command: () => this.redirectToSim(),
+                        visible: (this.hasAccess())
                     },
                     {
                         label: 'Modifier',
@@ -122,8 +130,14 @@ export class CreditListComponent implements OnInit {
         this.router.navigate(["/credit/demande", { id: v1, p: v2 }]);
     }
 
-    getDemandeId(id: number) {
+    redirectToSim(){
+        let v = this.encrypter.encrypt(this.idSim.toString());
+        this.router.navigate(["/credit/simulation", {id: v}]);
+    }
+
+    getDemandeId(id: number,idsim:number) {
         this.demandeId = id;
+        this.idSim = idsim;
         this.items = [{
             label: 'Voir détails',
             icon: 'pi pi-file',
@@ -134,6 +148,12 @@ export class CreditListComponent implements OnInit {
             icon: 'pi pi-upload',
             command: () => this.redirectToDetails("traitement"),
             visible: (this.hasAccess() && this.canTreat())
+        },
+        {
+            label: 'Voir simulation',
+            icon: 'pi pi-file',
+            command: () => this.redirectToSim(),
+            visible: (this.hasAccess())
         },
         {
             label: 'Modifier',
@@ -189,7 +209,8 @@ export class CreditListComponent implements OnInit {
                 etat: phase.etape,
                 enAttente: phase.enAttenteDe,
                 phase: phase.id,
-                gsm: e.gsm
+                gsm: e.gsm,
+                idSimulation: e.idSimulation
             });
         });
     }

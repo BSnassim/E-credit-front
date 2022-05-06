@@ -151,6 +151,7 @@
                     <td>{{ demande.montant | currency: " " }} TND</td>
                     <td>{{ demande.etat }} {{ demande.enAttente }}</td>
                     <td>
+<<<<<<< HEAD
                         <button
                             type="button"
                             pButton
@@ -167,6 +168,17 @@
                             [model]="items"
                             appendTo="body"
                         ></p-menu>
+=======
+                        {{ demande.montant | currency: " " }} TND
+                    </td>
+                    <td>
+                        {{ demande.etat }} {{ demande.enAttente }}
+                    </td>
+                    <td>
+                        <button type="button" pButton icon="pi pi-bars" label="Actions" class="p-button-info"
+                            (click)="menu.toggle($event); getDemandeId(demande.id,demande.idSimulation)"></button>
+                        <p-menu #menu [popup]="true" [model]="items" appendTo="body"></p-menu>
+>>>>>>> origin/master
                     </td>
                 </tr>
             </ng-template>
