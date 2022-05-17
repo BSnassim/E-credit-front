@@ -150,7 +150,6 @@ export class SimFormComponent implements OnInit {
             this.resultat = this.simulationService.calculateSimulation(this.simulation);
             this.simulation.resultat = (this.resultat>=50? "Eligible":"Ineligible");
             this.simulationService.saveSimulation(this.simulation).subscribe( data =>{
-                console.log(data);
                 this.simulation.idSim = data;
             });
             this.showResultat = true;
