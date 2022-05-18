@@ -63,11 +63,6 @@ export class AppMenuComponent implements OnInit {
                             {
                                 label: "Demander un credit",
                                 icon: "pi pi-fw pi-dollar",
-                                routerLink: ["/credit/demande"],
-                            },
-                            {
-                                label: "Simulation",
-                                icon: "pi pi-fw pi-dollar",
                                 routerLink: ["/credit/simulation"],
                             },
                             {

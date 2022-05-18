@@ -1,8 +1,9 @@
+import { CryptojsService } from 'src/app/Services/cryptojs.service';
 import { TokenService } from './../../auth/services/token.service';
 import { SimulationService } from './../../Services/simulation.service';
 import { Simulation } from './../../models/credit/simulation';
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AppBreadcrumbService } from "src/app/main/app-breadcrumb/app.breadcrumb.service";
 import { CreditFormService } from "src/app/Services/credit-form-service.service";
 import { TypeCredit } from 'src/app/models/credit/typeCredit';
@@ -32,7 +33,7 @@ export class SimFormComponent implements OnInit {
     logementOptions = [{ id: 1, name: 'Locataire' }, { id: 2, name: "Propriétaire" }];
     selectedLogement = {} as { id: number, name: string };
 
-    pieceOptions = [{ id: 1, name: 'CIN' }, { id: 2, name: "Passeport" }];
+    pieceOptions = [{ id: 1, name: "CIN" }, { id: 2, name: "Passeport" }];
     selectedPiece = {} as { id: number, name: string };
 
     typesCredit: TypeCredit[];
@@ -44,10 +45,14 @@ export class SimFormComponent implements OnInit {
 
     showResultat: boolean= false;
 
+    details: boolean= false;
+
     resultat : number;
 
     constructor(
         private router: Router,
+        private route: ActivatedRoute,
+        private encrypter: CryptojsService,
         private messageService: MessageService,
         private creditFormService: CreditFormService,
         private simulationService: SimulationService,
@@ -63,6 +68,33 @@ export class SimFormComponent implements OnInit {
     ngOnInit(): void {
         this.getUserID();
         this.getTypeCredit();
+        this.getParams();
+    }
+
+    getParams(){
+        this.route.params.subscribe((params) => {
+            if(params.id){
+                let v: number = + this.encrypter.decrypt(params.id);
+                this.details = true;
+                this.getSimDetails(v);
+            }
+        });
+    }
+
+    getSimDetails(id:number){
+        this.simulationService.getSimulationById(id).subscribe(data =>{
+            if(data==null){this.router.navigate(['notfound'])}
+            else{
+            this.simulation = data;
+            this.selectedCredit = this.typesCredit.find((i) => i.idType === data.idTypeCredit );
+            this.selectedEcheance = this.echeanceOptions.find((i) => i.name === data.unite);
+            this.selectedEmploi = this.emploiOptions.find((i) => i.name === data.sitProfessionnel);
+            this.selectedFamiliale = this.familialeOptions.find((i) => i.name === data.sitFamiliale);
+            this.selectedLogement = this.logementOptions.find((i) => i.name === data.sitLogement);
+            this.selectedMedicale = this.medicaleOptions.find((i) => i.name === data.sitMedicale);
+            this.selectedPiece = this.pieceOptions.find((i) => i.name === data.typePiece);
+            }
+        })
     }
 
     getUserID(){
@@ -79,11 +111,31 @@ export class SimFormComponent implements OnInit {
         });
     }
 
+    toDemande(){
+        let a = this.encrypter.encrypt(this.simulation.idSim.toString());
+        this.router.navigate(["/credit/demande", { id1: a }]);
+    }
+
+    validateNumPiece(){
+        let test = false;
+        if(this.selectedPiece.id == 1){
+            if(this.simulation.numPiece.length!=8){
+                test = true;
+            }
+        } else if(this.selectedPiece.id == 2){
+            if(this.simulation.numPiece.length!=9){
+                test = true;
+            }
+        }
+        return test;
+    }
+
     submit() {
         if (!this.selectedCredit || !this.selectedEcheance || !this.selectedEmploi || !this.selectedFamiliale || !this.selectedLogement
             || !this.selectedMedicale || !this.selectedPiece || !this.simulation.nom || !this.simulation.prenom || !this.simulation.numPiece
             || !this.simulation.numCompte || !this.simulation.dateCompte || !this.simulation.dateNaissance || !this.simulation.gsm ||
-            !this.simulation.montant || !this.simulation.nbreEcheance || !this.simulation.salaire) {
+            !this.simulation.montant || !this.simulation.nbreEcheance || !this.simulation.salaire || this.simulation.numCompte.length!=13
+            || this.simulation.gsm.toString().length!=8 || this.validateNumPiece()) {
             this.messageService.add({ severity: 'error', summary: 'Echec', detail: 'Veuiller verifier les champs !', life: 3000 });
         }
         else{
@@ -97,7 +149,9 @@ export class SimFormComponent implements OnInit {
             this.simulation.idUser = this.UserId;
             this.resultat = this.simulationService.calculateSimulation(this.simulation);
             this.simulation.resultat = (this.resultat>=50? "Eligible":"Ineligible");
-            this.simulationService.saveSimulation(this.simulation).subscribe();
+            this.simulationService.saveSimulation(this.simulation).subscribe( data =>{
+                this.simulation.idSim = data;
+            });
             this.showResultat = true;
         }
     }

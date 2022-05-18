@@ -24,4 +24,5 @@ export interface Demande {
     idUser?: number;
     userName?: string;
     gsm?: number;
+    idSimulation?: number;
 }
