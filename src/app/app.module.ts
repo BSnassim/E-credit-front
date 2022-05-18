@@ -143,6 +143,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { AppCalendarComponent } from "./pages/app.calendar.component";
 import { ChargeModule } from "./Charge/charge.module";
 import { RendezVousComponent } from "./Charge/Rendez-vous/rendez-vous.component";
+import { ChatModule } from "./Chat/chat.module";
 
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
@@ -175,6 +176,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         CarouselModule,
         CascadeSelectModule,
         ChartModule,
+        ChatModule,
         ChargeModule,
         CheckboxModule,
         ChipModule,

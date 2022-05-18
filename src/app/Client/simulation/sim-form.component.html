@@ -1,5 +1,5 @@
 <div class="grid">
-    <div class="col-12 ">
+    <div class="col-12">
         <div class="card">
             <h5>Informations personnels</h5>
             <div class="p-fluid formgrid grid">
@@ -75,7 +75,6 @@
                             required maxlength="8" minlength="8" />
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -132,7 +131,6 @@
     </div>
 
     <p-toast></p-toast>
-
 </div>
 
 <div class="buttonResultat">
@@ -140,10 +138,21 @@
     <p-button label="Simuler" (click)="submit()" *ngxPermissionsOnly="'ROLE_Demande Credit Client'"></p-button>
 </div>
 
-<p-dialog [(visible)]='showResultat' [draggable]=false [resizable]=false modal="true">
+<p-dialog
+    [(visible)]="showResultat"
+    [draggable]="false"
+    [resizable]="false"
+    modal="true"
+>
     <b>Résultat de simulation :</b>
-    <div class="success" *ngIf="resultat>=50"><div class="tup"><i class="pi pi-thumbs-up"></i></div><p>Eligible</p></div>
-    <div class="failure" *ngIf="resultat<50"><div class="tdown"><i class="pi pi-thumbs-down"></i></div><p>Ineligible</p></div>
+    <div class="success" *ngIf="resultat >= 50">
+        <div class="tup"><i class="pi pi-thumbs-up"></i></div>
+        <p>Eligible</p>
+    </div>
+    <div class="failure" *ngIf="resultat < 50">
+        <div class="tdown"><i class="pi pi-thumbs-down"></i></div>
+        <p>Ineligible</p>
+    </div>
     <ng-template pTemplate="footer">
         <button *ngIf="resultat>=50" pButton pRipple label="Passer au demande" (click)="toDemande()" icon="pi pi-check" class="p-button-text"></button>
     </ng-template>

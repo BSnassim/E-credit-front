@@ -1,14 +1,18 @@
-import { TokenService } from 'src/app/auth/services/token.service';
-import { User } from 'src/app/models/user';
-import { Subscription } from 'rxjs';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
-import { environment } from "src/environments/environment";
+import { TokenService } from "src/app/auth/services/token.service";
+import { User } from "src/app/models/user";
+import { Subscription } from "rxjs";
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+} from "@angular/core";
 import { EventsService } from "src/app/Services/events.service";
 import { DatePipe } from "@angular/common";
 import { DemandeRdv } from "src/app/models/demande-rdv";
 import { MessageService } from "primeng/api";
-import { Router } from "@angular/router";
-import { Location } from "@angular/common";
 
 @Component({
     selector: "app-rendez-vous",
@@ -47,10 +51,8 @@ export class RendezVousComponent implements OnInit, OnDestroy {
         private eventService: EventsService,
         private datePipe: DatePipe,
         private messageService: MessageService,
-        private tokenService: TokenService,
-        public _router: Router,
-        public _location: Location
-    ) { }
+        private tokenService: TokenService
+    ) {}
 
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
@@ -61,7 +63,7 @@ export class RendezVousComponent implements OnInit, OnDestroy {
         this.getRdv();
         this.subscription = this.eventService.refresh$.subscribe(() => {
             this.getRdv();
-        })
+        });
 
         this.datePipe.transform(this.currentDate, "dd/MM/yyyy");
 
@@ -117,13 +119,10 @@ export class RendezVousComponent implements OnInit, OnDestroy {
                         this.changedEvent.start = this.clickedEvent.start;
                         this.changedEvent.end = this.clickedEvent.end;
                         this.changedEvent.id = this.clickedEvent.id;
-
                     },
                 };
             }, 1);
             this.options = { ...this.options, ...{ events: this.events } };
-
-
         });
     }
 
@@ -132,11 +131,10 @@ export class RendezVousComponent implements OnInit, OnDestroy {
         if (newEvent.getTime() < this.currentDate.setHours(0, 0, 0, 0)) {
             this.eventDialog = false;
         } else {
-
             this.eventDialog = true;
             this.clickedEvent = arg.event;
             this.date = new Date(arg.dateStr);
-            this.date.setHours(8,30,0,0);
+            this.date.setHours(8, 30, 0, 0);
             // this.date = this.datePipe.transform(this.newDate, "yyyy-MM-dd");
             this.changedEvent = {
                 id: null,
@@ -183,14 +181,13 @@ export class RendezVousComponent implements OnInit, OnDestroy {
                 detail: "Rendez-vous modifié avec succès",
             });
             this.eventDialog = false;
-        }
-        else {
+        } else {
             this.messageService.add({
                 key: "tst",
                 severity: "error",
                 summary: "Accés refusé",
-                detail: "Vous ne pouvez pas fixer un rendez-vous sans une demande"
-            })
+                detail: "Vous ne pouvez pas fixer un rendez-vous sans une demande",
+            });
         }
     }
 
@@ -208,5 +205,4 @@ export class RendezVousComponent implements OnInit, OnDestroy {
             this.eventDialog = false;
         }
     }
-
 }
