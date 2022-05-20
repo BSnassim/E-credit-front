@@ -209,7 +209,6 @@ export class SimFormComponent implements OnInit {
             this.simulationService
                 .saveSimulation(this.simulation)
                 .subscribe((data) => {
-                    console.log(data);
                     this.simulation.idSim = data;
                 });
             this.showResultat = true;
