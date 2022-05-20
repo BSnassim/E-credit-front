@@ -1,9 +1,8 @@
-import { NgxPermissionsService } from 'ngx-permissions';
-import { CryptojsService } from './../../Services/cryptojs.service';
-import { User } from './../../models/user';
-import { Router } from '@angular/router';
+import { NgxPermissionsService } from "ngx-permissions";
+import { CryptojsService } from "./../../Services/cryptojs.service";
+import { User } from "./../../models/user";
+import { Router } from "@angular/router";
 import { TokenService } from "src/app/auth/services/token.service";
-
 import { Component, OnInit } from "@angular/core";
 import { AppBreadcrumbService } from "src/app/main/app-breadcrumb/app.breadcrumb.service";
 import { Demande } from "src/app/models/credit/demande";
@@ -17,7 +16,6 @@ import { MenuItem } from "primeng/api";
     styleUrls: ["./credit-list.component.scss"],
 })
 export class CreditListComponent implements OnInit {
-
     listDemande: Demande[] = [];
 
     items: MenuItem[];
@@ -35,7 +33,7 @@ export class CreditListComponent implements OnInit {
         enAttente: string;
         gsm: number;
         phase: number;
-        idSimulation:number;
+        idSimulation: number;
     }[] = [];
 
     phases: any;
@@ -64,30 +62,31 @@ export class CreditListComponent implements OnInit {
                     this.listDemande = result3;
                     this.initList();
                     this.loading = false;
-                    this.items = [{
-                        label: 'Voir détails',
-                        icon: 'pi pi-file',
-                        command: () => this.redirectToDetails("info")
-                    },
-                    {
-                        label: 'Traitement',
-                        icon: 'pi pi-upload',
-                        command: () => this.redirectToDetails("traitement"),
-                        visible: (this.hasAccess() && this.canTreat())
-                    },
-                    {
-                        label: 'Voir simulation',
-                        icon: 'pi pi-file',
-                        command: () => this.redirectToSim(),
-                        visible: (this.hasAccess())
-                    },
-                    {
-                        label: 'Modifier',
-                        icon: 'pi pi-upload',
-                        command: () => this.redirectToDetails("modification"),
-                        visible: this.needsComplement()
-                    }
-
+                    this.items = [
+                        {
+                            label: "Voir détails",
+                            icon: "pi pi-file",
+                            command: () => this.redirectToDetails("info"),
+                        },
+                        {
+                            label: "Traitement",
+                            icon: "pi pi-upload",
+                            command: () => this.redirectToDetails("traitement"),
+                            visible: this.hasAccess() && this.canTreat(),
+                        },
+                        {
+                            label: "Voir simulation",
+                            icon: "pi pi-file",
+                            command: () => this.redirectToSim(),
+                            visible: this.hasAccess(),
+                        },
+                        {
+                            label: "Modifier",
+                            icon: "pi pi-upload",
+                            command: () =>
+                                this.redirectToDetails("modification"),
+                            visible: this.needsComplement(),
+                        },
                     ];
                 });
             });
@@ -96,9 +95,13 @@ export class CreditListComponent implements OnInit {
 
     hasAccess() {
         let access: boolean = false;
-            if (this.permissionsService.getPermissions().hasOwnProperty('ROLE_Traitement Demandes')) {
-                access = true;
-            }
+        if (
+            this.permissionsService
+                .getPermissions()
+                .hasOwnProperty("ROLE_Traitement Demandes")
+        ) {
+            access = true;
+        }
         return access;
     }
 
@@ -106,7 +109,12 @@ export class CreditListComponent implements OnInit {
         let access: boolean = false;
         if (this.demandeId) {
             let c = this.displayList.find((i) => i.id === this.demandeId);
-            if(this.permissionsService.getPermissions().hasOwnProperty('ROLE_Demande Credit Client') && c.phase === 4){
+            if (
+                this.permissionsService
+                    .getPermissions()
+                    .hasOwnProperty("ROLE_Demande Credit Client") &&
+                c.phase === 4
+            ) {
                 access = true;
             }
         }
@@ -130,38 +138,38 @@ export class CreditListComponent implements OnInit {
         this.router.navigate(["/credit/demande", { id: v1, p: v2 }]);
     }
 
-    redirectToSim(){
+    redirectToSim() {
         let v = this.encrypter.encrypt(this.idSim.toString());
-        this.router.navigate(["/credit/simulation", {id: v}]);
+        this.router.navigate(["/credit/simulation", { id: v }]);
     }
 
-    getDemandeId(id: number,idsim:number) {
+    getDemandeId(id: number, idsim: number) {
         this.demandeId = id;
         this.idSim = idsim;
-        this.items = [{
-            label: 'Voir détails',
-            icon: 'pi pi-file',
-            command: () => this.redirectToDetails("info")
-        },
-        {
-            label: 'Traitement',
-            icon: 'pi pi-upload',
-            command: () => this.redirectToDetails("traitement"),
-            visible: (this.hasAccess() && this.canTreat())
-        },
-        {
-            label: 'Voir simulation',
-            icon: 'pi pi-file',
-            command: () => this.redirectToSim(),
-            visible: (this.hasAccess())
-        },
-        {
-            label: 'Modifier',
-            icon: 'pi pi-upload',
-            command: () => this.redirectToDetails("modification"),
-            visible: this.needsComplement()
-        }
-
+        this.items = [
+            {
+                label: "Voir détails",
+                icon: "pi pi-file",
+                command: () => this.redirectToDetails("info"),
+            },
+            {
+                label: "Traitement",
+                icon: "pi pi-upload",
+                command: () => this.redirectToDetails("traitement"),
+                visible: this.hasAccess() && this.canTreat(),
+            },
+            {
+                label: "Voir simulation",
+                icon: "pi pi-file",
+                command: () => this.redirectToSim(),
+                visible: this.hasAccess(),
+            },
+            {
+                label: "Modifier",
+                icon: "pi pi-upload",
+                command: () => this.redirectToDetails("modification"),
+                visible: this.needsComplement(),
+            },
         ];
     }
 
@@ -187,8 +195,7 @@ export class CreditListComponent implements OnInit {
                 .getDemandesByAgence(this.user.agence.idAgence)
                 .toPromise();
             return result;
-        }
-        else {
+        } else {
             const result = await this.creditService
                 .getDemandesByUser(this.user.id)
                 .toPromise();
@@ -210,7 +217,7 @@ export class CreditListComponent implements OnInit {
                 enAttente: phase.enAttenteDe,
                 phase: phase.id,
                 gsm: e.gsm,
-                idSimulation: e.idSimulation
+                idSimulation: e.idSimulation,
             });
         });
     }

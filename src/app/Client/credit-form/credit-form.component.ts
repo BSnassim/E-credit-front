@@ -1,7 +1,12 @@
-import { SimulationService } from './../../Services/simulation.service';
-import { NgxPermissionsService } from 'ngx-permissions';
+import { SimulationService } from "./../../Services/simulation.service";
+import { NgxPermissionsService } from "ngx-permissions";
 import { Component, OnInit } from "@angular/core";
-import { MessageService, ConfirmationService, MenuItem, ConfirmEventType } from "primeng/api";
+import {
+    MessageService,
+    ConfirmationService,
+    MenuItem,
+    ConfirmEventType,
+} from "primeng/api";
 import { AppBreadcrumbService } from "src/app/main/app-breadcrumb/app.breadcrumb.service";
 import { Garantie } from "src/app/models/credit/garantie";
 import { Demande } from "src/app/models/credit/demande";
@@ -84,7 +89,8 @@ export class CreditFormComponent implements OnInit {
 
     phases: any;
 
-    history: { date: Date, phase: string, nextPhase: string, byWho: string }[] = [];
+    history: { date: Date; phase: string; nextPhase: string; byWho: string }[] =
+        [];
 
     complement: string;
 
@@ -94,7 +100,7 @@ export class CreditFormComponent implements OnInit {
 
     etapeActuelle: string;
 
-    etapeSuivante = {} as { id: number, etape: string };
+    etapeSuivante = {} as { id: number; etape: string };
 
     constructor(
         private router: Router,
@@ -114,28 +120,28 @@ export class CreditFormComponent implements OnInit {
         ]);
         this.items = [
             {
-                label: 'Prise de RDV',
-                icon: 'pi pi-check',
+                label: "Prise de RDV",
+                icon: "pi pi-check",
                 command: () => {
                     this.nextPhase(2);
                     this.hideComplement(true);
-                }
+                },
             },
             {
-                label: 'Complément',
-                icon: 'pi pi-refresh',
+                label: "Complément",
+                icon: "pi pi-refresh",
                 command: () => {
                     this.nextPhase(4);
                     this.hideComplement(false);
-                }
+                },
             },
             {
-                label: 'Refuser',
-                icon: 'pi pi-times',
+                label: "Refuser",
+                icon: "pi pi-times",
                 command: () => {
                     this.nextPhase(3);
                     this.hideComplement(true);
-                }
+                },
             },
         ];
 
@@ -143,8 +149,8 @@ export class CreditFormComponent implements OnInit {
         this.fileMaxSize = null;
         this.loading = false;
         this.multiple = true;
-        this.propagateChange = (object: any) => { };
-        this.propagateValidator = () => { };
+        this.propagateChange = (object: any) => {};
+        this.propagateValidator = () => {};
         this.readOnly = false;
         this.required = false;
         this.style = { width: "100%" };
@@ -172,7 +178,7 @@ export class CreditFormComponent implements OnInit {
     /*           ********************************************               */
     /*           *************** LIGNE CREDIT ***************               */
 
-    unite: any[] = [ "Mois", "Année"];
+    unite: any[] = ["Mois", "Année"];
 
     getTypeCredit() {
         this.creditFormService.getTypeCreditAPI().subscribe((response) => {
@@ -384,19 +390,19 @@ export class CreditFormComponent implements OnInit {
                 });
             } else {
                 this.demande.idTypeCredit = this.typeC.idType;
-                this.demande.garantie = this.garanties
+                this.demande.garantie = this.garanties;
                 this.demande.idPhase = 5;
-                this.demande.userName = this.user.nom + ' ' + this.user.prenom;
-                this.creditFormService
-                    .putDemande(this.demande)
-                    .subscribe();
+                this.demande.userName = this.user.nom + " " + this.user.prenom;
+                this.creditFormService.putDemande(this.demande).subscribe();
                 this.messageService.add({
                     key: "tst",
                     severity: "success",
                     summary: "Succés",
                     detail: "Demande changé avec succés",
                 });
-                setTimeout(() => { this.router.navigate(["/credit/consultation"]); }, 1500);
+                setTimeout(() => {
+                    this.router.navigate(["/credit/consultation"]);
+                }, 1500);
             }
             //IF INSERTING A NEW LOAN
         } else {
@@ -436,7 +442,8 @@ export class CreditFormComponent implements OnInit {
                             this.user = response;
                             this.demande.idTypeCredit = this.typeC.idType;
                             this.demande.idUser = this.user.id;
-                            this.demande.userName = this.user.nom + ' ' + this.user.prenom;
+                            this.demande.userName =
+                                this.user.nom + " " + this.user.prenom;
                             this.creditFormService
                                 .postDemandeAPI(this.demande, this.garanties)
                                 .subscribe();
@@ -447,7 +454,9 @@ export class CreditFormComponent implements OnInit {
                                 detail: "Demande déposer avec succés",
                             });
                         });
-                        setTimeout(() => { this.router.navigate(["/credit/consultation"]); }, 1500);
+                        setTimeout(() => {
+                            this.router.navigate(["/credit/consultation"]);
+                        }, 1500);
                     }
                 });
         }
@@ -467,13 +476,17 @@ export class CreditFormComponent implements OnInit {
 
     getDemande(id: number) {
         this.creditFormService.getDemandeById(id).subscribe((data) => {
-            if(data == null){ this.router.navigate(['notfound'])}
-            else{
-            this.demande = data;
-            let t = this.typeCredit.find((i) => i.idType === data.idTypeCredit);
-            let e = this.phases.find((i) => i.id === data.idPhase);
-            this.etapeActuelle = e.etape;
-            this.typeC = t;}
+            if (data == null) {
+                this.router.navigate(["notfound"]);
+            } else {
+                this.demande = data;
+                let t = this.typeCredit.find(
+                    (i) => i.idType === data.idTypeCredit
+                );
+                let e = this.phases.find((i) => i.id === data.idPhase);
+                this.etapeActuelle = e.etape;
+                this.typeC = t;
+            }
         });
     }
 
@@ -484,30 +497,33 @@ export class CreditFormComponent implements OnInit {
     }
 
     getPieces(id: number) {
-        this.creditFormService.getPiecesJointesByDemande(id).subscribe((data) => {
-            this.selected = data;
-        })
+        this.creditFormService
+            .getPiecesJointesByDemande(id)
+            .subscribe((data) => {
+                this.selected = data;
+            });
     }
 
     getPhases() {
-        this.creditFormService.getListPhases().subscribe(data => {
+        this.creditFormService.getListPhases().subscribe((data) => {
             this.phases = data;
-        })
+        });
     }
 
     getHistory(id: number) {
-        this.creditFormService.getAllHistoriqueByDemande(id).subscribe(data => {
-            data.forEach(e => {
-                let phase = this.phases.find((i) => i.id === e.idPhase);
-                this.history.push({
-                    date: e.datePhase,
-                    phase: phase.etape,
-                    nextPhase: phase.enAttenteDe,
-                    byWho: e.userName
-                })
-            })
-
-        });
+        this.creditFormService
+            .getAllHistoriqueByDemande(id)
+            .subscribe((data) => {
+                data.forEach((e) => {
+                    let phase = this.phases.find((i) => i.id === e.idPhase);
+                    this.history.push({
+                        date: e.datePhase,
+                        phase: phase.etape,
+                        nextPhase: phase.enAttenteDe,
+                        byWho: e.userName,
+                    });
+                });
+            });
     }
 
     getUser() {
@@ -516,20 +532,21 @@ export class CreditFormComponent implements OnInit {
         });
     }
 
-    getSim(id : number){
-        this.simulationService.getSimulationById(id).subscribe( data =>{
-            if(data == null){ this.router.navigate(['notfound'])}
-            else{
-            this.demande.nom = data.nom;
-            this.demande.prenom = data.prenom;
-            this.demande.dateCompte = data.dateCompte;
-            this.demande.dateNaissance = data.dateNaissance;
-            this.demande.gsm = data.gsm;
-            this.demande.numCompte = data.numCompte;
-            this.demande.numPiece = data.numPiece;
-            this.demande.typePiece = data.typePiece;
-            this.demande.sitFamiliale = data.sitFamiliale;
-            this.demande.idSimulation = data.idSim;
+    getSim(id: number) {
+        this.simulationService.getSimulationById(id).subscribe((data) => {
+            if (data == null) {
+                this.router.navigate(["notfound"]);
+            } else {
+                this.demande.nom = data.nom;
+                this.demande.prenom = data.prenom;
+                this.demande.dateCompte = data.dateCompte;
+                this.demande.dateNaissance = data.dateNaissance;
+                this.demande.gsm = data.gsm;
+                this.demande.numCompte = data.numCompte;
+                this.demande.numPiece = data.numPiece;
+                this.demande.typePiece = data.typePiece;
+                this.demande.sitFamiliale = data.sitFamiliale;
+                this.demande.idSimulation = data.idSim;
             }
         });
     }
@@ -539,24 +556,28 @@ export class CreditFormComponent implements OnInit {
             if (params.id) {
                 this.page = this.encrypter.decrypt(params.p);
                 this.modifying = true;
-                let value: number = + this.encrypter.decrypt(params.id);
+                let value: number = +this.encrypter.decrypt(params.id);
                 this.getPhases();
                 this.getDemande(value);
                 this.getGaranties(value);
                 this.getPieces(value);
                 this.getHistory(value);
             } else if (params.id1) {
-                let v: number = + this.encrypter.decrypt(params.id1);
+                let v: number = +this.encrypter.decrypt(params.id1);
                 this.getSim(v);
             } else {
-                this.router.navigate(['notfound']);
+                this.router.navigate(["notfound"]);
             }
         });
     }
 
     hasAccess() {
         let access: boolean = false;
-        if (this.permissionsService.getPermissions().hasOwnProperty('ROLE_Traitement Demandes')) {
+        if (
+            this.permissionsService
+                .getPermissions()
+                .hasOwnProperty("ROLE_Traitement Demandes")
+        ) {
             access = true;
         }
         return access;
@@ -565,81 +586,124 @@ export class CreditFormComponent implements OnInit {
     complementInfo() {
         this.confirmationService.confirm({
             key: "second",
-            message: 'Voulez vous vraiment envoyer cette demande?',
-            header: 'Confirmation',
-            icon: 'pi pi-info-circle',
+            message: "Voulez vous vraiment envoyer cette demande?",
+            header: "Confirmation",
+            icon: "pi pi-info-circle",
             accept: () => {
-                this.messageService.add({ key: "tst", severity: 'info', summary: 'Confirmé', detail: 'Informations envoyées' });
+                this.messageService.add({
+                    key: "tst",
+                    severity: "info",
+                    summary: "Confirmé",
+                    detail: "Informations envoyées",
+                });
                 let dem = this.demande;
                 dem.idPhase = 4;
                 dem.garantie = [];
                 dem.pieces = [];
                 dem.complement = this.complement;
-                dem.userName = this.user.nom + ' ' + this.user.prenom;
+                dem.userName = this.user.nom + " " + this.user.prenom;
                 this.creditFormService.putDemande(dem).subscribe();
-                setTimeout(() => { this.router.navigate(["/credit/consultation"]); }, 1500);
+                setTimeout(() => {
+                    this.router.navigate(["/credit/consultation"]);
+                }, 1500);
             },
             reject: (type) => {
                 switch (type) {
                     case ConfirmEventType.REJECT:
-                        this.messageService.add({ key: "sts", severity: 'error', summary: 'Rejeté', detail: 'Vous avez rejeté' });
+                        this.messageService.add({
+                            key: "sts",
+                            severity: "error",
+                            summary: "Rejeté",
+                            detail: "Vous avez rejeté",
+                        });
                         break;
                     case ConfirmEventType.CANCEL:
-                        this.messageService.add({ key: "sts", severity: 'warn', summary: 'Anuulé', detail: 'Vous avez annulé' });
+                        this.messageService.add({
+                            key: "sts",
+                            severity: "warn",
+                            summary: "Anuulé",
+                            detail: "Vous avez annulé",
+                        });
                         break;
                 }
-            }
+            },
         });
     }
 
     refuseDemande() {
         this.confirmationService.confirm({
             key: "second",
-            message: 'Voulez vous vraiment refuser cette demande?',
-            header: 'Confirmation',
-            icon: 'pi pi-info-circle',
+            message: "Voulez vous vraiment refuser cette demande?",
+            header: "Confirmation",
+            icon: "pi pi-info-circle",
             accept: () => {
-                this.messageService.add({ severity: 'info', summary: 'Confirmé', detail: 'Demande refusée' });
+                this.messageService.add({
+                    severity: "info",
+                    summary: "Confirmé",
+                    detail: "Demande refusée",
+                });
                 let dem = this.demande;
                 dem.idPhase = 3;
                 dem.garantie = [];
                 dem.pieces = [];
-                dem.userName = this.user.nom + ' ' + this.user.prenom;
+                dem.userName = this.user.nom + " " + this.user.prenom;
                 this.creditFormService.putDemande(dem).subscribe();
-                setTimeout(() => { this.router.navigate(["/credit/consultation"]); }, 1500);
+                setTimeout(() => {
+                    this.router.navigate(["/credit/consultation"]);
+                }, 1500);
             },
             reject: (type) => {
                 switch (type) {
                     case ConfirmEventType.REJECT:
-                        this.messageService.add({ key: "sts", severity: 'error', summary: 'Rejeté', detail: 'Vous avez rejeté' });
+                        this.messageService.add({
+                            key: "sts",
+                            severity: "error",
+                            summary: "Rejeté",
+                            detail: "Vous avez rejeté",
+                        });
                         break;
                     case ConfirmEventType.CANCEL:
-                        this.messageService.add({ key: "sts", severity: 'warn', summary: 'Anuulé', detail: 'Vous avez annulé' });
+                        this.messageService.add({
+                            key: "sts",
+                            severity: "warn",
+                            summary: "Anuulé",
+                            detail: "Vous avez annulé",
+                        });
                         break;
                 }
-            }
+            },
         });
     }
 
     priseRDV() {
         this.confirmationService.confirm({
             key: "second",
-            message: 'Voulez vous vraiment fixer un RDV pour cette demande?',
-            header: 'Confirmation',
-            icon: 'pi pi-info-circle',
+            message: "Voulez vous vraiment fixer un RDV pour cette demande?",
+            header: "Confirmation",
+            icon: "pi pi-info-circle",
             accept: () => {
                 this.calendarDialog = true;
             },
             reject: (type) => {
                 switch (type) {
                     case ConfirmEventType.REJECT:
-                        this.messageService.add({ key: "sts", severity: 'error', summary: 'Rejeté', detail: 'Vous avez rejeté' });
+                        this.messageService.add({
+                            key: "sts",
+                            severity: "error",
+                            summary: "Rejeté",
+                            detail: "Vous avez rejeté",
+                        });
                         break;
                     case ConfirmEventType.CANCEL:
-                        this.messageService.add({ key: "sts", severity: 'warn', summary: 'Anuulé', detail: 'Vous avez annulé' });
+                        this.messageService.add({
+                            key: "sts",
+                            severity: "warn",
+                            summary: "Anuulé",
+                            detail: "Vous avez annulé",
+                        });
                         break;
                 }
-            }
+            },
         });
     }
 
@@ -653,11 +717,17 @@ export class CreditFormComponent implements OnInit {
         dem.idPhase = 2;
         dem.garantie = [];
         dem.pieces = [];
-        dem.userName = this.user.nom + ' ' + this.user.prenom;
-        let res = this.encrypter.encrypt(dem.idDemande.toString())
+        dem.userName = this.user.nom + " " + this.user.prenom;
+        let res = this.encrypter.encrypt(dem.idDemande.toString());
         this.creditFormService.putDemande(dem).subscribe();
-        this.messageService.add({ severity: 'info', summary: 'Confirmé', detail: 'Rendez-vous décidé' });
-        setTimeout(() => { this.router.navigate(["/credit/consultation"]); }, 1500);
+        this.messageService.add({
+            severity: "info",
+            summary: "Confirmé",
+            detail: "Rendez-vous décidé",
+        });
+        setTimeout(() => {
+            this.router.navigate(["/credit/consultation"]);
+        }, 1500);
     }
 
     nextPhase(id: number) {

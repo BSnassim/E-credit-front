@@ -55,7 +55,9 @@ export class LoginComponent implements OnInit, OnDestroy {
                     this.tokenService.setToken(response.token);
                     // Add roles to permission service
                     this.authService.savePermissions(response.roles);
-                    this.permissionsService.loadPermissions(this.authService.getPermissions());
+                    this.permissionsService.loadPermissions(
+                        this.authService.getPermissions()
+                    );
                     this.router.navigate(["/"]);
                 },
                 (error) => {
