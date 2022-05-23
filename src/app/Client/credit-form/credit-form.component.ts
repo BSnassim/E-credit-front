@@ -398,7 +398,7 @@ export class CreditFormComponent implements OnInit {
                     key: "tst",
                     severity: "success",
                     summary: "Succés",
-                    detail: "Demande changé avec succés",
+                    detail: "Demande modifié avec succés",
                 });
                 setTimeout(() => {
                     this.router.navigate(["/credit/consultation"]);

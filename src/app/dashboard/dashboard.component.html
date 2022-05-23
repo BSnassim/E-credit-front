@@ -7,3 +7,50 @@
 <div class="grid" *ngxPermissionsOnly="'ROLE_Demande Credit Client'">
     <p>this is a client dashboard</p>
 </div>
+
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h2>Timeline</h2>
+
+            <h5>Custom Timeline</h5>
+            <p-timeline
+                [value]="customEvents"
+                align="alternate"
+                styleClass="customized-timeline"
+            >
+                <ng-template pTemplate="marker" let-event>
+                    <span
+                        class="custom-marker shadow-2"
+                        [style.backgroundColor]="event.color"
+                    >
+                        <i [ngClass]="event.icon"></i>
+                    </span>
+                </ng-template>
+                <ng-template pTemplate="content" let-event>
+                    <p-card [header]="event.status" [subheader]="event.date">
+                        <button
+                            pButton
+                            label="Read more"
+                            class="p-button-text"
+                        ></button>
+                    </p-card>
+                </ng-template>
+            </p-timeline>
+
+            <!-- <h5 style="margin-top: 5em">Horizontal - Alternate Align</h5>
+            <p-timeline
+                [value]="horizontalEvents"
+                layout="horizontal"
+                align="alternate"
+            >
+                <ng-template pTemplate="content" let-event>
+                    {{ event }}
+                </ng-template>
+                <ng-template pTemplate="opposite" let-event>
+                    &nbsp;
+                </ng-template>
+            </p-timeline> -->
+        </div>
+    </div>
+</div>
