@@ -106,8 +106,6 @@ import { AppTopbarComponent } from "./main/app-topbar/app.topbar.component";
 import { AppFooterComponent } from "./main/app-footer/app.footer.component";
 
 // Demo pages
-import { AppInvoiceComponent } from "./pages/app.invoice.component";
-import { AppHelpComponent } from "./pages/app.help.component";
 import { AppNotfoundComponent } from "./pages/app.notfound.component";
 import { AppErrorComponent } from "./pages/app.error.component";
 import { AppAccessdeniedComponent } from "./pages/app.accessdenied.component";
@@ -269,8 +267,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         AppTopbarComponent,
         AppFooterComponent,
         AppCalendarComponent,
-        AppInvoiceComponent,
-        AppHelpComponent,
         AppNotfoundComponent,
         AppErrorComponent,
         AppAccessdeniedComponent,
