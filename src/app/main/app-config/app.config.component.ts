@@ -43,29 +43,6 @@ import {TranslateService} from "@ngx-translate/core";
                                (onClick)="changeColorScheme('dark')"></p-radioButton>
                 <label for="darkMode2">Dark</label>
             </div>
-
-            <h5>Ripple Effect</h5>
-			<p-inputSwitch [ngModel]="app.ripple" (onChange)="appMain.onRippleChange($event)"></p-inputSwitch>
-
-            <h5>Layouts</h5>
-            <div class="layout-themes">
-                <div *ngFor="let l of layoutColors">
-                    <a style="cursor: pointer" (click)="changeLayout(l.name)" [ngStyle]="{'background-color': l.color}">
-                        <i *ngIf="app.layout === l.name" class="pi pi-check"></i>
-                    </a>
-                </div>
-            </div>
-
-            <h5>Themes</h5>
-            <div class="layout-themes">
-                <div *ngFor="let t of themeColors">
-                    <a style="cursor: pointer" (click)="changeTheme(t.name)" [ngStyle]="{'background-color': t.color}">
-                        <i *ngIf="app.theme === t.name" class="pi pi-check"></i>
-                    </a>
-                </div>
-            </div>
-            <h5>Languages</h5>
-            <app-language-select></app-language-select>
         </div>
     `
 })
