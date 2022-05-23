@@ -6,76 +6,195 @@
             <div class="p-fluid formgrid grid">
                 <div class="field col-12 md:col-6">
                     <label for="nom">Nom</label>
-                    <input id="nom" [(ngModel)]="demande.nom" type="text" pInputText required [disabled]="modifying" />
-                    <small *ngIf="submitAll && !demande.nom" id="nom" class="p-invalid">Ce champ est nécessaire.</small>
+                    <input
+                        id="nom"
+                        [(ngModel)]="demande.nom"
+                        type="text"
+                        pInputText
+                        required
+                        [disabled]="modifying"
+                    />
+                    <small
+                        *ngIf="submitAll && !demande.nom"
+                        id="nom"
+                        class="p-invalid"
+                        >Ce champ est nécessaire.</small
+                    >
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="prenom">Prénom</label>
-                    <input id="prenom" [(ngModel)]="demande.prenom" type="text" pInputText required
-                        [disabled]="modifying" />
-                    <small *ngIf="submitAll && !demande.prenom" id="prenom" class="p-invalid">Ce champ est
-                        nécessaire.</small>
+                    <input
+                        id="prenom"
+                        [(ngModel)]="demande.prenom"
+                        type="text"
+                        pInputText
+                        required
+                        [disabled]="modifying"
+                    />
+                    <small
+                        *ngIf="submitAll && !demande.prenom"
+                        id="prenom"
+                        class="p-invalid"
+                        >Ce champ est nécessaire.</small
+                    >
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="typePiece">Type de pièce</label>
-                    <p-dropdown inputId="typePiece" [options]="typePiece" [(ngModel)]="demande.typePiece"
-                        [disabled]="modifying" placeholder="Choisir" required></p-dropdown>
-                    <small *ngIf="submitAll && !demande.typePiece" id="typePiece" class="p-invalid">Ce champ est
-                        nécessaire.</small>
+                    <p-dropdown
+                        inputId="typePiece"
+                        [options]="typePiece"
+                        [(ngModel)]="demande.typePiece"
+                        [disabled]="modifying"
+                        placeholder="Choisir"
+                        required
+                    ></p-dropdown>
+                    <small
+                        *ngIf="submitAll && !demande.typePiece"
+                        id="typePiece"
+                        class="p-invalid"
+                        >Ce champ est nécessaire.</small
+                    >
                 </div>
-                <div class="field col-12 md:col-6" *ngIf="demande.typePiece == 'CIN'">
+                <div
+                    class="field col-12 md:col-6"
+                    *ngIf="demande.typePiece == 'CIN'"
+                >
                     <label for="numCin">Numéro CIN</label>
-                    <input type="text" pInputText pKeyFilter="pnum" id="numCin" [(ngModel)]="demande.numPiece" required
-                        maxlength="8" minlength="8" [disabled]="modifying" />
+                    <input
+                        type="text"
+                        pInputText
+                        pKeyFilter="pnum"
+                        id="numCin"
+                        [(ngModel)]="demande.numPiece"
+                        required
+                        maxlength="8"
+                        minlength="8"
+                        [disabled]="modifying"
+                    />
                 </div>
-                <div class="field col-12 md:col-6" *ngIf="demande.typePiece == 'Passeport'">
+                <div
+                    class="field col-12 md:col-6"
+                    *ngIf="demande.typePiece == 'Passeport'"
+                >
                     <label for="numCin">Numéro Passport</label>
-                    <input id="numCin" [(ngModel)]="demande.numPiece" type="text" minlength="9" maxlength="9" pInputText
-                        required [disabled]="modifying" />
+                    <input
+                        id="numCin"
+                        [(ngModel)]="demande.numPiece"
+                        type="text"
+                        minlength="9"
+                        maxlength="9"
+                        pInputText
+                        required
+                        [disabled]="modifying"
+                    />
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="numCompte">N° Compte</label>
-                    <input type="text" pInputText pKeyFilter="pnum" id="numCompte" [(ngModel)]="demande.numCompte"
-                        required maxlength="13" minlength="13" [disabled]="modifying" />
-                    <small *ngIf="submitAll && !demande.numCompte" id="numCompte" class="p-invalid">Ce champ est
-                        nécessaire.</small>
+                    <input
+                        type="text"
+                        pInputText
+                        pKeyFilter="pnum"
+                        id="numCompte"
+                        [(ngModel)]="demande.numCompte"
+                        required
+                        maxlength="13"
+                        minlength="13"
+                        [disabled]="modifying"
+                    />
+                    <small
+                        *ngIf="submitAll && !demande.numCompte"
+                        id="numCompte"
+                        class="p-invalid"
+                        >Ce champ est nécessaire.</small
+                    >
                 </div>
                 <div class="field col-12 md:col-6">
                     <label>GSM</label>
                     <div class="p-inputgroup">
-                        <button type="button" pButton class="no-click" label="+216" [disabled]="modifying"></button>
-                        <input [(ngModel)]="demande.gsm" type="text" pInputText showIcon="test" pKeyFilter="pnum"
-                            required maxlength="8" minlength="8" [disabled]="modifying"/>
-                        <small *ngIf="submitAll && !demande.gsm" id="numCompte" class="p-invalid">Ce champ est
-                            nécessaire.</small>
+                        <button
+                            type="button"
+                            pButton
+                            class="no-click"
+                            label="+216"
+                            [disabled]="modifying"
+                        ></button>
+                        <input
+                            [(ngModel)]="demande.gsm"
+                            type="text"
+                            pInputText
+                            showIcon="test"
+                            pKeyFilter="pnum"
+                            required
+                            maxlength="8"
+                            minlength="8"
+                            [disabled]="modifying"
+                        />
+                        <small
+                            *ngIf="submitAll && !demande.gsm"
+                            id="numCompte"
+                            class="p-invalid"
+                            >Ce champ est nécessaire.</small
+                        >
                     </div>
                 </div>
                 <div class="field col-12 md:col-3">
                     <label for="dateCompte">Date ouverture compte</label>
-                    <p-calendar id="dateCompte" name="dateCompte" [showIcon]="true" inputId="icon"
-                        [(ngModel)]="demande.dateCompte" required [disabled]="modifying">
+                    <p-calendar
+                        id="dateCompte"
+                        name="dateCompte"
+                        [showIcon]="true"
+                        inputId="icon"
+                        [(ngModel)]="demande.dateCompte"
+                        required
+                        [disabled]="modifying"
+                    >
                     </p-calendar>
-                    <small *ngIf="submitAll && !demande.dateCompte" id="dateCompte" class="p-invalid">Ce champ est
-                        nécessaire.</small>
+                    <small
+                        *ngIf="submitAll && !demande.dateCompte"
+                        id="dateCompte"
+                        class="p-invalid"
+                        >Ce champ est nécessaire.</small
+                    >
                 </div>
                 <div class="field col-12 md:col-3">
                     <label for="dateNaissance">Né le</label>
                     <span class="p-float-label">
-                        <p-calendar id="dateNaissance" name="dateNaissance" [showIcon]="true" inputId="icon"
-                            [(ngModel)]="demande.dateNaissance" required [disabled]="modifying">
+                        <p-calendar
+                            id="dateNaissance"
+                            name="dateNaissance"
+                            [showIcon]="true"
+                            inputId="icon"
+                            [(ngModel)]="demande.dateNaissance"
+                            required
+                            [disabled]="modifying"
+                        >
                         </p-calendar>
                     </span>
-                    <small *ngIf="submitAll && !demande.dateNaissance" id="dateNaissance" class="p-invalid">Ce champ est
-                        nécessaire.</small>
+                    <small
+                        *ngIf="submitAll && !demande.dateNaissance"
+                        id="dateNaissance"
+                        class="p-invalid"
+                        >Ce champ est nécessaire.</small
+                    >
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="sitFam">Situation familiale</label>
                     <span class="p-float-label">
-                        <p-dropdown inputId="situation" [options]="sitFam" [(ngModel)]="demande.sitFamiliale"
-                            placeholder="Choisir" required [disabled]="modifying"></p-dropdown>
+                        <p-dropdown
+                            inputId="situation"
+                            [options]="sitFam"
+                            [(ngModel)]="demande.sitFamiliale"
+                            placeholder="Choisir"
+                            required
+                            [disabled]="modifying"
+                        ></p-dropdown>
                     </span>
-                    <small *ngIf="submitAll && !demande.sitFamiliale" id="situation" class="p-invalid">Ce champ est
-                        nécessaire.</small>
+                    <small
+                        *ngIf="submitAll && !demande.sitFamiliale"
+                        id="situation"
+                        class="p-invalid"
+                        >Ce champ est nécessaire.</small
+                    >
                 </div>
             </div>
         </div>
@@ -89,37 +208,80 @@
                 <div class="field col-12 md:col-6">
                     <label for="credit">Type Crédit</label>
                     <span class="p-float-label">
-                        <p-dropdown (onChange)="findDocObligatoire()" inputId="credit" placeholder="Type"
-                            [(ngModel)]="typeC" [options]="typeCredit" optionLabel="libcredit" [disabled]="modifying">
+                        <p-dropdown
+                            (onChange)="findDocObligatoire()"
+                            inputId="credit"
+                            placeholder="Type"
+                            [(ngModel)]="typeC"
+                            [options]="typeCredit"
+                            optionLabel="libcredit"
+                            [disabled]="modifying"
+                        >
                         </p-dropdown>
                     </span>
-                    <small *ngIf="submitAll && !typeC.libcredit" id="credit" class="p-invalid">Ce champ est
-                        nécessaire.</small>
+                    <small
+                        *ngIf="submitAll && !typeC.libcredit"
+                        id="credit"
+                        class="p-invalid"
+                        >Ce champ est nécessaire.</small
+                    >
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="montant">Montant</label>
-                    <p-inputNumber id="montant" [(ngModel)]="demande.montant" mode="currency" required currency="TND"
-                        locale="tn-TN" [disabled]="page == 'traitement' || page == 'info'"></p-inputNumber>
-                    <small *ngIf="submitAll && !demande.montant" id="montant" class="p-invalid">Ce champ est
-                        nécessaire.</small>
+                    <p-inputNumber
+                        id="montant"
+                        [(ngModel)]="demande.montant"
+                        mode="currency"
+                        required
+                        currency="TND"
+                        locale="tn-TN"
+                        [disabled]="page == 'traitement' || page == 'info'"
+                    ></p-inputNumber>
+                    <small
+                        *ngIf="submitAll && !demande.montant"
+                        id="montant"
+                        class="p-invalid"
+                        >Ce champ est nécessaire.</small
+                    >
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="unite">Unité</label>
                     <span class="p-float-label">
-                        <p-dropdown inputId="unite" [options]="unite" [(ngModel)]="demande.unite" placeholder="Par"
-                            required [disabled]="modifying" (onChange)="demande.nbreEcheance=null">
+                        <p-dropdown
+                            inputId="unite"
+                            [options]="unite"
+                            [(ngModel)]="demande.unite"
+                            placeholder="Par"
+                            required
+                            [disabled]="modifying"
+                            (onChange)="demande.nbreEcheance = null"
+                        >
                         </p-dropdown>
                     </span>
-                    <small *ngIf="submitAll && !demande.unite" id="unite" class="p-invalid">Ce champ est
-                        nécessaire.</small>
+                    <small
+                        *ngIf="submitAll && !demande.unite"
+                        id="unite"
+                        class="p-invalid"
+                        >Ce champ est nécessaire.</small
+                    >
                 </div>
                 <div class="field col-12 md:col-6">
                     <label for="nbrEcheance">Nombre échéance</label>
-                    <p-inputNumber id="nbrEcheance" maxlength="3" [max]="(demande.unite=='Mois'?360:30)"
-                        [(ngModel)]="demande.nbreEcheance" required [disabled]="modifying">
+                    <p-inputNumber
+                        id="nbrEcheance"
+                        maxlength="3"
+                        [max]="demande.unite == 'Mois' ? 360 : 30"
+                        [(ngModel)]="demande.nbreEcheance"
+                        required
+                        [disabled]="modifying"
+                    >
                     </p-inputNumber>
-                    <small *ngIf="submitAll && !demande.nbreEcheance" id="nbreEcheance" class="p-invalid">Ce champ est
-                        nécessaire.</small>
+                    <small
+                        *ngIf="submitAll && !demande.nbreEcheance"
+                        id="nbreEcheance"
+                        class="p-invalid"
+                        >Ce champ est nécessaire.</small
+                    >
                 </div>
             </div>
         </div>
@@ -131,19 +293,33 @@
     <div class="col-12">
         <div class="card">
             <h5>Garantie Proposées</h5>
-            <p-table [value]="garanties" [columns]="garantieCols" dataKey="id" styleClass="p-datatable-customers"
-                [rowHover]="true" [rows]="3" [paginator]="true">
+            <p-table
+                [value]="garanties"
+                [columns]="garantieCols"
+                dataKey="id"
+                styleClass="p-datatable-customers"
+                [rowHover]="true"
+                [rows]="3"
+                [paginator]="true"
+            >
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Nature</th>
                         <th>Type</th>
                         <th>Montant</th>
                         <th style="text-align: center">
-                            <button pButton pRipple icon="pi pi-plus" *ngIf="
+                            <button
+                                pButton
+                                pRipple
+                                icon="pi pi-plus"
+                                *ngIf="
                                     page != 'info' &&
                                     page != 'traitement' &&
                                     hasAccess() == false
-                                " class="p-button-rounded p-button-success mr-2 mb-2" (click)="newGarantie()"></button>
+                                "
+                                class="p-button-rounded p-button-success mr-2 mb-2"
+                                (click)="newGarantie()"
+                            ></button>
                         </th>
                     </tr>
                 </ng-template>
@@ -162,23 +338,37 @@
                             {{ garantie.montant | currency: "TND" }}
                         </td>
                         <td style="text-align: center">
-                            <button *ngIf="
+                            <button
+                                *ngIf="
                                     page != 'info' &&
                                     page != 'traitement' &&
                                     hasAccess() == false
-                                " pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-help mr-2"
-                                (click)="editGarantie(garantie)"></button>
-                            <button *ngIf="
+                                "
+                                pButton
+                                pRipple
+                                icon="pi pi-pencil"
+                                class="p-button-rounded p-button-help mr-2"
+                                (click)="editGarantie(garantie)"
+                            ></button>
+                            <button
+                                *ngIf="
                                     page != 'info' &&
                                     page != 'traitement' &&
                                     hasAccess() == false
-                                " pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                                (click)="deleteGarantie(garantie)"></button>
+                                "
+                                pButton
+                                pRipple
+                                icon="pi pi-trash"
+                                class="p-button-rounded p-button-warning"
+                                (click)="deleteGarantie(garantie)"
+                            ></button>
                         </td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="summary">
-                    <div class="flex align-items-center justify-content-between">
+                    <div
+                        class="flex align-items-center justify-content-between"
+                    >
                         En total il y a
                         {{ garantie ? garanties?.length : 0 }} garanties.
                     </div>
@@ -186,45 +376,94 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="GarantieDialog" [style]="{ width: '450px', height:'500px' }" header="Ajouter garantie"
-            [modal]="true" styleClass="p-fluid">
+        <p-dialog
+            [(visible)]="GarantieDialog"
+            [style]="{ width: '450px', height: '500px' }"
+            header="Ajouter garantie"
+            [modal]="true"
+            styleClass="p-fluid"
+        >
             <ng-template pTemplate="content">
                 <div class="field">
                     <label for="nature">Nature Garantie</label>
                     <span class="p-float-label">
-                        <p-dropdown inputId="nature" [autoDisplayFirst]="false" [options]="natureGarantie"
-                            optionLabel="libelleNature" [(ngModel)]="garantie.nature" placeholder="Nature" required>
+                        <p-dropdown
+                            inputId="nature"
+                            [autoDisplayFirst]="false"
+                            [options]="natureGarantie"
+                            optionLabel="libelleNature"
+                            [(ngModel)]="garantie.nature"
+                            placeholder="Nature"
+                            required
+                        >
                         </p-dropdown>
                     </span>
                     <br />
-                    <p-message severity="error" *ngIf="submitted && !garantie.nature" text="Ce champ est nécessaire.">
+                    <p-message
+                        severity="error"
+                        *ngIf="submitted && !garantie.nature"
+                        text="Ce champ est nécessaire."
+                    >
                     </p-message>
                     <br />
                     <label for="type">Type Garantie</label>
                     <span class="p-float-label">
-                        <p-dropdown inputId="type" [autoDisplayFirst]="false" [options]="typeGarantie"
-                            optionLabel="libType" [(ngModel)]="garantie.type" placeholder="Type" required>
+                        <p-dropdown
+                            inputId="type"
+                            [autoDisplayFirst]="false"
+                            [options]="typeGarantie"
+                            optionLabel="libType"
+                            [(ngModel)]="garantie.type"
+                            placeholder="Type"
+                            required
+                        >
                         </p-dropdown>
                     </span>
                     <br />
-                    <p-message severity="error" *ngIf="submitted && !garantie.type" text="Ce champ est nécessaire.">
+                    <p-message
+                        severity="error"
+                        *ngIf="submitted && !garantie.type"
+                        text="Ce champ est nécessaire."
+                    >
                     </p-message>
                     <br />
                     <label for="montant">Montant</label>
-                    <p-inputNumber id="montant" [(ngModel)]="garantie.montant" mode="currency" currency="TND"
-                        locale="tn-TN" required></p-inputNumber>
+                    <p-inputNumber
+                        id="montant"
+                        [(ngModel)]="garantie.montant"
+                        mode="currency"
+                        currency="TND"
+                        locale="tn-TN"
+                        required
+                    ></p-inputNumber>
                     <br />
                     <br />
-                    <p-message severity="error" *ngIf="submitted && !garantie.montant" text="Ce champ est nécessaire.">
+                    <p-message
+                        severity="error"
+                        *ngIf="submitted && !garantie.montant"
+                        text="Ce champ est nécessaire."
+                    >
                     </p-message>
                 </div>
             </ng-template>
 
             <ng-template pTemplate="footer">
-                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text"
-                    (click)="hideGarantieDialog()"></button>
-                <button pButton pRipple label="Ajouter" icon="pi pi-check" class="p-button-text"
-                    (click)="saveGarantie()"></button>
+                <button
+                    pButton
+                    pRipple
+                    label="Annuler"
+                    icon="pi pi-times"
+                    class="p-button-text"
+                    (click)="hideGarantieDialog()"
+                ></button>
+                <button
+                    pButton
+                    pRipple
+                    label="Ajouter"
+                    icon="pi pi-check"
+                    class="p-button-text"
+                    (click)="saveGarantie()"
+                ></button>
             </ng-template>
         </p-dialog>
         <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
@@ -236,8 +475,13 @@
     <div class="col-12">
         <div class="card">
             <h5>Piéces Jointes</h5>
-            <p-table [value]="piecesJointes" [rowHover]="true" selectionMode="single" dataKey="id"
-                styleClass="p-datatable-customers p-datatable-gridlines p-datatable-striped">
+            <p-table
+                [value]="piecesJointes"
+                [rowHover]="true"
+                selectionMode="single"
+                dataKey="id"
+                styleClass="p-datatable-customers p-datatable-gridlines p-datatable-striped"
+            >
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Documents</th>
@@ -258,19 +502,46 @@
                 </ng-template>
             </p-table>
 
-            <p-progressBar mode="indeterminate" [hidden]="!loading"></p-progressBar>
-            <p-fileUpload [disabled]="modifying" #fileUpload *ngIf="!readOnly" [auto]="true" [chooseLabel]="'choisir'"
-                customUpload="true" [maxFileSize]="fileMaxSize" [multiple]="multiple" [style]="style"
-                (uploadHandler)="onUpload($event)">
+            <p-progressBar
+                mode="indeterminate"
+                [hidden]="!loading"
+            ></p-progressBar>
+            <p-fileUpload
+                [disabled]="modifying"
+                #fileUpload
+                *ngIf="!readOnly"
+                [auto]="true"
+                [chooseLabel]="'choisir'"
+                customUpload="true"
+                [maxFileSize]="fileMaxSize"
+                [multiple]="multiple"
+                [style]="style"
+                (uploadHandler)="onUpload($event)"
+            >
             </p-fileUpload>
             <div *ngIf="selected ? selected.length > 0 : false" [style]="style">
-                <div *ngFor="let file of selected" style="vertical-align: middle">
-                    <button pButton class="p-button-text" [label]="'- ' + file.fileName" style="width: fit-content"
-                        type="button" (click)="onDownload(file)"></button>
+                <div
+                    *ngFor="let file of selected"
+                    style="vertical-align: middle"
+                >
+                    <button
+                        pButton
+                        class="p-button-text"
+                        [label]="'- ' + file.fileName"
+                        style="width: fit-content"
+                        type="button"
+                        (click)="onDownload(file)"
+                    ></button>
                     &nbsp;
-                    <button [disabled]="modifying" *ngIf="!readOnly" pButton
-                        class="p-button-rounded p-button-danger p-button-text" icon="pi pi-times" type="button"
-                        (click)="onDelete(file)"></button>
+                    <button
+                        [disabled]="modifying"
+                        *ngIf="!readOnly"
+                        pButton
+                        class="p-button-rounded p-button-danger p-button-text"
+                        icon="pi pi-times"
+                        type="button"
+                        (click)="onDelete(file)"
+                    ></button>
                 </div>
             </div>
         </div>
@@ -278,12 +549,29 @@
 
     <!--/*           ***********************************************           */-->
 
-    <div class="col-12 retour" *ngIf="page != 'info' && page != 'traitement' && hasAccess() == false">
+    <div
+        class="col-12 retour"
+        *ngIf="page != 'info' && page != 'traitement' && hasAccess() == false"
+    >
         <p-toast key="tst"></p-toast>
-        <button pButton pRipple type="button" block="true" (click)="saveDemandeCredit()" label="Sauvegarder"
-            class="mr-2 mb-2"></button>
-        <button pButton pRipple type="button" block="true" label="Initialiser" (click)="resetBT()"
-            class="p-button-secondary mr-2 mb-2"></button>
+        <button
+            pButton
+            pRipple
+            type="button"
+            block="true"
+            (click)="saveDemandeCredit()"
+            label="Sauvegarder"
+            class="mr-2 mb-2"
+        ></button>
+        <button
+            pButton
+            pRipple
+            type="button"
+            block="true"
+            label="Initialiser"
+            (click)="resetBT()"
+            class="p-button-secondary mr-2 mb-2"
+        ></button>
     </div>
 
     <!-- traitement credit + consultation -->
@@ -315,36 +603,67 @@
     <div class="col-12" *ngIf="hasAccess() && page == 'traitement'">
         <div class="card c1">
             <h5>Traitement du dossier</h5>
-            <p-confirmDialog key="second" acceptLabel="Oui" rejectLabel="Non" [style]="{ width: '50vw' }"
-                [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+            <p-confirmDialog
+                key="second"
+                acceptLabel="Oui"
+                rejectLabel="Non"
+                [style]="{ width: '50vw' }"
+                [baseZIndex]="10000"
+                rejectButtonStyleClass="p-button-text"
+            ></p-confirmDialog>
             Etape actuelle: <span class="ea">{{ etapeActuelle }}</span> <br />
             Etape suivante:
-            <p-splitButton class="ea" label="Choisir" [model]="items"
-                styleClass="p-button-outlined p-button-primary mr-2 mb-2">
+            <p-splitButton
+                class="ea"
+                label="Choisir"
+                [model]="items"
+                styleClass="p-button-outlined p-button-primary mr-2 mb-2"
+            >
             </p-splitButton>
             {{ etapeSuivante.etape }}
             <div [hidden]="hidden">
                 <h6>Informations à demander</h6>
-                <textarea label pInputTextarea cols="80" [(ngModel)]="complement"></textarea><br />
+                <textarea
+                    label
+                    pInputTextarea
+                    cols="80"
+                    [(ngModel)]="complement"
+                ></textarea
+                ><br />
             </div>
         </div>
     </div>
 
     <!-- return and validation button -->
     <div class="col-12 retour" *ngIf="page">
-        <p-button [routerLink]="['/credit/consultation']" label="Retour"></p-button>
-        <p-button label="Envoyer" (click)="envoyer()" [disabled]="!etapeSuivante" *ngIf="hasAccess()"></p-button>
+        <p-button
+            [routerLink]="['/credit/consultation']"
+            label="Retour"
+        ></p-button>
+        <p-button
+            label="Envoyer"
+            (click)="envoyer()"
+            [disabled]="!etapeSuivante"
+            *ngIf="hasAccess()"
+        ></p-button>
     </div>
 
-    <p-dialog [(visible)]="calendarDialog" [style]="{width: '800px', height:'800px'}" [modal]="true"
-        styleClass="p-fluid">
+    <p-dialog
+        [(visible)]="calendarDialog"
+        [style]="{ width: '800px', height: '800px' }"
+        [modal]="true"
+        styleClass="p-fluid"
+    >
         <ng-template pTemplate="content">
-            <app-rendez-vous (closeDialog)="closeDialog($event)" [demandeId]="demande.idDemande"
-                [clientName]="demande.nom+' '+demande.prenom" [userId]="user.id">
+            <app-rendez-vous
+                (closeDialog)="closeDialog($event)"
+                [demandeId]="demande.idDemande"
+                [clientName]="demande.nom + ' ' + demande.prenom"
+                [userId]="user.id"
+            >
             </app-rendez-vous>
         </ng-template>
-        <ng-template pTemplate="footer">
-        </ng-template>
+        <ng-template pTemplate="footer"> </ng-template>
     </p-dialog>
 
     <p-toast key="sts"></p-toast>

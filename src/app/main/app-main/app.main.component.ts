@@ -1,11 +1,12 @@
-import {Component} from '@angular/core';
-import {MenuService} from '../app-menu/app.menu.service';
-import {PrimeNGConfig} from 'primeng/api';
-import {AppComponent} from '../../app.component';
+import { Component } from "@angular/core";
+import { MenuService } from "../app-menu/app.menu.service";
+import { PrimeNGConfig } from "primeng/api";
+import { AppComponent } from "../../app.component";
+import { ChatService } from "src/app/Services/chat.service";
 
 @Component({
-    selector: 'app-main',
-    templateUrl: './app.main.component.html'
+    selector: "app-main",
+    templateUrl: "./app.main.component.html",
 })
 export class AppMainComponent {
     overlayMenuActive: boolean;
@@ -44,7 +45,16 @@ export class AppMainComponent {
 
     pinActive: boolean;
 
-    constructor(private menuService: MenuService, private primengConfig: PrimeNGConfig, public app: AppComponent) {}
+    constructor(
+        private menuService: MenuService,
+        private primengConfig: PrimeNGConfig,
+        public app: AppComponent,
+        private chatservice: ChatService
+    ) {}
+
+    ngOnInit(): void {
+        this.chatservice.chatbot();
+    }
 
     onLayoutClick() {
         if (!this.topbarItemClick) {
@@ -102,7 +112,7 @@ export class AppMainComponent {
     }
 
     onSidebarMouseOver(event) {
-        if (this.app.menuMode === 'sidebar' && !this.sidebarStatic) {
+        if (this.app.menuMode === "sidebar" && !this.sidebarStatic) {
             this.sidebarActive = this.isDesktop();
             setTimeout(() => {
                 this.pinActive = this.isDesktop();
@@ -111,7 +121,7 @@ export class AppMainComponent {
     }
 
     onSidebarMouseLeave($event) {
-        if (this.app.menuMode === 'sidebar' && !this.sidebarStatic) {
+        if (this.app.menuMode === "sidebar" && !this.sidebarStatic) {
             setTimeout(() => {
                 this.sidebarActive = false;
                 this.pinActive = false;
@@ -170,23 +180,23 @@ export class AppMainComponent {
     }
 
     isStatic() {
-        return this.app.menuMode === 'static';
+        return this.app.menuMode === "static";
     }
 
     isOverlay() {
-        return this.app.menuMode === 'overlay';
+        return this.app.menuMode === "overlay";
     }
 
     isSlim() {
-        return this.app.menuMode === 'slim';
+        return this.app.menuMode === "slim";
     }
 
     isHorizontal() {
-        return this.app.menuMode === 'horizontal';
+        return this.app.menuMode === "horizontal";
     }
 
     isSidebar() {
-        return this.app.menuMode === 'sidebar';
+        return this.app.menuMode === "sidebar";
     }
 
     isDesktop() {
@@ -196,5 +206,4 @@ export class AppMainComponent {
     isMobile() {
         return window.innerWidth <= 991;
     }
-
 }

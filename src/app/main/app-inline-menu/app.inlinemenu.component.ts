@@ -70,7 +70,6 @@ export class AppInlineMenuComponent implements OnInit {
     logout() {
         this.authService.logout();
     }
-
     loadUser() {
         this.tokenService.getUser().subscribe((data) => {
             this.currentUser = data;
