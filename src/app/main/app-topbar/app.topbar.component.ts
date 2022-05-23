@@ -38,12 +38,7 @@ import {AuthService} from "../../auth/services/auth.service";
                                     <span>Profile</span>
                                 </a>
                             </li>
-                            <!-- <li role="menuitem">
-                                <a href="#" (click)="appMain.onTopbarSubItemClick($event)">
-                                    <i class="pi pi-fw pi-cog"></i>
-                                    <span>Settings</span>
-                                </a>
-                            </li> -->
+
                             <li role="menuitem">
                                 <a  (click)="logout()">
                                     <i class="pi pi-fw pi-sign-out"></i>
@@ -53,13 +48,7 @@ import {AuthService} from "../../auth/services/auth.service";
                         </ul>
                     </li>
 
-                    <li>
-                        <a href="#">
-                            <i class="topbar-icon pi pi-fw pi-comment"></i>
-                            <span class="topbar-badge">5</span>
-                            <span class="topbar-item-name">Messages</span>
-                        </a>
-                    </li>
+                    
 
                 </ul>
             </div>
