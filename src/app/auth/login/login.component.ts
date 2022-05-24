@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { AppComponent } from "../../app.component";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { TranslateService } from "@ngx-translate/core";
 import { LoginUser } from "../../models/LoginUser";
 import { AuthService } from "../services/auth.service";
 import { TokenService } from "../services/token.service";
@@ -14,19 +13,17 @@ import { Subscription } from "rxjs";
     templateUrl: "./login.component.html",
     styleUrls: ["./login.component.scss"],
 })
-export class LoginComponent implements OnInit, OnDestroy {
-    subscription: Subscription;
+export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     errorMsgs = [];
     constructor(
         public app: AppComponent,
         private formBuilder: FormBuilder,
-        private translateService: TranslateService,
         private authService: AuthService,
         private tokenService: TokenService,
         private permissionsService: NgxPermissionsService,
         private router: Router
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         if (this.tokenService.getToken()) {
@@ -61,48 +58,36 @@ export class LoginComponent implements OnInit, OnDestroy {
                     this.router.navigate(["/"]);
                 },
                 (error) => {
-                    this.subscription = this.translateService
-                        .get("msgs")
-                        .subscribe((msg) => {
-                            if (error.status === 403) {
-                                this.errorMsgs.push({
-                                    severity: "error",
-                                    detail: msg.invalid_credentials,
-                                });
-                            } else {
-                                this.errorMsgs.push({
-                                    severity: "error",
-                                    detail: msg.error,
-                                });
-                            }
+
+                    if (error.status === 403) {
+                        this.errorMsgs.push({
+                            severity: "error",
+                            detail: "Login invalide",
                         });
+                    } else {
+                        this.errorMsgs.push({
+                            severity: "error",
+                            detail: "Une erreur est survenue !",
+                        });
+                    }
                 }
             );
         }
     }
 
     showValidationMsgs() {
-        this.subscription = this.translateService
-            .get(["user", "msgs"])
-            .subscribe((data) => {
-                if (this.loginForm.controls.username.hasError("required")) {
-                    this.errorMsgs.push({
-                        severity: "error",
-                        detail: data.user.username + data.msgs.required,
-                    });
-                }
-                if (this.loginForm.controls.password.hasError("required")) {
-                    this.errorMsgs.push({
-                        severity: "error",
-                        detail: data.user.password + data.msgs.required,
-                    });
-                }
+        if (this.loginForm.controls.username.hasError("required")) {
+            this.errorMsgs.push({
+                severity: "error",
+                detail: "Veuillez saisir votre identifiant.",
             });
-    }
-    ngOnDestroy() {
-        // Open observable subscription streams causes performance issues
-        if (this.subscription) {
-            this.subscription.unsubscribe();
+        }
+        if (this.loginForm.controls.password.hasError("required")) {
+            this.errorMsgs.push({
+                severity: "error",
+                detail: "Veuillez saisir votre mot de passe.",
+            });
         }
     }
+
 }
