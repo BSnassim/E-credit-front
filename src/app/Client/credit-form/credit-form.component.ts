@@ -408,14 +408,14 @@ export class CreditFormComponent implements OnInit {
         } else {
             this.submitAll = true;
             this.creditFormService
-                .getDemandeExistsAPI(this.user.id)
+                .getDemandeExistsAPI(this.demande.numPiece)
                 .subscribe((response) => {
                     if (response) {
                         this.messageService.add({
                             key: "tst",
                             severity: "error",
                             summary: "Erreur",
-                            detail: "Vous-avez déja déposé une demande",
+                            detail: "Vous avez déja déposé une demande",
                         });
                     } else if (
                         !this.demande.nom ||
