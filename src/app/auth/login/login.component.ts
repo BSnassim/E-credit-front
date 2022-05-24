@@ -15,6 +15,17 @@ import { Subscription } from "rxjs";
     styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit, OnDestroy {
+    // :::::::::  PIN PAD CONFIGURATION  :::::::::::::
+    title = "sample";
+    result = "1234";
+    showPeriod = true;
+    isPassword = true;
+    isDisplay = true;
+    showTwoZeros = false;
+    maxLength = null;
+    maxNumber = null;
+
+    // :::::::::::::::::::::::::::::::::::::::::::::::
     subscription: Subscription;
     loginForm: FormGroup;
     errorMsgs = [];

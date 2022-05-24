@@ -143,7 +143,6 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { AppCalendarComponent } from "./pages/app.calendar.component";
 import { ChargeModule } from "./Charge/charge.module";
 import { RendezVousComponent } from "./Charge/Rendez-vous/rendez-vous.component";
-
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
     timeGridPlugin,
