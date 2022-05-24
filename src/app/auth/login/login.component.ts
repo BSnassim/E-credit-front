@@ -6,7 +6,6 @@ import { AuthService } from "../services/auth.service";
 import { TokenService } from "../services/token.service";
 import { NgxPermissionsService } from "ngx-permissions";
 import { Router } from "@angular/router";
-import { Subscription } from "rxjs";
 
 @Component({
     selector: "app-login",
@@ -59,7 +58,7 @@ export class LoginComponent implements OnInit {
                 },
                 (error) => {
 
-                    if (error.status === 403) {
+                    if (error.status === 403 || error.status === 401) {
                         this.errorMsgs.push({
                             severity: "error",
                             detail: "Login invalide",
