@@ -16,7 +16,8 @@ export class TokenInterceptorService implements HttpInterceptor {
     constructor(
         private tokenService: TokenService,
         private router: Router,
-        private permissionService: NgxPermissionsService) { }
+        private permissionService: NgxPermissionsService,
+        private authService: AuthService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let authReq = req;
@@ -29,10 +30,14 @@ export class TokenInterceptorService implements HttpInterceptor {
             if (error.status == 401 || error.status == 403) {
                 // handling unauthorized errors
                 //  or token expired 
-                this.tokenService.removeToken();
-                sessionStorage.removeItem("permissions");
-                this.permissionService.flushPermissions();
-                this.router.navigate(["/login"]);
+                if (token != null) {
+                    this.authService.logout();
+                } else {
+                    this.tokenService.removeToken();
+                    sessionStorage.removeItem("permissions");
+                    this.permissionService.flushPermissions();
+                    this.router.navigate(["/login"]);
+                }
             }
             return throwError(error);
         }));

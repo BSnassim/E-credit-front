@@ -408,7 +408,7 @@ export class CreditFormComponent implements OnInit {
         } else {
             this.submitAll = true;
             this.creditFormService
-                .getDemandeExistsAPI(this.demande.numPiece)
+                .getDemandeExistsAPI(this.user.id)
                 .subscribe((response) => {
                     if (response) {
                         this.messageService.add({
