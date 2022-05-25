@@ -3,6 +3,12 @@ import { NgxRolesService } from "ngx-permissions";
 import { Component, OnInit } from "@angular/core";
 import { PrimeIcons } from "primeng/api";
 import { AppBreadcrumbService } from "../main/app-breadcrumb/app.breadcrumb.service";
+import { DemandeRdv } from "../models/demande-rdv";
+import { User } from "../models/user";
+import { EventsService } from "../Services/events.service";
+import { TokenService } from "../auth/services/token.service";
+import { Phase } from "../models/phase";
+import { CreditFormService } from "../Services/credit-form-service.service";
 
 @Component({
     selector: "app-dashboard",
@@ -10,45 +16,94 @@ import { AppBreadcrumbService } from "../main/app-breadcrumb/app.breadcrumb.serv
     styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit {
+    events: DemandeRdv[] = [];
+
+    currentUser: User = new User();
+
     customEvents: any[];
 
     horizontalEvents: any[];
 
-    constructor(private breadcrumbService: AppBreadcrumbService) {
+    etapePhase: Phase[] = [];
+
+    constructor(
+        private breadcrumbService: AppBreadcrumbService,
+        private eventsService: EventsService,
+        private tokenService: TokenService,
+        private creditService: CreditFormService
+    ) {
         this.breadcrumbService.setItems([
             { label: "Dashboard", routerLink: ["/"] },
         ]);
     }
 
     ngOnInit(): void {
-        this.customEvents = [
-            {
-                status: "Demande soumise",
-                date: "15/10/2020 10:30",
-                // icon: PrimeIcons.SHOPPING_CART,
-                // color: "#9C27B0",
-                // image: "game-controller.jpg",
-            },
-            {
-                status: "Processing",
-                date: "15/10/2020 14:00",
-                // icon: PrimeIcons.COG,
-                // color: "#673AB7",
-            },
-            {
-                status: "Shipped",
-                date: "15/10/2020 16:15",
-                // icon: PrimeIcons.ENVELOPE,
-                // color: "#FF9800",
-            },
-            {
-                status: "Delivered",
-                date: "16/10/2020 10:00",
-                // icon: PrimeIcons.CHECK,
-                // color: "#607D8B",
-            },
-        ];
+        this.getEtapePhase().then((res) => {
+            this.customEvents = [
+                {
+                    // idPhase=1
+                    status: res.find((i) => i.id == 1).etape,
+                    date: res.find((i) => i.id == 1).enAttenteDe,
+                    icon: PrimeIcons.DOWNLOAD,
+                    color: "rgba(228, 0, 123, 1)",
+                },
+                {
+                    // idPhase=1
+                    status: "Demande en cours de traitement",
+                    // date: "15/10/2020 14:00",
+                    icon: PrimeIcons.COG,
+                    color: "rgba(255, 170, 0, 1)",
+                },
+                {
+                    // idPhase=4
+                    status: res.find((i) => i.id == 4).etape,
+                    date: res.find((i) => i.id == 4).enAttenteDe,
+                    icon: PrimeIcons.PLUS,
+                    color: "rgba(186, 0, 255, 1)",
+                },
+                {
+                    // idPhase=5
+                    status: res.find((i) => i.id == 5).etape,
+                    date: res.find((i) => i.id == 5).enAttenteDe,
+                    icon: PrimeIcons.PENCIL,
+                    color: "rgba(0, 186, 255, 1)",
+                },
+                {
+                    // idPhase=3
+                    status: res.find((i) => i.id == 3).etape,
+                    date: "Pour plus d'informations contacter le responsable de votre agence",
+                    icon: PrimeIcons.TIMES,
+                    color: "rgba(255, 0, 0, 1)",
+                },
+                {
+                    // idPhase=2
+                    status: res.find((i) => i.id == 2).etape,
+                    // info: "Rendez-vous dans votre agence le :",
+                    date: res.find((i) => i.id == 2).enAttenteDe,
+                    icon: PrimeIcons.CHECK,
+                    color: "rgba(2, 217, 7, 0.82)",
+                },
+            ];
+        });
 
         this.horizontalEvents = ["2020", "2021", "2022", "2023"];
+    }
+
+    async getEtapePhase() {
+        const result = await this.creditService.getListPhases().toPromise();
+        return result;
+    }
+
+    getEvent(id: number) {
+        this.eventsService.getRdvByIdUserAPI(id).subscribe((data) => {
+            this.events = data;
+        });
+    }
+
+    loadUser() {
+        this.tokenService.getUser().subscribe((data) => {
+            this.currentUser = data;
+            this.getEvent(data.id);
+        });
     }
 }
