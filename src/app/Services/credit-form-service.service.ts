@@ -39,7 +39,7 @@ export class CreditFormService {
         return this.http.get<Demande[]>(this.baseUrl + "/demande/ByAgence/" + id);
     }
 
-    getDemandeExistsAPI(i: any) {
+    getDemandeExistsAPI(i: string) {
         return this.http.get<boolean>(
             `${this.baseUrl}` + `/demande/Exists/` + i
         );

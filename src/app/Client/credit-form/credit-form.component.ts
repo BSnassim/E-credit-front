@@ -415,7 +415,7 @@ export class CreditFormComponent implements OnInit {
                             key: "tst",
                             severity: "error",
                             summary: "Erreur",
-                            detail: "Vous-avez déja déposé une demande",
+                            detail: "Vous avez déja déposé une demande",
                         });
                     } else if (
                         !this.demande.nom ||

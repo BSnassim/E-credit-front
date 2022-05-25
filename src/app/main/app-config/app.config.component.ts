@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { AppComponent } from '../../app.component';
 import { AppMainComponent } from '../app-main/app.main.component';
-import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'app-config',
@@ -52,7 +51,7 @@ export class AppConfigComponent implements OnInit {
 
     themeColors: any[];
 
-    constructor(public appMain: AppMainComponent, public app: AppComponent, private translateService: TranslateService) {}
+    constructor(public appMain: AppMainComponent, public app: AppComponent) {}
 
     ngOnInit() {
         this.themeColors = [
