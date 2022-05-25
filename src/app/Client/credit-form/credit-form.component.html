@@ -507,7 +507,7 @@
                 [hidden]="!loading"
             ></p-progressBar>
             <p-fileUpload
-                [disabled]="modifying"
+                [disabled]="page == 'traitement' || page == 'info'"
                 #fileUpload
                 *ngIf="!readOnly"
                 [auto]="true"
@@ -534,7 +534,7 @@
                     ></button>
                     &nbsp;
                     <button
-                        [disabled]="modifying"
+                        [disabled]="page == 'traitement' || page == 'info'"
                         *ngIf="!readOnly"
                         pButton
                         class="p-button-rounded p-button-danger p-button-text"
@@ -659,7 +659,7 @@
                 (closeDialog)="closeDialog($event)"
                 [demandeId]="demande.idDemande"
                 [clientName]="demande.nom + ' ' + demande.prenom"
-                [userId]="user.id"
+                [clientId]="demande.idUser"
             >
             </app-rendez-vous>
         </ng-template>

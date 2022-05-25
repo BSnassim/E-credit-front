@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 
 @Injectable({
@@ -12,7 +13,11 @@ import { Router } from '@angular/router';
 })
 export class TokenInterceptorService implements HttpInterceptor {
 
-    constructor(private tokenService: TokenService, private authService: AuthService) { }
+    constructor(
+        private tokenService: TokenService,
+        private router: Router,
+        private permissionService: NgxPermissionsService,
+        private authService: AuthService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let authReq = req;
@@ -23,10 +28,16 @@ export class TokenInterceptorService implements HttpInterceptor {
         return next.handle(authReq).pipe(catchError((error: HttpErrorResponse) => {
             console.log(error);
             if (error.status == 401 || error.status == 403) {
-                // 403 handled in auth.interceptor
-                //  Token expired !
-                //  refresh token
+                // handling unauthorized errors
+                //  or token expired 
+                if (token != null) {
                     this.authService.logout();
+                } else {
+                    this.tokenService.removeToken();
+                    sessionStorage.removeItem("permissions");
+                    this.permissionService.flushPermissions();
+                    this.router.navigate(["/login"]);
+                }
             }
             return throwError(error);
         }));

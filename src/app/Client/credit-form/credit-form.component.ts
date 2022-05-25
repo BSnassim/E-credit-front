@@ -149,8 +149,8 @@ export class CreditFormComponent implements OnInit {
         this.fileMaxSize = null;
         this.loading = false;
         this.multiple = true;
-        this.propagateChange = (object: any) => {};
-        this.propagateValidator = () => {};
+        this.propagateChange = (object: any) => { };
+        this.propagateValidator = () => { };
         this.readOnly = false;
         this.required = false;
         this.style = { width: "100%" };
@@ -415,7 +415,7 @@ export class CreditFormComponent implements OnInit {
                             key: "tst",
                             severity: "error",
                             summary: "Erreur",
-                            detail: "Vous-avez déja déposé une demande",
+                            detail: "Vous avez déja déposé une demande",
                         });
                     } else if (
                         !this.demande.nom ||
@@ -577,6 +577,12 @@ export class CreditFormComponent implements OnInit {
             this.permissionsService
                 .getPermissions()
                 .hasOwnProperty("ROLE_Traitement Demandes")
+            && !this.permissionsService
+                .getPermissions()
+                .hasOwnProperty("ROLE_Administration")
+            && !this.permissionsService
+                .getPermissions()
+                .hasOwnProperty("ROLE_Demande Credit Client")
         ) {
             access = true;
         }

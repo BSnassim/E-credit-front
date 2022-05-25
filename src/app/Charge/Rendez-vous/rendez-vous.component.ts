@@ -22,6 +22,7 @@ import { MessageService } from "primeng/api";
 })
 export class RendezVousComponent implements OnInit, OnDestroy {
     @Input() demandeId: number;
+    @Input() clientId: number;
     @Input() clientName: string;
     @Output() closeDialog = new EventEmitter<boolean>();
 
@@ -155,7 +156,7 @@ export class RendezVousComponent implements OnInit, OnDestroy {
             this.myRdv.idDemande = this.demandeId;
             // this.myRdv.heur = this.changedEvent.;
 
-            this.myRdv.idUser = this.user.id;
+            this.myRdv.idUser = this.clientId;
 
             this.eventService.postRdvAPI(this.myRdv).subscribe();
             this.messageService.add({

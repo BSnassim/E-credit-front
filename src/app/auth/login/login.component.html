@@ -1,5 +1,6 @@
 <div class="login-body">
     <div class="login-image">
+        <<<<<<< HEAD
         <img
             [src]="
                 'assets/layout/images/pages/login-' +
@@ -8,6 +9,16 @@
             "
             alt="atlantis"
         />
+        =======
+        <img
+            [src]="
+                'assets/layout/images/pages/login-' +
+                (app.colorScheme === 'dark' ? 'ondark' : 'onlight') +
+                '.png'
+            "
+            alt="atlantis"
+        />
+        >>>>>>> origin/master
     </div>
     <div class="login-panel p-fluid">
         <div class="flex flex-column">
@@ -34,7 +45,7 @@
                             autocomplete="off"
                             formControlName="email"
                             pInputText
-                            placeholder="{{ 'user.email' | translate }}"
+                            placeholder="Identifiant"
                             type="text"
                         />
                     </span>
@@ -45,7 +56,7 @@
                             autocomplete="off"
                             formControlName="password"
                             pInputText
-                            placeholder="{{ 'user.password' | translate }}"
+                            placeholder="Mot de passe"
                             type="password"
                         />
                     </span>
@@ -153,7 +164,7 @@
                 <div class="button-container">
                     <button
                         icon="pi"
-                        label="{{ 'loginForm.login' | translate }}"
+                        label="Login"
                         pButton
                         type="submit"
                     ></button>

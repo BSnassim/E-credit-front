@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { AppComponent } from '../../app.component';
 import { AppMainComponent } from '../app-main/app.main.component';
-import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'app-config',
@@ -43,29 +42,6 @@ import {TranslateService} from "@ngx-translate/core";
                                (onClick)="changeColorScheme('dark')"></p-radioButton>
                 <label for="darkMode2">Dark</label>
             </div>
-
-            <h5>Ripple Effect</h5>
-			<p-inputSwitch [ngModel]="app.ripple" (onChange)="appMain.onRippleChange($event)"></p-inputSwitch>
-
-            <h5>Layouts</h5>
-            <div class="layout-themes">
-                <div *ngFor="let l of layoutColors">
-                    <a style="cursor: pointer" (click)="changeLayout(l.name)" [ngStyle]="{'background-color': l.color}">
-                        <i *ngIf="app.layout === l.name" class="pi pi-check"></i>
-                    </a>
-                </div>
-            </div>
-
-            <h5>Themes</h5>
-            <div class="layout-themes">
-                <div *ngFor="let t of themeColors">
-                    <a style="cursor: pointer" (click)="changeTheme(t.name)" [ngStyle]="{'background-color': t.color}">
-                        <i *ngIf="app.theme === t.name" class="pi pi-check"></i>
-                    </a>
-                </div>
-            </div>
-            <h5>Languages</h5>
-            <app-language-select></app-language-select>
         </div>
     `
 })
@@ -75,7 +51,7 @@ export class AppConfigComponent implements OnInit {
 
     themeColors: any[];
 
-    constructor(public appMain: AppMainComponent, public app: AppComponent, private translateService: TranslateService) {}
+    constructor(public appMain: AppMainComponent, public app: AppComponent) {}
 
     ngOnInit() {
         this.themeColors = [

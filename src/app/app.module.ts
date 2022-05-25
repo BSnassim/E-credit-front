@@ -106,8 +106,6 @@ import { AppTopbarComponent } from "./main/app-topbar/app.topbar.component";
 import { AppFooterComponent } from "./main/app-footer/app.footer.component";
 
 // Demo pages
-import { AppInvoiceComponent } from "./pages/app.invoice.component";
-import { AppHelpComponent } from "./pages/app.help.component";
 import { AppNotfoundComponent } from "./pages/app.notfound.component";
 import { AppErrorComponent } from "./pages/app.error.component";
 import { AppAccessdeniedComponent } from "./pages/app.accessdenied.component";
@@ -119,14 +117,8 @@ import { AppBreadcrumbService } from "./main/app-breadcrumb/app.breadcrumb.servi
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import {
-    TranslateLoader,
-    TranslateModule,
-    TranslateService,
-} from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { AuthModule } from "./auth/auth.module";
-import { SharedModule } from "./shared/shared.module";
 import { NgxPermissionsModule, NgxPermissionsService } from "ngx-permissions";
 import { TokenInterceptorService } from "./interceptors/token-interceptor.service";
 import { FormProfilComponent } from "./Admin/Profil/form-profil/form-profil.component";
@@ -243,16 +235,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         TreeTableModule,
         VirtualScrollerModule,
         AppCodeModule,
-        TranslateModule.forRoot({
-            defaultLanguage: "fr",
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient],
-            },
-        }),
         NgxPermissionsModule.forRoot(),
-        SharedModule,
     ],
     declarations: [
         AppComponent,
@@ -266,8 +249,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         AppTopbarComponent,
         AppFooterComponent,
         AppCalendarComponent,
-        AppInvoiceComponent,
-        AppHelpComponent,
         AppNotfoundComponent,
         AppErrorComponent,
         AppAccessdeniedComponent,
@@ -294,7 +275,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         MenuService,
         AppBreadcrumbService,
-        TranslateService,
         NgxPermissionsService,
     ],
     bootstrap: [AppComponent],

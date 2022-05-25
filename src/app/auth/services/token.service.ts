@@ -25,7 +25,6 @@ export class TokenService {
 
     // Used to get the user details using his token
     getUser(): Observable<User> {
-        console.log(this.getToken());
         return this.http.get<User>(
             this.url + "/getUserByToken/" + this.getToken()
         );
@@ -41,8 +40,4 @@ export class TokenService {
         });
     }
 
-    // Used in the interceptor to refresh the current token
-    // refreshToken(){
-    //     this.router.navigate(['/login']);
-    // }
 }
