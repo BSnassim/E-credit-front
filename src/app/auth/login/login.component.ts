@@ -16,6 +16,55 @@ import { Subscription } from "rxjs";
 })
 export class LoginComponent implements OnInit, OnDestroy {
     // :::::::::  PIN PAD CONFIGURATION  :::::::::::::
+    // generatedPad() {
+    //     const padLayout = [
+    //         "1",
+    //         "2",
+    //         "3",
+    //         "4",
+    //         "5",
+    //         "6",
+    //         "7",
+    //         "8",
+    //         "9",
+    //         "0",
+    //         "erase",
+    //     ];
+    //     padLayout.forEach((key) => {
+    //         const insertBreak = key.search(/[369]/) !== -1;
+    //         const keyEl = document.createElement("div");
+
+    //         keyEl.classList.add("pin-login__key");
+    //         keyEl.classList.toggle("material-icons", isNaN(key));
+    //         keyEl.textContent = key;
+    //         keyEl.addEventListener("click", () => {
+    //             this._handleKeyPress(key);
+    //         });
+    //         this.el.numPad.appendChild(keyEl);
+    //         if (insertBreak) {
+    //             this.el.numPad.appendChild(document.createElement("br"));
+    //         }
+    //     });
+    // }
+    // _handleKeyPress(key) {
+    //     switch (key) {
+    //         case "backspace":
+    //             this.value = this.value.substring(0, this.value.length - this.value.length);
+    //             break;
+    //         default:
+    //             if (this.value.length < this.maxNumbers && !isNaN(key)) {
+    //                 this.value += key;
+    //             }
+    //             break;
+    //     }
+
+    //     this._updateValueText();
+    // }
+
+    // _updateValueText() {
+    //     this.el.textDisplay.value = "_".repeat(this.value.length);
+    //     this.el.textDisplay.classList.remove("pin-login__text--error");
+    // }
 
     // :::::::::::::::::::::::::::::::::::::::::::::::
     subscription: Subscription;

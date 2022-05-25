@@ -25,7 +25,7 @@ export class AppRightMenuComponent {
     ) {}
 
     ngOnInit(): void {
-        this.getEvent(2);
+        this.getEvent(41);
         this.loadUser();
     }
 
