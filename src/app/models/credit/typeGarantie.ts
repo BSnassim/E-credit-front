@@ -1,5 +1,5 @@
 /*           *************** GARANTIE ***************               */
 export interface TypeGarantie {
-    idType?: number;
+    id?: number;
     libType?: string;
 }
