@@ -3,7 +3,6 @@ import { TokenService } from "./../../auth/services/token.service";
 import { Component, OnInit } from "@angular/core";
 import { AppComponent } from "../../app.component";
 import { AppMainComponent } from "../app-main/app.main.component";
-import { TranslateService } from "@ngx-translate/core";
 import { MenuService } from "./app.menu.service";
 import { MenuItem } from "primeng/api";
 
@@ -19,7 +18,6 @@ export class AppMenuComponent implements OnInit {
     constructor(
         public app: AppComponent,
         public appMain: AppMainComponent,
-        private translateService: TranslateService,
         private menuService: MenuService,
         private permissionService: NgxPermissionsService
     ) { }
