@@ -12,8 +12,7 @@ import { Router } from "@angular/router";
     templateUrl: "./login.component.html",
     styleUrls: ["./login.component.scss"],
 })
-<<<<<<< HEAD
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
     // :::::::::  PIN PAD CONFIGURATION  :::::::::::::
     // generatedPad() {
     //     const padLayout = [
@@ -66,10 +65,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     // }
 
     // :::::::::::::::::::::::::::::::::::::::::::::::
-    subscription: Subscription;
-=======
-export class LoginComponent implements OnInit {
->>>>>>> origin/master
     loginForm: FormGroup;
     errorMsgs = [];
     constructor(
@@ -79,7 +74,7 @@ export class LoginComponent implements OnInit {
         private tokenService: TokenService,
         private permissionsService: NgxPermissionsService,
         private router: Router
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         if (this.tokenService.getToken()) {
@@ -114,7 +109,6 @@ export class LoginComponent implements OnInit {
                     this.router.navigate(["/"]);
                 },
                 (error) => {
-
                     if (error.status === 403 || error.status === 401) {
                         this.errorMsgs.push({
                             severity: "error",
@@ -145,5 +139,4 @@ export class LoginComponent implements OnInit {
             });
         }
     }
-
 }
