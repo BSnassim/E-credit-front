@@ -1,41 +1,177 @@
 <div class="login-body">
     <div class="login-image">
-        <img [src]="'assets/layout/images/pages/login-'+ (app.colorScheme === 'dark' ? 'ondark' : 'onlight') + '.png'"
-            alt="atlantis">
+        <img
+            [src]="
+                'assets/layout/images/pages/login-' +
+                (app.colorScheme === 'dark' ? 'ondark' : 'onlight') +
+                '.png'
+            "
+            alt="atlantis"
+        />
     </div>
     <div class="login-panel p-fluid">
         <div class="flex flex-column">
             <div class="flex align-items-center mb-6 logo-container">
-                <img [src]="'assets/layout/images/logo3-'+ (app.colorScheme === 'light' ? 'dark' : 'light') + '.png'"
-                    class="login-logo" />
-
+                <img
+                    [src]="
+                        'assets/layout/images/logo3-' +
+                        (app.colorScheme === 'light' ? 'dark' : 'light') +
+                        '.png'
+                    "
+                    class="login-logo"
+                />
             </div>
-            <form (submit)="login()" [formGroup]="this.loginForm" name="loginForm">
-
-
+            <form
+                (submit)="login()"
+                [formGroup]="this.loginForm"
+                name="loginForm"
+            >
                 <div class="form-container">
+                    <!-- <div class="card"> -->
                     <span class="p-input-icon-left">
                         <i class="pi pi-user"></i>
-                        <input autocomplete="off" formControlName='email' pInputText placeholder="Identifiant"
-                            type="text" />
+                        <input
+                            autocomplete="off"
+                            formControlName="email"
+                            pInputText
+                            placeholder="Identifiant"
+                            type="text"
+                        />
                     </span>
 
                     <span class="p-input-icon-left">
                         <i class="pi pi-key"></i>
-                        <input autocomplete="off" formControlName='password' pInputText placeholder="Mot de passe"
-                            type="password">
+                        <input
+                            autocomplete="off"
+                            formControlName="password"
+                            pInputText
+                            placeholder="Mot de passe"
+                            type="password"
+                        />
                     </span>
-
+                    <div class="box">
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            icon="pi"
+                            class="p-button-rounded p-button-secondary p-button-outlined mr-2 mb-2"
+                        >
+                            1
+                        </button>
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            icon="pi"
+                            class="p-button-rounded p-button-secondary p-button-outlined mr-2 mb-2"
+                        >
+                            2
+                        </button>
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            icon="pi"
+                            class="p-button-rounded p-button-secondary p-button-outlined mr-2 mb-2"
+                        >
+                            3
+                        </button>
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            icon="pi"
+                            class="p-button-rounded p-button-secondary p-button-outlined mr-2 mb-2"
+                        >
+                            4
+                        </button>
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            icon="pi"
+                            class="p-button-rounded p-button-secondary p-button-outlined mr-2 mb-2"
+                        >
+                            5</button
+                        ><br />
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            icon="pi"
+                            class="p-button-rounded p-button-secondary p-button-outlined mr-2 mb-2"
+                        >
+                            6
+                        </button>
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            icon="pi"
+                            class="p-button-rounded p-button-secondary p-button-outlined mr-2 mb-2"
+                        >
+                            7
+                        </button>
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            icon="pi"
+                            class="p-button-rounded p-button-secondary p-button-outlined mr-2 mb-2"
+                        >
+                            8
+                        </button>
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            icon="pi"
+                            class="p-button-rounded p-button-secondary p-button-outlined mr-2 mb-2"
+                        >
+                            9
+                        </button>
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            icon="pi"
+                            class="p-button-rounded p-button-secondary p-button-outlined mr-2 mb-2"
+                        >
+                            0</button
+                        ><br />
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            icon="pi pi-times"
+                            class="cancel-button p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"
+                        ></button>
+                    </div>
                 </div>
+                <br />
                 <div class="button-container">
-                    <button icon="pi" label="Login" pButton type="submit"></button>
+                    <button
+                        icon="pi"
+                        label="Login"
+                        pButton
+                        type="submit"
+                    ></button>
                 </div>
                 <!-- Use this the p-message component has an open bug since 2020 -->
-                <div *ngIf="errorMsgs.length>0" class="p-message p-message-error p-component" style="width: 30%">
-                    <div class="p-message-wrapper p-d-flex p-flex-row p-ai-center">
+                <div
+                    *ngIf="errorMsgs.length > 0"
+                    class="p-message p-message-error p-component"
+                    style="width: 30%"
+                >
+                    <div
+                        class="p-message-wrapper p-d-flex p-flex-row p-ai-center"
+                    >
                         <span class="p-message-icon pi pi-times-circle"></span>
                         <ul>
-                            <li *ngFor="let error of errorMsgs">{{error.detail}}</li>
+                            <li *ngFor="let error of errorMsgs">
+                                {{ error.detail }}
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -44,7 +180,10 @@
 
         <div class="login-footer flex align-items-center">
             <div class="flex align-items-center login-footer-logo-container">
-                <img class="login-footer-logo" src="assets/layout/images/logo3-light.png" />
+                <img
+                    class="login-footer-logo"
+                    src="assets/layout/images/logo3-light.png"
+                />
             </div>
             <span>&#169; GTI - 2022</span>
         </div>

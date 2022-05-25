@@ -1,4 +1,4 @@
-import { SimFormComponent } from './Client/simulation/sim-form.component';
+import { SimFormComponent } from "./Client/simulation/sim-form.component";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import {
@@ -135,8 +135,6 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { AppCalendarComponent } from "./pages/app.calendar.component";
 import { ChargeModule } from "./Charge/charge.module";
 import { RendezVousComponent } from "./Charge/Rendez-vous/rendez-vous.component";
-import { ChatModule } from "./Chat/chat.module";
-
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
     timeGridPlugin,
@@ -168,7 +166,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         CarouselModule,
         CascadeSelectModule,
         ChartModule,
-        ChatModule,
         ChargeModule,
         CheckboxModule,
         ChipModule,
@@ -267,7 +264,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         GarantieNaturePipe,
         DashboardComponent,
         RendezVousComponent,
-        SimFormComponent
+        SimFormComponent,
     ],
     providers: [
         {

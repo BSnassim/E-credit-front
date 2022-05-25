@@ -25,13 +25,11 @@ export class AppRightMenuComponent {
     ) {}
 
     ngOnInit(): void {
-        this.getEvent(2);
         this.loadUser();
     }
 
     getEvent(id: number) {
         this.eventsService.getRdvByIdUserAPI(id).subscribe((data) => {
-            console.log(data);
             this.events = data;
         });
     }
@@ -39,6 +37,7 @@ export class AppRightMenuComponent {
     loadUser() {
         this.tokenService.getUser().subscribe((data) => {
             this.currentUser = data;
+            this.getEvent(data.id);
         });
     }
 }
