@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
         }
         this.loginForm = this.formBuilder.group(
             {
-                email: ["", Validators.required],
+                id: ["", Validators.required],
                 password: ["", Validators.required],
             },
             { updateOn: "submit" }

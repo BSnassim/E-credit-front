@@ -6,6 +6,7 @@ import { environment } from "src/environments/environment.dev";
 import { User } from "../models/user";
 
 const URL = environment.adminURL + "/users";
+const apiUrl = environment.apiURL;
 
 @Injectable({
     providedIn: "root",
@@ -23,12 +24,12 @@ export class UserService {
         return this.http.get<User[]>(URL);
     }
 
-    getUserById(id: number): Observable<User> {
-        return this.http.get<User>(URL + "/" + id);
+    getUserById(id: string): Observable<User> {
+        return this.http.get<User>(apiUrl + "/Utilisateur/" + id);
     }
 
     emailAlreadyExists(email: string): Observable<User> {
-        return this.http.get<User>(URL + "/" + email);
+        return this.http.get<User>(URL + "/ByEmail/" + email);
     }
 
     addUser(User: User): Observable<User> {
@@ -39,7 +40,7 @@ export class UserService {
         );
     }
 
-    deleteUser(id: number) {
+    deleteUser(id: string) {
         return this.http.delete(URL + "/" + id).pipe(
             tap(() => {
                 this._refresh$.next();
@@ -47,7 +48,7 @@ export class UserService {
         );
     }
 
-    deleteUsers(ids: number[]) {
+    deleteUsers(ids: string[]) {
         return this.http.delete(URL + "/deleteAll/" + ids).pipe(
             tap(() => {
                 this._refresh$.next();

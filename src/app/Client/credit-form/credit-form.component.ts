@@ -1,3 +1,4 @@
+import { UserService } from 'src/app/Services/user.service';
 import { SimulationService } from "./../../Services/simulation.service";
 import { NgxPermissionsService } from "ngx-permissions";
 import { Component, OnInit } from "@angular/core";
@@ -89,7 +90,7 @@ export class CreditFormComponent implements OnInit {
 
     phases: any;
 
-    history: { date: Date; phase: string; nextPhase: string; byWho: string }[] =
+    history: { date: Date; phase: string; nextPhase: string; cin: string; name: string }[] =
         [];
 
     complement: string;
@@ -112,7 +113,8 @@ export class CreditFormComponent implements OnInit {
         private route: ActivatedRoute,
         private encrypter: CryptojsService,
         private permissionsService: NgxPermissionsService,
-        private breadcrumbService: AppBreadcrumbService
+        private breadcrumbService: AppBreadcrumbService,
+        private userService: UserService
     ) {
         this.breadcrumbService.setItems([
             { label: "Credit" },
@@ -149,8 +151,8 @@ export class CreditFormComponent implements OnInit {
         this.fileMaxSize = null;
         this.loading = false;
         this.multiple = true;
-        this.propagateChange = (object: any) => {};
-        this.propagateValidator = () => {};
+        this.propagateChange = (object: any) => { };
+        this.propagateValidator = () => { };
         this.readOnly = false;
         this.required = false;
         this.style = { width: "100%" };
@@ -392,7 +394,8 @@ export class CreditFormComponent implements OnInit {
                 this.demande.idTypeCredit = this.typeC.idType;
                 this.demande.garantie = this.garanties;
                 this.demande.idPhase = 5;
-                this.demande.userName = this.user.nom + " " + this.user.prenom;
+                this.demande.changerId = this.user.id;
+                this.demande.complement = "";
                 this.creditFormService.putDemande(this.demande).subscribe();
                 this.messageService.add({
                     key: "tst",
@@ -442,8 +445,7 @@ export class CreditFormComponent implements OnInit {
                             this.user = response;
                             this.demande.idTypeCredit = this.typeC.idType;
                             this.demande.idUser = this.user.id;
-                            this.demande.userName =
-                                this.user.nom + " " + this.user.prenom;
+                            this.demande.changerId = this.user.id;
                             this.creditFormService
                                 .postDemandeAPI(this.demande, this.garanties)
                                 .subscribe();
@@ -516,12 +518,15 @@ export class CreditFormComponent implements OnInit {
             .subscribe((data) => {
                 data.forEach((e) => {
                     let phase = this.phases.find((i) => i.id === e.idPhase);
-                    this.history.push({
-                        date: e.datePhase,
-                        phase: phase.etape,
-                        nextPhase: phase.enAttenteDe,
-                        byWho: e.userName,
-                    });
+                    this.userService.getUserById(e.userId).subscribe(res => {
+                        this.history.push({
+                            date: e.datePhase,
+                            phase: phase.etape,
+                            nextPhase: phase.enAttenteDe,
+                            cin: e.userId,
+                            name: res.nom + " " + res.prenom
+                        });
+                    })
                 });
             });
     }
@@ -607,7 +612,7 @@ export class CreditFormComponent implements OnInit {
                 dem.garantie = [];
                 dem.pieces = [];
                 dem.complement = this.complement;
-                dem.userName = this.user.nom + " " + this.user.prenom;
+                dem.changerId = this.user.id;
                 this.creditFormService.putDemande(dem).subscribe();
                 setTimeout(() => {
                     this.router.navigate(["/credit/consultation"]);
@@ -652,7 +657,7 @@ export class CreditFormComponent implements OnInit {
                 dem.idPhase = 3;
                 dem.garantie = [];
                 dem.pieces = [];
-                dem.userName = this.user.nom + " " + this.user.prenom;
+                dem.changerId = this.user.id;
                 this.creditFormService.putDemande(dem).subscribe();
                 setTimeout(() => {
                     this.router.navigate(["/credit/consultation"]);
@@ -723,7 +728,7 @@ export class CreditFormComponent implements OnInit {
         dem.idPhase = 2;
         dem.garantie = [];
         dem.pieces = [];
-        dem.userName = this.user.nom + " " + this.user.prenom;
+        dem.changerId = this.user.id;
         let res = this.encrypter.encrypt(dem.idDemande.toString());
         this.creditFormService.putDemande(dem).subscribe();
         this.messageService.add({

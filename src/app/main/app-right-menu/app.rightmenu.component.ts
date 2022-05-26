@@ -28,7 +28,7 @@ export class AppRightMenuComponent {
         this.loadUser();
     }
 
-    getEvent(id: number) {
+    getEvent(id: string) {
         this.eventsService.getRdvByIdUserAPI(id).subscribe((data) => {
             this.events = data;
         });
