@@ -135,6 +135,8 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { AppCalendarComponent } from "./pages/app.calendar.component";
 import { ChargeModule } from "./Charge/charge.module";
 import { RendezVousComponent } from "./Charge/Rendez-vous/rendez-vous.component";
+import { LibPhasePipe } from "./dashboard/lib-phase.pipe";
+
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
     timeGridPlugin,
@@ -273,6 +275,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
             multi: true,
         },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
+        LibPhasePipe,
         MenuService,
         AppBreadcrumbService,
         NgxPermissionsService,
