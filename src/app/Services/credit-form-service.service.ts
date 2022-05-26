@@ -149,4 +149,10 @@ export class CreditFormService {
             this.baseUrl + "/historique/ByDemande/" + id
         );
     }
+
+    getHistoriqueDemandeRecente(id: number) {
+        return this.http.get<any[]>(
+            this.baseUrl + "/historique/DemandeRecente/ByUser/" + id
+        );
+    }
 }

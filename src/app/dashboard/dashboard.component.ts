@@ -9,6 +9,7 @@ import { EventsService } from "../Services/events.service";
 import { TokenService } from "../auth/services/token.service";
 import { Phase } from "../models/phase";
 import { CreditFormService } from "../Services/credit-form-service.service";
+import { Historique } from "../models/historique";
 
 @Component({
     selector: "app-dashboard",
@@ -17,6 +18,8 @@ import { CreditFormService } from "../Services/credit-form-service.service";
 })
 export class DashboardComponent implements OnInit {
     events: DemandeRdv[] = [];
+
+    historique: Historique[] = [];
 
     currentUser: User = new User();
 
@@ -38,7 +41,8 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getEtapePhase().then((res) => {
+        this.loadUser();
+        this.getLibEtapePhase().then((res) => {
             this.customEvents = [
                 {
                     // idPhase=1
@@ -89,21 +93,29 @@ export class DashboardComponent implements OnInit {
         this.horizontalEvents = ["2020", "2021", "2022", "2023"];
     }
 
-    async getEtapePhase() {
+    async getLibEtapePhase() {
         const result = await this.creditService.getListPhases().toPromise();
         return result;
     }
 
-    getEvent(id: number) {
-        this.eventsService.getRdvByIdUserAPI(id).subscribe((data) => {
-            this.events = data;
+    // getEvent(id: number) {
+    //     this.eventsService.getRdvByIdUserAPI(id).subscribe((data) => {
+    //         this.events = data;
+    //     });
+    // }
+
+    LoadHistoriqueDemande(id: number) {
+        this.creditService.getHistoriqueDemandeRecente(id).subscribe((data) => {
+            this.historique = data;
         });
     }
 
     loadUser() {
         this.tokenService.getUser().subscribe((data) => {
             this.currentUser = data;
-            this.getEvent(data.id);
+            // this.getEvent(data.id);
+            this.LoadHistoriqueDemande(data.id);
+            console.log(this.LoadHistoriqueDemande(data.id));
         });
     }
 }
