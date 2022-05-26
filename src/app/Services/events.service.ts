@@ -48,7 +48,7 @@ export class EventsService {
         return this.http.get<any>(this.baseUrl1 + "/rdv");
     }
 
-    getRdvByIdUserAPI(id: number) {
+    getRdvByIdUserAPI(id: string) {
         return this.http.get<any>(this.baseUrl1 + "/rdv/" + id);
     }
 }

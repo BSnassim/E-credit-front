@@ -21,8 +21,8 @@ export interface Demande {
     complement?: string;
     garantie?: Garantie[];
     pieces?: PiecesJointes[];
-    idUser?: number;
-    userName?: string;
+    idUser?: string;
+    changerId?: string;
     gsm?: number;
     idSimulation?: number;
 }

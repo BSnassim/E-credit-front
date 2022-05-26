@@ -94,7 +94,7 @@ export class DashboardComponent implements OnInit {
         return result;
     }
 
-    getEvent(id: number) {
+    getEvent(id: string) {
         this.eventsService.getRdvByIdUserAPI(id).subscribe((data) => {
             this.events = data;
         });
