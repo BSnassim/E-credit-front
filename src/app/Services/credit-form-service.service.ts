@@ -10,6 +10,7 @@ import { NatureGarantie } from "../models/credit/natureGarantie";
 import { PiecesJointes } from "../models/credit/piece-jointes";
 import { TypeGarantie } from "../models/credit/typeGarantie";
 import { TypeCredit } from "../models/credit/typeCredit";
+import { Phase } from "../models/phase";
 
 @Injectable({
     providedIn: "root",
@@ -35,8 +36,10 @@ export class CreditFormService {
         return this.http.get<Demande[]>(this.baseUrl + "/demande");
     }
 
-    getDemandesByAgence(id:number){
-        return this.http.get<Demande[]>(this.baseUrl + "/demande/ByAgence/" + id);
+    getDemandesByAgence(id: number) {
+        return this.http.get<Demande[]>(
+            this.baseUrl + "/demande/ByAgence/" + id
+        );
     }
 
     getDemandeExistsAPI(i: string) {
@@ -122,7 +125,7 @@ export class CreditFormService {
     // phase
 
     getListPhases() {
-        return this.http.get(this.baseUrl + "/phase");
+        return this.http.get<Phase[]>(this.baseUrl + "/phase");
     }
 
     // agence
