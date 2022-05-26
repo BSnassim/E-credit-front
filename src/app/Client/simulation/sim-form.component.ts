@@ -61,7 +61,7 @@ export class SimFormComponent implements OnInit {
 
     simulation = {} as Simulation;
 
-    UserId: number;
+    UserId: string;
 
     showResultat: boolean = false;
 

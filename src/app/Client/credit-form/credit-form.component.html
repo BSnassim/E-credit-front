@@ -584,14 +584,16 @@
                     <tr>
                         <th>Date</th>
                         <th>Fait par</th>
+                        <th>CIN</th>
                         <th>Etat</th>
                         <th>En attente de</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-h>
                     <tr>
-                        <td>{{ h.date | date: "dd/MM/yyyy" }}</td>
-                        <td>{{ h.byWho }}</td>
+                        <td>{{ h.date | date: "dd/MM/yyyy, HH:mm" }}</td>
+                        <td>{{ h.name }}</td>
+                        <td>{{ h.cin }}</td>
                         <td>{{ h.phase }}</td>
                         <td>{{ h.nextPhase }}</td>
                     </tr>

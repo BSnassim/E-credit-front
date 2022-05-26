@@ -28,7 +28,7 @@ export class CreditFormService {
         return this.http.post<Demande>(`${this.baseUrl}` + `/demande`, demande);
     }
 
-    getDemandesByUser(id: number) {
+    getDemandesByUser(id: string) {
         return this.http.get<Demande[]>(this.baseUrl + "/demande/ByUser/" + id);
     }
 
@@ -150,7 +150,7 @@ export class CreditFormService {
         );
     }
 
-    getHistoriqueDemandeRecente(id: number) {
+    getHistoriqueDemandeRecente(id: string) {
         return this.http.get<any[]>(
             this.baseUrl + "/historique/DemandeRecente/ByUser/" + id
         );

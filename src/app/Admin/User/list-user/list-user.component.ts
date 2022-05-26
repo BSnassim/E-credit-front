@@ -83,7 +83,7 @@ export class ListUserComponent implements OnInit, OnDestroy {
       header: 'Confirmer',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        let idList: number[] = [];
+        let idList: string[] = [];
         this.selectedUsers.forEach(e => {
           idList.push(e.id);
         });

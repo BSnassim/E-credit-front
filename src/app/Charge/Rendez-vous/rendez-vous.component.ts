@@ -22,7 +22,7 @@ import { MessageService } from "primeng/api";
 })
 export class RendezVousComponent implements OnInit, OnDestroy {
     @Input() demandeId: number;
-    @Input() clientId: number;
+    @Input() clientId: string;
     @Input() clientName: string;
     @Output() closeDialog = new EventEmitter<boolean>();
 

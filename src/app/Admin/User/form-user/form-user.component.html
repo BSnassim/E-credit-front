@@ -37,11 +37,18 @@
     </div>
 </div>
 
-<div class="field">
-    <label>Agence</label>
+<div class="p-fluid formgrid grid">
+    <div class="field col">
+        <label>Agence</label>
         <p-dropdown [options]="agences" optionLabel="nomAgence" [(ngModel)]="selectedAgence"
             placeholder="Choisir une agence" [showClear]="true">
         </p-dropdown>
+    </div>
+    <div class="field col" *ngIf="userToEdit == null">
+        <label for="id">CIN</label>
+        <input type="text" pInputText pKeyFilter="pnum" id="id" [(ngModel)]="cin"
+            [ngClass]="{'invalid':validateNumbers(cin)}" required maxlength="8" />
+    </div>
 </div>
 
 <div class="p-fluid formgrid grid" *ngIf="userToEdit == null">
@@ -56,23 +63,24 @@
 </div>
 
 <span *ngIf="userToEdit != null">
-<div class="field">
-    <label for="oldPass">Mot de passe actuel</label>
-    <p-password id="oldPass" [(ngModel)]="oldPassword" required></p-password>
-</div>
-<div class="p-fluid formgrid grid">
-    <div class="field col">
-        <label for="newPass">Nouveau mot de passe</label>
-        <p-password id="newPass" [(ngModel)]="password" [feedback]="false" required></p-password>
+    <div class="field">
+        <label for="oldPass">Mot de passe actuel</label>
+        <p-password id="oldPass" [(ngModel)]="oldPassword" required></p-password>
     </div>
-    <div class="field col">
-        <label for="newpassR">Répéter le nouveau mot de passe</label>
-        <p-password id="newPassR" [(ngModel)]="repeatedPass" [feedback]="false" required></p-password>
+    <div class="p-fluid formgrid grid">
+        <div class="field col">
+            <label for="newPass">Nouveau mot de passe</label>
+            <p-password id="newPass" [(ngModel)]="password" [feedback]="false" required></p-password>
+        </div>
+        <div class="field col">
+            <label for="newpassR">Répéter le nouveau mot de passe</label>
+            <p-password id="newPassR" [(ngModel)]="repeatedPass" [feedback]="false" required></p-password>
+        </div>
     </div>
-</div>
 </span>
 
 <small>{{validatePassword()}}</small><br>
+<small>{{errorCIN}}</small><br>
 <small>{{errorEmail}}</small><br>
 <small>{{errorPass}}</small>
 

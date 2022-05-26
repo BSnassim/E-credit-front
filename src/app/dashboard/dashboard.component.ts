@@ -104,7 +104,7 @@ export class DashboardComponent implements OnInit {
     //     });
     // }
 
-    LoadHistoriqueDemande(id: number) {
+    LoadHistoriqueDemande(id: string) {
         this.creditService.getHistoriqueDemandeRecente(id).subscribe((data) => {
             this.historique = data;
         });
