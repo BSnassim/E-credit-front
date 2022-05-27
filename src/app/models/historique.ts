@@ -3,5 +3,5 @@ export class Historique {
     idPhase: number;
     datePhase: Date;
     idDemande: number;
-    userName: string;
+    userId: string;
 }

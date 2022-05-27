@@ -128,6 +128,10 @@ export class CreditFormService {
         return this.http.get<Phase[]>(this.baseUrl + "/phase");
     }
 
+    getPhaseById(id: number) {
+        return this.http.get<Phase>(this.baseUrl + "/phase/" + id);
+    }
+
     // agence
 
     getListAgences() {
