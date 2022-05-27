@@ -13,12 +13,9 @@ import {AuthService} from "../../auth/services/auth.service";
                 </a>
 
                 <a href="#" class="logo">
-                    <img  [src]="'assets/layout/images/logo-'+ (app.colorScheme === 'light' ? 'dark' : 'light') + '.png'">
+                    <img  [src]="'assets/layout/images/logo3-'+ (app.colorScheme === 'light' ? 'dark' : 'light') + '.png'">
                 </a>
 
-                <a href="#">
-                    <img  [src]="'assets/layout/images/appname-'+ (app.colorScheme === 'light' ? 'dark' : 'light') + '.png'" class="app-name"/>
-                </a>
             </div>
 
             <app-menu></app-menu>

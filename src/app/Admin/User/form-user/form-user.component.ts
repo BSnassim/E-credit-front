@@ -168,7 +168,8 @@ export class FormUserComponent implements OnInit {
     let empty = (this.tel == null || this.nom == '' || this.prenom == '' || this.email == ''
       || this.password == '' || this.repeatedPass == '' || this.dateN == null ||
       this.selectedProfil == null || this.selectedAgence == null);
-    return (this.validateEmail() || this.validatePassword() != '' || this.validateNumbers(this.tel) || empty);
+    return (this.validateEmail() || this.validatePassword() != '' || this.validateNumbers(this.tel) || this.validateNumbers(this.cin)
+      || empty);
   }
 
 }
