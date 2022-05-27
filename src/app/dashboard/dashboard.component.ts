@@ -1,13 +1,12 @@
 import { NgxPermissionsService } from "ngx-permissions";
 import { NgxRolesService } from "ngx-permissions";
 import { Component, OnInit } from "@angular/core";
-import { PrimeIcons } from "primeng/api";
 import { AppBreadcrumbService } from "../main/app-breadcrumb/app.breadcrumb.service";
 import { DemandeRdv } from "../models/demande-rdv";
 import { User } from "../models/user";
-import { EventsService } from "../Services/events.service";
+
 import { TokenService } from "../auth/services/token.service";
-import { Phase } from "../models/phase";
+
 import { CreditFormService } from "../Services/credit-form-service.service";
 import { Historique } from "../models/historique";
 
@@ -17,19 +16,14 @@ import { Historique } from "../models/historique";
     styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit {
-    events: DemandeRdv[] = [];
-
-    historique: Historique[] = [];
+    historiques: Historique[] = [];
 
     currentUser: User = new User();
 
-    horizontalEvents: any[];
-
-    etapePhase: Phase[] = [];
+    historique = {} as Historique;
 
     constructor(
         private breadcrumbService: AppBreadcrumbService,
-        private eventsService: EventsService,
         private tokenService: TokenService,
         private creditService: CreditFormService
     ) {
@@ -88,19 +82,12 @@ export class DashboardComponent implements OnInit {
         //         },
         //     ];
         // });
-
-        this.horizontalEvents = ["2020", "2021", "2022", "2023"];
-    }
-
-    async getLibEtapePhase() {
-        const result = await this.creditService.getListPhases().toPromise();
-        return result;
     }
 
     LoadHistoriqueDemande(id: string) {
         this.creditService.getHistoriqueDemandeRecente(id).subscribe((data) => {
             setTimeout(() => {
-                this.historique = data;
+                this.historiques = data;
                 console.log(this.historique);
             }, 1000);
         });

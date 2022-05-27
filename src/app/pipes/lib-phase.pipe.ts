@@ -12,8 +12,9 @@ export class LibPhasePipe implements PipeTransform {
             .getPhaseById(id)
             .toPromise();
 
-        if (result.content) {
-            return result.content.etape;
+        if (result) {
+            console.log("rhhh", result.etape);
+            return result.etape;
         } else {
             return null;
         }
