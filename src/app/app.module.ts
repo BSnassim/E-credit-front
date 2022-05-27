@@ -135,6 +135,9 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { AppCalendarComponent } from "./pages/app.calendar.component";
 import { ChargeModule } from "./Charge/charge.module";
 import { RendezVousComponent } from "./Charge/Rendez-vous/rendez-vous.component";
+import { LibPhasePipe } from "./pipes/lib-phase.pipe";
+import { IdUserTOUsernamePipe } from './pipes/id-user-to-username.pipe';
+
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
     timeGridPlugin,
@@ -262,9 +265,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         TypeCreditPipePipe,
         TypeGarantiePipe,
         GarantieNaturePipe,
+        LibPhasePipe,
         DashboardComponent,
         RendezVousComponent,
         SimFormComponent,
+        IdUserTOUsernamePipe,
     ],
     providers: [
         {
@@ -273,6 +278,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
             multi: true,
         },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
+
         MenuService,
         AppBreadcrumbService,
         NgxPermissionsService,
