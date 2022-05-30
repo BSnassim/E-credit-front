@@ -11,7 +11,6 @@ export class IdUserTOUsernamePipe implements PipeTransform {
         const result: any = await this.userService.getUserById(id).toPromise();
 
         if (result) {
-            console.log("rhhh", result.prenom);
             return result.prenom + " " + result.nom;
         } else {
             return null;

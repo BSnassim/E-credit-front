@@ -88,7 +88,6 @@ export class DashboardComponent implements OnInit {
         this.creditService.getHistoriqueDemandeRecente(id).subscribe((data) => {
             setTimeout(() => {
                 this.historiques = data;
-                console.log(this.historique);
             }, 1000);
         });
     }

@@ -13,7 +13,6 @@ export class LibPhasePipe implements PipeTransform {
             .toPromise();
 
         if (result) {
-            console.log("rhhh", result.etape);
             return result.etape;
         } else {
             return null;
