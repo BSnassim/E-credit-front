@@ -102,13 +102,9 @@ export class DashboardComponent implements OnInit {
 
     loadHistoriqueDemande(id: string) {
         this.creditService.getHistoriqueDemandeRecente(id).subscribe((data) => {
-<<<<<<< HEAD
-            this.historiques = data;
-=======
             setTimeout(() => {
                 this.historiques = data;
             }, 1000);
->>>>>>> origin/master
         });
     }
 
