@@ -1420,13 +1420,13 @@ body a {
 }
 
 .layout-config {
-  width: 16em;
-  height: 100%;
+  width: 18em;
+  height: 3.5rem;
   position: fixed;
   right: 0;
-  top: 0;
+  top: 47%;
   padding: 1rem;
-  overflow: auto;
+  overflow: hidden;
   background: linear-gradient(180deg, #F6F9FC 0%, #ECECF9 100%);
   color: #44486D !important;
   z-index: 999;

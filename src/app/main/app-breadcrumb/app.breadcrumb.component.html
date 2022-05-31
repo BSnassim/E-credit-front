@@ -12,17 +12,11 @@
             <i class="pi pi-search"></i>
         </a>
 
-        <!-- <div class="search-wrapper" [ngClass]="{'active-search-wrapper': appMain.searchActive}">
-            <span class="p-input-icon-left">
-                <i class="pi pi-search"></i>
-                <input type="text" pInputText placeholder="Search..." [(ngModel)]="search" (click)="appMain.searchClick=true"/>
-            </span>
-        </div> -->
-
         <button pButton pRipple type="button" class="layout-rightmenu-button" *ngIf="!appMain.isMobile()"
             (click)="appMain.onRightMenuButtonClick()">
-            <i class="pi pi-bell mr-4 p-text-primary" pBadge style="font-size: 25px" [value]="10"></i></button>
-        <button pButton pRipple type="button" icon="pi pi-bell" *ngIf="appMain.isMobile()"
-            class="layout-rightmenu-button" (click)="appMain.onRightMenuButtonClick()"></button>
+            <i class="pi pi-bell mr-4 p-text-primary" pBadge style="font-size: 25px;" [value]="events" severity="danger"></i></button>
+        <button pButton pRipple type="button" *ngIf="appMain.isMobile()"
+            class="layout-rightmenu-button" (click)="appMain.onRightMenuButtonClick()">
+            <i class="pi pi-bell mr-4 p-text-primary" pBadge style="font-size: 25px;" [value]="events" severity="danger"></i></button>
     </div>
 </div>
