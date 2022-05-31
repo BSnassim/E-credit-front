@@ -56,6 +56,12 @@ export class CreditFormService {
         return this.http.put<Demande>(this.baseUrl + "/demande", demande);
     }
 
+    getAllDemandesByAgenceAndByYear(id: number) {
+        return this.http.get<Demande[]>(
+            this.baseUrl + "/demande/ByAllYear/" + id
+        );
+    }
+
     //type credit
 
     getTypeCreditAPI() {
