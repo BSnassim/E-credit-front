@@ -86,18 +86,27 @@ export class DashboardComponent implements OnInit {
 
     currentUser: User = new User();
 
+    invoiceDialog = false;
+
+    demId:number;
+
     constructor(
         private breadcrumbService: AppBreadcrumbService,
         private tokenService: TokenService,
         private creditService: CreditFormService
     ) {
         this.breadcrumbService.setItems([
-            { label: "Dashboard", routerLink: ["/"] },
+            { label: "Tableau de bord", routerLink: ["/"] },
         ]);
     }
 
     ngOnInit(): void {
         this.loadUserInfo();
+    }
+
+    rdvInvoice(id:number){
+        this.invoiceDialog = true;
+        this.demId = id;
     }
 
     loadHistoriqueDemande(id: string) {

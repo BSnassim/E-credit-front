@@ -1,1 +1,32 @@
-HI
+<button pButton label="Imprimer" type="button" icon="pi pi-print" (click)="print()" style="display:block;margin-bottom: 20px; margin-left: 6px;" class="p-button-outlined invoice-button"></button>
+
+<div class="grid">
+	<div class="col">
+		<div class="card" >
+			<div id="invoice-content">
+				<div class="invoice">
+					<div class="invoice-header">
+						<div class="invoice-company flex align-items-center">
+                            <img class="invoice-logo" [src]="'assets/layout/images/logo3-'+ (app.colorScheme === 'light' ? 'dark' : 'light') + '.png'" alt="atlantis-layout"/>
+						</div>
+						<div>
+							<div class="customer-id">ID Client: {{userId}}</div>
+						</div>
+					</div>
+
+					<div class="invoice-to">
+						<div class="invoice-date">{{today | date : "dd/MM/yyyy"}}</div>
+                        <div class="invoice-id">Demande <span>#{{demId}}</span></div>
+					</div>
+
+					<div class="invoice-summary">
+                        Madame, Monsieur {{userName}}, <br>
+                        Suite à votre demande de credit, vous êtes invité à notre agence pour un rendez-vous le {{rendezVous.dateRdv | date :"dd/MM/yyyy HH:mm"}}. <br>
+                        Dans le cas ou vous ne serez pas present(e), nous vous fixons un autre rendez-vous le plûtot possible.
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
