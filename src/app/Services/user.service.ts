@@ -28,6 +28,10 @@ export class UserService {
         return this.http.get<User>(apiUrl + "/Utilisateur/" + id);
     }
 
+    getUsersByIdAgence(id: number): Observable<User[]> {
+        return this.http.get<User[]>(URL + "/ByAgence/" + id);
+    }
+
     emailAlreadyExists(email: string): Observable<User> {
         return this.http.get<User>(URL + "/ByEmail/" + email);
     }

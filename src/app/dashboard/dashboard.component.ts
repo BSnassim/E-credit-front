@@ -1,12 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { AppBreadcrumbService } from "../main/app-breadcrumb/app.breadcrumb.service";
 import { User } from "../models/user";
-
 import { TokenService } from "../auth/services/token.service";
-
 import { CreditFormService } from "../Services/credit-form-service.service";
 import { Historique } from "../models/historique";
 import { Demande } from "../models/credit/demande";
+import { UserService } from "../Services/user.service";
 
 @Component({
     selector: "app-dashboard",
@@ -14,6 +13,8 @@ import { Demande } from "../models/credit/demande";
     styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit {
+    /***** Manager's Dashboard Declarations *****/
+
     barData: any;
 
     pieData: any;
@@ -86,13 +87,50 @@ export class DashboardComponent implements OnInit {
 
     currentUser: User = new User();
 
+    /***** Admin's Dashboard Declarations *****/
+
+    users: User[] = [];
+
+    stackedData: any;
+
+    stackedOptions: any;
+
+    adminTu: number = 0;
+    chargeTu: number = 0;
+    clientTu: number = 0;
+
+    adminAr: number = 0;
+    chargeAr: number = 0;
+    clientAr: number = 0;
+
+    adminAo: number = 0;
+    chargeAo: number = 0;
+    clientAo: number = 0;
+
+    adminMou: number = 0;
+    chargeMou: number = 0;
+    clientMou: number = 0;
+
+    adminNa: number = 0;
+    chargeNa: number = 0;
+    clientNa: number = 0;
+
+    adminMontazah: number = 0;
+    chargeMontazah: number = 0;
+    clientMontazah: number = 0;
+
+    adminMontplaisir: number = 0;
+    chargeMontplaisir: number = 0;
+    clientMontplaisir: number = 0;
+
     constructor(
         private breadcrumbService: AppBreadcrumbService,
         private tokenService: TokenService,
-        private creditService: CreditFormService
+        private creditService: CreditFormService,
+        private userService: UserService
     ) {
         this.breadcrumbService.setItems([
-            { label: "Dashboard", routerLink: ["/"] },
+            { label: "Tableau de bord", routerLink: ["/"] },
         ]);
     }
 
@@ -100,23 +138,167 @@ export class DashboardComponent implements OnInit {
         this.loadUserInfo();
     }
 
-    loadHistoriqueDemande(id: string) {
+    loadHistoriqueDemandeForClient(id: string) {
         this.creditService.getHistoriqueDemandeRecente(id).subscribe((data) => {
-<<<<<<< HEAD
             this.historiques = data;
-=======
-            setTimeout(() => {
-                this.historiques = data;
-            }, 1000);
->>>>>>> origin/master
         });
     }
 
     loadUserInfo() {
         this.tokenService.getUser().subscribe((data) => {
             this.currentUser = data;
-            this.loadHistoriqueDemande(data.id);
+            this.loadHistoriqueDemandeForClient(data.id);
             this.loadDemandsForManager(data.agence.idAgence);
+            this.loadDataForAdmin();
+        });
+    }
+
+    loadDataForAdmin() {
+        this.userService.getUsers().subscribe((data) => {
+            this.users = data;
+            let u: number = 0;
+            while (u < Object.keys(this.users).length) {
+                if (this.users[u].agence.idAgence === 100) {
+                    if (this.users[u].profil.id === 85) {
+                        this.adminTu++;
+                    } else if (this.users[u].profil.id === 86) {
+                        this.chargeTu++;
+                    } else if (this.users[u].profil.id === 101) {
+                        this.clientTu++;
+                    }
+                } else if (this.users[u].agence.idAgence === 101) {
+                    if (this.users[u].profil.id === 85) {
+                        this.adminAr++;
+                    } else if (this.users[u].profil.id === 86) {
+                        this.chargeAr++;
+                    } else if (this.users[u].profil.id === 101) {
+                        this.clientAr++;
+                    }
+                } else if (this.users[u].agence.idAgence === 102) {
+                    if (this.users[u].profil.id === 85) {
+                        this.adminAo++;
+                    } else if (this.users[u].profil.id === 86) {
+                        this.chargeAo++;
+                    } else if (this.users[u].profil.id === 101) {
+                        this.clientAo++;
+                    }
+                } else if (this.users[u].agence.idAgence === 103) {
+                    if (this.users[u].profil.id === 85) {
+                        this.adminMou++;
+                    } else if (this.users[u].profil.id === 86) {
+                        this.chargeMou++;
+                    } else if (this.users[u].profil.id === 101) {
+                        this.clientMou++;
+                    }
+                } else if (this.users[u].agence.idAgence === 104) {
+                    if (this.users[u].profil.id === 85) {
+                        this.adminNa++;
+                    } else if (this.users[u].profil.id === 86) {
+                        this.chargeNa++;
+                    } else if (this.users[u].profil.id === 101) {
+                        this.clientNa++;
+                    }
+                } else if (this.users[u].agence.idAgence === 105) {
+                    if (this.users[u].profil.id === 85) {
+                        this.adminMontazah++;
+                    } else if (this.users[u].profil.id === 86) {
+                        this.chargeMontazah++;
+                    } else if (this.users[u].profil.id === 101) {
+                        this.clientMontazah++;
+                    }
+                } else if (this.users[u].agence.idAgence === 106) {
+                    if (this.users[u].profil.id === 85) {
+                        this.adminMontplaisir++;
+                    } else if (this.users[u].profil.id === 86) {
+                        this.chargeMontplaisir++;
+                    } else if (this.users[u].profil.id === 101) {
+                        this.clientMontplaisir++;
+                    }
+                }
+                u++;
+            }
+            this.stackedData = {
+                labels: [
+                    "Tunis",
+                    "Ariana",
+                    "Aouina",
+                    "Mourouj",
+                    "Nabeul",
+                    "Montazah",
+                    "Montplaisir",
+                ],
+                datasets: [
+                    {
+                        type: "bar",
+                        label: "Admins",
+                        backgroundColor: "rgba(245, 39, 93, 0.91)",
+                        data: [
+                            this.adminTu,
+                            this.adminAr,
+                            this.adminAo,
+                            this.adminMou,
+                            this.adminNa,
+                            this.adminMontazah,
+                            this.adminMontplaisir,
+                        ],
+                    },
+                    {
+                        type: "bar",
+                        label: "Chargés des demandes de crédit",
+                        backgroundColor: "rgba(39, 217, 245, 1)",
+                        data: [
+                            this.chargeTu,
+                            this.chargeAr,
+                            this.chargeAo,
+                            this.chargeMou,
+                            this.chargeNa,
+                            this.chargeMontazah,
+                            this.chargeMontplaisir,
+                        ],
+                    },
+                    {
+                        type: "bar",
+                        label: "Clients",
+                        backgroundColor: "rgba(39, 245, 127, 1)",
+                        data: [
+                            this.clientTu,
+                            this.clientAr,
+                            this.clientAo,
+                            this.clientMou,
+                            this.clientNa,
+                            this.clientMontazah,
+                            this.clientMontplaisir,
+                        ],
+                    },
+                ],
+            };
+            this.stackedOptions = {
+                plugins: {
+                    legend: {
+                        labels: {
+                            fontColor: "#A0A7B5",
+                        },
+                    },
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: "#A0A7B5",
+                        },
+                        grid: {
+                            color: "rgba(160, 167, 181, .3)",
+                        },
+                    },
+                    y: {
+                        ticks: {
+                            color: "#A0A7B5",
+                        },
+                        grid: {
+                            color: "rgba(160, 167, 181, .3)",
+                        },
+                    },
+                },
+            };
         });
     }
 
@@ -175,7 +357,6 @@ export class DashboardComponent implements OnInit {
                 while (i < Object.keys(this.demands).length) {
                     let dat = new Date(this.demands[i].datePhase);
                     if (dat.getMonth() === 0) {
-                        console.log("January");
                         this.JanDemands[a] = this.demands[i];
                         if (this.JanDemands[a].idPhase === 2) {
                             this.JanDemandsAccepted++;
@@ -185,7 +366,6 @@ export class DashboardComponent implements OnInit {
                         a++;
                     }
                     if (dat.getMonth() === 1) {
-                        console.log("February");
                         this.FebDemands[b] = this.demands[i];
                         if (this.FebDemands[b].idPhase === 2) {
                             this.FebDemandsAccepted++;
@@ -195,7 +375,6 @@ export class DashboardComponent implements OnInit {
                         b++;
                     }
                     if (dat.getMonth() === 2) {
-                        console.log("Mars");
                         this.MarDemands[c] = this.demands[i];
                         if (this.MarDemands[c].idPhase === 2) {
                             this.MarDemandsAccepted++;
@@ -205,7 +384,6 @@ export class DashboardComponent implements OnInit {
                         c++;
                     }
                     if (dat.getMonth() === 3) {
-                        console.log("April");
                         this.AprDemands[d] = this.demands[i];
                         if (this.AprDemands[d].idPhase === 2) {
                             this.AprDemandsAccepted++;
@@ -215,7 +393,6 @@ export class DashboardComponent implements OnInit {
                         d++;
                     }
                     if (dat.getMonth() === 4) {
-                        console.log("May");
                         this.MayDemands[e] = this.demands[i];
                         if (this.MayDemands[e].idPhase === 2) {
                             this.MayDemandsAccepted++;
@@ -225,7 +402,6 @@ export class DashboardComponent implements OnInit {
                         e++;
                     }
                     if (dat.getMonth() === 5) {
-                        console.log("Juin");
                         this.JuiDemands[f] = this.demands[i];
                         if (this.JuiDemands[f].idPhase === 2) {
                             this.JuiDemandsAccepted++;
@@ -235,7 +411,6 @@ export class DashboardComponent implements OnInit {
                         f++;
                     }
                     if (dat.getMonth() === 6) {
-                        console.log("July");
                         this.JulDemands[g] = this.demands[i];
                         if (this.JulDemands[g].idPhase === 2) {
                             this.JulDemandsAccepted++;
@@ -245,7 +420,6 @@ export class DashboardComponent implements OnInit {
                         g++;
                     }
                     if (dat.getMonth() === 7) {
-                        console.log("August");
                         this.AugDemands[h] = this.demands[i];
                         if (this.AugDemands[h].idPhase === 2) {
                             this.AugDemandsAccepted++;
@@ -255,7 +429,6 @@ export class DashboardComponent implements OnInit {
                         h++;
                     }
                     if (dat.getMonth() === 8) {
-                        console.log("September");
                         this.SepDemands[j] = this.demands[i];
                         if (this.SepDemands[j].idPhase === 2) {
                             this.SepDemandsAccepted++;
@@ -265,7 +438,6 @@ export class DashboardComponent implements OnInit {
                         j++;
                     }
                     if (dat.getMonth() === 9) {
-                        console.log("October");
                         this.OctDemands[k] = this.demands[i];
                         if (this.OctDemands[k].idPhase === 2) {
                             this.OctDemandsAccepted++;
@@ -275,7 +447,6 @@ export class DashboardComponent implements OnInit {
                         k++;
                     }
                     if (dat.getMonth() === 10) {
-                        console.log("November");
                         this.NovDemands[l] = this.demands[i];
                         if (this.NovDemands[l].idPhase === 2) {
                             this.NovDemandsAccepted++;

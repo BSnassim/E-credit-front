@@ -1,4 +1,4 @@
-import { NgxPermissionsService } from 'ngx-permissions';
+import { NgxPermissionsService } from "ngx-permissions";
 import { TokenService } from "./../../auth/services/token.service";
 import { Component, OnInit } from "@angular/core";
 import { AppComponent } from "../../app.component";
@@ -20,7 +20,7 @@ export class AppMenuComponent implements OnInit {
         public appMain: AppMainComponent,
         private menuService: MenuService,
         private permissionService: NgxPermissionsService
-    ) { }
+    ) {}
 
     ngOnInit() {
         // this.loadMenu();
@@ -30,14 +30,16 @@ export class AppMenuComponent implements OnInit {
                 icon: "pi pi-home",
                 items: [
                     {
-                        label: "Dashboard",
+                        label: "Tableau de bord",
                         icon: "pi pi-fw pi-home",
                         routerLink: ["/"],
                     },
                     {
                         label: "Administration",
                         icon: "pi pi-fw pi-list",
-                        visible:this.permissionService.getPermissions().hasOwnProperty('ROLE_Administration'),
+                        visible: this.permissionService
+                            .getPermissions()
+                            .hasOwnProperty("ROLE_Administration"),
                         routerLink: ["/administration"],
                         items: [
                             {
@@ -55,7 +57,9 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: "Credit client",
                         icon: "pi pi-fw pi-money-bill",
-                        visible:this.permissionService.getPermissions().hasOwnProperty('ROLE_Demande Credit Client'),
+                        visible: this.permissionService
+                            .getPermissions()
+                            .hasOwnProperty("ROLE_Demande Credit Client"),
                         routerLink: ["/credit"],
                         items: [
                             {
@@ -73,7 +77,9 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: "Traitement des demandes",
                         icon: "pi pi-fw pi-folder",
-                        visible:this.permissionService.getPermissions().hasOwnProperty('ROLE_Traitement Demandes'),
+                        visible: this.permissionService
+                            .getPermissions()
+                            .hasOwnProperty("ROLE_Traitement Demandes"),
                         routerLink: ["/credit"],
                         items: [
                             {
@@ -87,7 +93,7 @@ export class AppMenuComponent implements OnInit {
                                 routerLink: ["/rdv/rendezvous"],
                             },
                         ],
-                    }
+                    },
                 ],
             },
         ];
