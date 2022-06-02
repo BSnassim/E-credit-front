@@ -141,7 +141,7 @@
                         </td>
                         <td>
                             <span class="p-column-title">Agence</span>
-                            {{ user.agence.nomAgence }}
+                            <span *ngIf="user.agence">{{ user.agence.nomAgence }}</span>
                         </td>
                         <td class="flex justify-content-end">
                             <button

@@ -65,7 +65,7 @@ export class ListUserComponent implements OnInit, OnDestroy {
     loadUserInfo() {
         this.tokenService.getUser().subscribe((data) => {
             this.currentUser = data;
-            if (this.currentUser.agence.idAgence == null) {
+            if (this.currentUser.agence == null) {
                 this.getData();
             } else {
                 this.getUsersByAgence(this.currentUser.agence.idAgence);
