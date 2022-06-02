@@ -107,6 +107,8 @@ export class SimFormComponent implements OnInit {
                 this.router.navigate(["notfound"]);
             } else {
                 this.simulation = data;
+                this.simulation.dateCompte = new Date(data.dateCompte);
+                this.simulation.dateNaissance = new Date(data.dateNaissance);
                 this.selectedCredit = this.typesCredit.find(
                     (i) => i.idType === data.idTypeCredit
                 );

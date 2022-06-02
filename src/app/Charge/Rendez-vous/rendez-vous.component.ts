@@ -24,7 +24,7 @@ export class RendezVousComponent implements OnInit, OnDestroy {
     @Input() demandeId: number;
     @Input() clientId: string;
     @Input() clientName: string;
-    @Output() closeDialog = new EventEmitter<boolean>();
+    @Output() closeDialog = new EventEmitter<DemandeRdv>();
 
     user: User;
 
@@ -154,23 +154,21 @@ export class RendezVousComponent implements OnInit, OnDestroy {
             this.myRdv.dateRdv = this.changedEvent.start;
             this.myRdv.title = this.changedEvent.title;
             this.myRdv.idDemande = this.demandeId;
-            // this.myRdv.heur = this.changedEvent.;
 
             this.myRdv.idUser = this.clientId;
 
-            this.eventService.postRdvAPI(this.myRdv).subscribe();
+            // this.eventService.postRdvAPI(this.myRdv).subscribe();
             this.messageService.add({
                 key: "tst",
                 severity: "success",
                 summary: "Succès",
                 detail: "Rendez-vous enregistrer avec succès",
             });
-            this.closeDialog.emit(false);
+            this.closeDialog.emit(this.myRdv);
         } else if (this.changedEvent.id != null) {
             this.myRdv.dateRdv = this.changedEvent.start;
             this.myRdv.title = this.changedEvent.title;
             this.myRdv.idRdv = this.changedEvent.id;
-            // this.myRdv.heur = this.changedEvent.;
             this.myRdv.idUser = this.user.id;
             let e = this.events[0].find((i) => i.idRdv == this.changedEvent.id);
             this.myRdv.idDemande = e.idDemande;
