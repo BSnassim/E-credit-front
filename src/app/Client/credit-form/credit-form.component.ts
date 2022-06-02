@@ -689,13 +689,36 @@ export class CreditFormComponent implements OnInit {
     }
 
     priseRDV() {
+        this.calendarDialog = true;
+    }
+
+    closeDialog($event) {
+        this.calendarDialog = false;
+        this.nextPhase(2);
+        this.demande.rdv = $event;
+    }
+
+    acceptDemande() {
         this.confirmationService.confirm({
             key: "second",
             message: "Voulez vous vraiment fixer un RDV pour cette demande?",
             header: "Confirmation",
             icon: "pi pi-info-circle",
             accept: () => {
-                this.calendarDialog = true;
+                let dem = this.demande;
+                dem.idPhase = 2;
+                dem.garantie = [];
+                dem.pieces = [];
+                dem.changerId = this.user.id;
+                this.creditFormService.putDemande(dem).subscribe();
+                this.messageService.add({
+                    severity: "info",
+                    summary: "Confirmé",
+                    detail: "Rendez-vous décidé",
+                });
+                setTimeout(() => {
+                    this.router.navigate(["/credit/consultation"]);
+                }, 1500);
             },
             reject: (type) => {
                 switch (type) {
@@ -718,29 +741,6 @@ export class CreditFormComponent implements OnInit {
                 }
             },
         });
-    }
-
-    closeDialog($event) {
-        this.calendarDialog = false;
-        this.nextPhase(2);
-        this.demande.rdv = $event;
-    }
-
-    acceptDemande() {
-        let dem = this.demande;
-        dem.idPhase = 2;
-        dem.garantie = [];
-        dem.pieces = [];
-        dem.changerId = this.user.id;
-        this.creditFormService.putDemande(dem).subscribe();
-        this.messageService.add({
-            severity: "info",
-            summary: "Confirmé",
-            detail: "Rendez-vous décidé",
-        });
-        setTimeout(() => {
-            this.router.navigate(["/credit/consultation"]);
-        }, 1500);
     }
 
     nextPhase(id: number) {
