@@ -24,12 +24,16 @@ export class UserService {
         return this.http.get<User[]>(URL);
     }
 
+    getAllUsers(): Observable<User[]> {
+        return this.http.get<User[]>(apiUrl + "/Utilisateur");
+    }
+
     getUserById(id: string): Observable<User> {
         return this.http.get<User>(apiUrl + "/Utilisateur/" + id);
     }
 
     getUsersByIdAgence(id: number): Observable<User[]> {
-        return this.http.get<User[]>(URL + "/ByAgence/" + id);
+        return this.http.get<User[]>(apiUrl + "/Utilisateur/ByAgence/" + id);
     }
 
     emailAlreadyExists(email: string): Observable<User> {
