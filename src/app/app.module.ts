@@ -136,8 +136,8 @@ import { AppCalendarComponent } from "./pages/app.calendar.component";
 import { ChargeModule } from "./Charge/charge.module";
 import { RendezVousComponent } from "./Charge/Rendez-vous/rendez-vous.component";
 import { LibPhasePipe } from "./pipes/lib-phase.pipe";
-import { IdUserTOUsernamePipe } from './pipes/id-user-to-username.pipe';
-import { RendezVousInvoiceComponent } from './Invoice/rendez-vous-invoice/rendez-vous-invoice.component';
+import { IdUserTOUsernamePipe } from "./pipes/id-user-to-username.pipe";
+import { RendezVousInvoiceComponent } from "./Invoice/rendez-vous-invoice/rendez-vous-invoice.component";
 
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
