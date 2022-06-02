@@ -1,106 +1,146 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AppBreadcrumbService } from 'src/app/main/app-breadcrumb/app.breadcrumb.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { User } from 'src/app/models/user';
-import { UserService } from 'src/app/Services/user.service';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { AppBreadcrumbService } from "src/app/main/app-breadcrumb/app.breadcrumb.service";
+import { ConfirmationService, MessageService } from "primeng/api";
+import { User } from "src/app/models/user";
+import { UserService } from "src/app/Services/user.service";
+import { Subscription } from "rxjs";
+import { TokenService } from "src/app/auth/services/token.service";
 
 @Component({
-  selector: 'app-list-user',
-  templateUrl: './list-user.component.html',
-  styleUrls: ['./list-user.component.scss'],
-  providers: [MessageService, ConfirmationService]
+    selector: "app-list-user",
+    templateUrl: "./list-user.component.html",
+    styleUrls: ["./list-user.component.scss"],
+    providers: [MessageService, ConfirmationService],
 })
 export class ListUserComponent implements OnInit, OnDestroy {
-  userList: User[];
+    userList: User[];
 
-  cols: any[];
+    cols: any[];
 
-  selectedUsers: User[];
+    selectedUsers: User[];
 
-  userDialog: boolean;
+    userDialog: boolean;
 
-  user: User;
+    user: User;
 
-  subscription : Subscription;
+    subscription: Subscription;
 
-  constructor(private breadcrumbService: AppBreadcrumbService,
-    private userService: UserService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService) {
-    this.breadcrumbService.setItems([
-      { label: 'Gestion des utilisateurs' },
-      { label: 'Liste des utilisateurs', routerLink: ['/administration/users'] }
-    ]);
-  }
+    currentUser: User = new User();
 
-  ngOnInit(): void {
-    this.cols = [
-      { field: 'nom', header: 'Nom' },
-      { field: 'prenom', header: 'Prenom' },
-      { field: 'email', header: 'E-mail'},
-      { field: 'tel', header: 'Telephone'},
-      { field: 'dateN', header: 'Date de naissance'},
-      { field: 'profil.libelle', header: 'Profil'},
-      { filed: 'profil.nomAgence', header: 'Agence'},
-    ];
-    this.getData();
-    this.subscription = this.userService.refresh$.subscribe( () =>{
-      this.getData();
-    });
-  }
+    constructor(
+        private breadcrumbService: AppBreadcrumbService,
+        private userService: UserService,
+        private messageService: MessageService,
+        private confirmationService: ConfirmationService,
+        private tokenService: TokenService
+    ) {
+        this.breadcrumbService.setItems([
+            { label: "Gestion des utilisateurs" },
+            {
+                label: "Liste des utilisateurs",
+                routerLink: ["/administration/users"],
+            },
+        ]);
+    }
 
-  getData(){
-    this.userService.getUsers().subscribe( data =>{
-      this.userList = data;
-    });
-  }
+    ngOnInit(): void {
+        this.cols = [
+            { field: "nom", header: "Nom" },
+            { field: "prenom", header: "Prenom" },
+            { field: "email", header: "E-mail" },
+            { field: "tel", header: "Telephone" },
+            { field: "dateN", header: "Date de naissance" },
+            { field: "profil.libelle", header: "Profil" },
+            { filed: "profil.nomAgence", header: "Agence" },
+        ];
+        this.loadUserInfo();
+    }
 
-  openNew() {
-    this.user = null;
-    this.userDialog = true;
-  }
-
-  closeDialog($event) {
-    this.userDialog = false;
-  }
-
-  deleteUser(user: User) {
-    this.confirmationService.confirm({
-      message: 'Voulez-vous vraiment supprimer ' + user.nom + ' ' + user.prenom + '?',
-      header: 'Confirmer',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.userService.deleteUser(user.id).subscribe();
-        this.messageService.add({ severity: 'réussi', summary: 'Réussi', detail: 'user supprimé', life: 3000 });
-      }
-    });
-  }
-
-  deleteSelectedUsers() {
-    this.confirmationService.confirm({
-      message: 'Voulez-vous vraiment supprimer les users selectionées ?',
-      header: 'Confirmer',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        let idList: string[] = [];
-        this.selectedUsers.forEach(e => {
-          idList.push(e.id);
+    getUsersByAgence(id: number) {
+        this.userService.getUsersByIdAgence(id).subscribe((data) => {
+            this.userList = data;
         });
-        this.userService.deleteUsers(idList).subscribe();
-        this.selectedUsers = null;
-        this.messageService.add({ severity: 'réussi', summary: 'Réussi', detail: 'users supprimés', life: 3000 });
-      }
-    });
-  }
+    }
 
-  editUser(user: User) {
-    this.user = user;
-    this.userDialog = true;
-  }
+    loadUserInfo() {
+        this.tokenService.getUser().subscribe((data) => {
+            this.currentUser = data;
+            if (this.currentUser.agence.idAgence == null) {
+                this.getData();
+            } else {
+                this.getUsersByAgence(this.currentUser.agence.idAgence);
+                this.subscription = this.userService.refresh$.subscribe(() => {
+                    this.getUsersByAgence(this.currentUser.agence.idAgence);
+                });
+            }
+        });
+    }
 
-  ngOnDestroy():void{
-    this.subscription.unsubscribe();
-  }
+    getData() {
+        this.userService.getUsers().subscribe((data) => {
+            this.userList = data;
+        });
+    }
 
+    openNew() {
+        this.user = null;
+        this.userDialog = true;
+    }
+
+    closeDialog($event) {
+        this.userDialog = false;
+    }
+
+    deleteUser(user: User) {
+        this.confirmationService.confirm({
+            message:
+                "Voulez-vous vraiment supprimer " +
+                user.nom +
+                " " +
+                user.prenom +
+                "?",
+            header: "Confirmer",
+            icon: "pi pi-exclamation-triangle",
+            accept: () => {
+                this.userService.deleteUser(user.id).subscribe();
+                this.messageService.add({
+                    severity: "réussi",
+                    summary: "Réussi",
+                    detail: "user supprimé",
+                    life: 3000,
+                });
+            },
+        });
+    }
+
+    deleteSelectedUsers() {
+        this.confirmationService.confirm({
+            message: "Voulez-vous vraiment supprimer les users selectionées ?",
+            header: "Confirmer",
+            icon: "pi pi-exclamation-triangle",
+            accept: () => {
+                let idList: string[] = [];
+                this.selectedUsers.forEach((e) => {
+                    idList.push(e.id);
+                });
+                this.userService.deleteUsers(idList).subscribe();
+                this.selectedUsers = null;
+                this.messageService.add({
+                    severity: "réussi",
+                    summary: "Réussi",
+                    detail: "users supprimés",
+                    life: 3000,
+                });
+            },
+        });
+    }
+
+    editUser(user: User) {
+        this.user = user;
+        this.userDialog = true;
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+    }
 }

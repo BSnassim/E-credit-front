@@ -1,5 +1,14 @@
 <div class="grid" *ngxPermissionsOnly="'ROLE_Administration'">
-    <h1>Bienvenue</h1>
+    <div class="col-12 lg:col-11">
+        <div class="card">
+            <h5>Statistiques des Utilisateurs</h5>
+            <p-chart
+                type="bar"
+                [data]="stackedData"
+                [options]="stackedOptions"
+            ></p-chart>
+        </div>
+    </div>
 </div>
 <div class="grid" *ngxPermissionsOnly="'ROLE_Traitement Demandes'">
     <div class="col-12 lg:col-6">
@@ -66,39 +75,6 @@
                         </span>
                     </p-card>
                 </ng-template>
-
-                <!-- <ng-template pTemplate="content" let-item>
-                    <div class="card widget-customer-graph">
-                        <div class="header">
-                            <div class="title">
-                                <span>
-                                    <span style="font-weight: bolder">
-                                        {{ item.idPhase | libPhase | async }}
-                                    </span>
-                                    <br />
-                                    <span class="subtitle"
-                                        >Fait par
-                                        <span style="font-weight: bold">{{
-                                            item.userId
-                                                | idUserTOUsername
-                                                | async
-                                        }}</span></span
-                                    >
-                                    <br />
-                                    <span class="subtitle"></span>
-                                    <p-chip
-                                        icon="pi pi-calendar"
-                                        label="{{
-                                            item.datePhase
-                                                | date: 'dd/MM/yyyy HH:mm:ss'
-                                        }}"
-                                    >
-                                    </p-chip>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </ng-template> -->
             </p-timeline>
         </div>
     </div>

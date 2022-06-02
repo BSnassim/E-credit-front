@@ -1,22 +1,61 @@
-<div class="layout-breadcrumb-container flex align-items-center justify-content-between">
+<div
+    class="layout-breadcrumb-container flex align-items-center justify-content-between"
+>
     <div class="layout-breadcrumb-left-items flex align-items-center">
-        <a href="#" class="menu-button" (click)="appMain.onMenuButtonClick($event)"
-            *ngIf="appMain.isStatic() && !appMain.isMobile()">
+        <a
+            href="#"
+            class="menu-button"
+            (click)="appMain.onMenuButtonClick($event)"
+            *ngIf="appMain.isStatic() && !appMain.isMobile()"
+        >
             <i class="pi pi-bars"></i>
         </a>
 
-        <p-breadcrumb [model]="items" styleClass="layout-breadcrumb py-2"></p-breadcrumb>
+        <p-breadcrumb
+            [model]="items"
+            styleClass="layout-breadcrumb py-2"
+        ></p-breadcrumb>
     </div>
     <div class="layout-breadcrumb-right-items flex">
-        <a tabindex="0" class="search-icon" (click)="appMain.searchActive = true; appMain.searchClick = true;">
+        <a
+            tabindex="0"
+            class="search-icon"
+            (click)="appMain.searchActive = true; appMain.searchClick = true"
+        >
             <i class="pi pi-search"></i>
         </a>
 
-        <button pButton pRipple type="button" class="layout-rightmenu-button" *ngIf="!appMain.isMobile()"
-            (click)="appMain.onRightMenuButtonClick()">
-            <i class="pi pi-bell mr-4 p-text-primary" pBadge style="font-size: 25px;" [value]="events" severity="danger"></i></button>
-        <button pButton pRipple type="button" *ngIf="appMain.isMobile()"
-            class="layout-rightmenu-button" (click)="appMain.onRightMenuButtonClick()">
-            <i class="pi pi-bell mr-4 p-text-primary" pBadge style="font-size: 25px;" [value]="events" severity="danger"></i></button>
+        <button
+            pButton
+            pRipple
+            type="button"
+            class="layout-rightmenu-button"
+            *ngIf="!appMain.isMobile()"
+            (click)="appMain.onRightMenuButtonClick()"
+        >
+            <i
+                class="pi pi-bell mr-4 p-text-primary"
+                pBadge
+                style="font-size: 25px"
+                [value]="events"
+                severity="danger"
+            ></i>
+        </button>
+        <button
+            pButton
+            pRipple
+            type="button"
+            *ngIf="appMain.isMobile()"
+            class="layout-rightmenu-button"
+            (click)="appMain.onRightMenuButtonClick()"
+        >
+            <i
+                class="pi pi-bell mr-4 p-text-primary"
+                pBadge
+                style="font-size: 25px"
+                [value]="events"
+                severity="danger"
+            ></i>
+        </button>
     </div>
 </div>
