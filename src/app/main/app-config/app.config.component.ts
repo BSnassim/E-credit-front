@@ -13,8 +13,8 @@ import { AppMainComponent } from '../app-main/app.main.component';
             <div class="field-radiobutton">
                 <p-radioButton name="darkMode" value="dark" [(ngModel)]="app.colorScheme" inputId="darkMode2"
                 (onClick)="changeColorScheme('dark')"></p-radioButton>
-                <label for="darkMode2">Dark mode</label>
-                <p-radioButton style="margin-left:10px;" name="darkMode" value="light" [(ngModel)]="app.colorScheme" inputId="darkMode1"
+                <label style="margin-right:10px" for="darkMode2">Dark mode</label>
+                <p-radioButton name="darkMode" value="light" [(ngModel)]="app.colorScheme" inputId="darkMode1"
                                (onClick)="changeColorScheme('light')"></p-radioButton>
                 <label for="darkMode1">Light mode</label>
             </div>
