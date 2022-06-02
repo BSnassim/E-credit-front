@@ -70,7 +70,7 @@ export class FormUserComponent implements OnInit {
       this.user.id = this.userToEdit.id;
       this.nom = this.userToEdit.nom;
       this.prenom = this.userToEdit.prenom;
-      this.dateN = this.userToEdit.dateNais;
+      this.dateN = new Date(this.userToEdit.dateNais);
       this.email = this.userToEdit.email;
       this.tel = this.userToEdit.tel;
       this.selectedProfil = this.userToEdit.profil;
