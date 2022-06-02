@@ -125,7 +125,7 @@ export class DashboardComponent implements OnInit {
 
     invoiceDialog = false;
 
-    demId:number;
+    demId: number;
 
     constructor(
         private breadcrumbService: AppBreadcrumbService,
@@ -145,13 +145,13 @@ export class DashboardComponent implements OnInit {
     loadHistoriqueDemandeForClient(id: string) {
         this.creditService.getHistoriqueDemandeRecente(id).subscribe((data) => {
             this.historiques = data;
-            });
+        });
     }
 
-    rdvInvoice(id:number){
+    rdvInvoice(id: number) {
         this.invoiceDialog = true;
         this.demId = id;
-    }     
+    }
 
     loadUserInfo() {
         this.tokenService.getUser().subscribe((data) => {
@@ -163,7 +163,7 @@ export class DashboardComponent implements OnInit {
     }
 
     loadDataForAdmin() {
-        this.userService.getUsers().subscribe((data) => {
+        this.userService.getAllUsers().subscribe((data) => {
             this.users = data;
             let u: number = 0;
             while (u < Object.keys(this.users).length) {
