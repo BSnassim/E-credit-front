@@ -67,6 +67,9 @@ export class ListUserComponent implements OnInit, OnDestroy {
             this.currentUser = data;
             if (this.currentUser.agence.idAgence == 1) {
                 this.getData();
+                this.subscription = this.userService.refresh$.subscribe(() => {
+                    this.getData();
+                })
             } else {
                 this.getUsersByAgence(this.currentUser.agence.idAgence);
                 this.subscription = this.userService.refresh$.subscribe(() => {
