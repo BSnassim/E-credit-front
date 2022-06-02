@@ -1,3 +1,4 @@
+import { DemandeRdv } from 'src/app/models/demande-rdv';
 import { Garantie } from "./garantie";
 import { PiecesJointes } from "src/app/models/credit/piece-jointes";
 
@@ -25,4 +26,5 @@ export interface Demande {
     changerId?: string;
     gsm?: number;
     idSimulation?: number;
+    rdv?: DemandeRdv;
 }

@@ -125,7 +125,7 @@ export class CreditFormComponent implements OnInit {
                 label: "Prise de RDV",
                 icon: "pi pi-check",
                 command: () => {
-                    this.nextPhase(2);
+                    this.priseRDV();
                     this.hideComplement(true);
                 },
             },
@@ -482,6 +482,8 @@ export class CreditFormComponent implements OnInit {
                 this.router.navigate(["notfound"]);
             } else {
                 this.demande = data;
+                this.demande.dateCompte = new Date(data.dateCompte);
+                this.demande.dateNaissance = new Date(data.dateNaissance);
                 let t = this.typeCredit.find(
                     (i) => i.idType === data.idTypeCredit
                 );
@@ -544,8 +546,8 @@ export class CreditFormComponent implements OnInit {
             } else {
                 this.demande.nom = data.nom;
                 this.demande.prenom = data.prenom;
-                this.demande.dateCompte = data.dateCompte;
-                this.demande.dateNaissance = data.dateNaissance;
+                this.demande.dateCompte = new Date(data.dateCompte);
+                this.demande.dateNaissance = new Date(data.dateNaissance);
                 this.demande.gsm = data.gsm;
                 this.demande.numCompte = data.numCompte;
                 this.demande.numPiece = data.numPiece;
@@ -720,7 +722,8 @@ export class CreditFormComponent implements OnInit {
 
     closeDialog($event) {
         this.calendarDialog = false;
-        this.acceptDemande();
+        this.nextPhase(2);
+        this.demande.rdv = $event;
     }
 
     acceptDemande() {
@@ -729,7 +732,6 @@ export class CreditFormComponent implements OnInit {
         dem.garantie = [];
         dem.pieces = [];
         dem.changerId = this.user.id;
-        let res = this.encrypter.encrypt(dem.idDemande.toString());
         this.creditFormService.putDemande(dem).subscribe();
         this.messageService.add({
             severity: "info",
@@ -760,7 +762,7 @@ export class CreditFormComponent implements OnInit {
                 this.refuseDemande();
                 break;
             case 2:
-                this.priseRDV();
+                this.acceptDemande();
                 break;
         }
     }
