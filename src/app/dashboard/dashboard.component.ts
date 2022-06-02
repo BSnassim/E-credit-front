@@ -123,6 +123,10 @@ export class DashboardComponent implements OnInit {
     chargeMontplaisir: number = 0;
     clientMontplaisir: number = 0;
 
+    invoiceDialog = false;
+
+    demId:number;
+
     constructor(
         private breadcrumbService: AppBreadcrumbService,
         private tokenService: TokenService,
@@ -141,8 +145,13 @@ export class DashboardComponent implements OnInit {
     loadHistoriqueDemandeForClient(id: string) {
         this.creditService.getHistoriqueDemandeRecente(id).subscribe((data) => {
             this.historiques = data;
-        });
+            });
     }
+
+    rdvInvoice(id:number){
+        this.invoiceDialog = true;
+        this.demId = id;
+    }     
 
     loadUserInfo() {
         this.tokenService.getUser().subscribe((data) => {

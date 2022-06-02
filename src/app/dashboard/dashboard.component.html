@@ -14,23 +14,14 @@
     <div class="col-12 lg:col-6">
         <div class="card">
             <h5 class="centerText">Les Mois Précédente</h5>
-            <p-chart
-                type="bar"
-                [data]="barData"
-                [options]="barOptions"
-            ></p-chart>
+            <p-chart type="bar" [data]="barData" [options]="barOptions"></p-chart>
         </div>
     </div>
     <div class="col-12 lg:col-6">
         <div class="card">
             <h5 class="centerText">Mois Courant</h5>
             <div class="flex justify-content-center">
-                <p-chart
-                    type="pie"
-                    [data]="pieData"
-                    [options]="pieOptions"
-                    [style]="{ width: '50%' }"
-                ></p-chart>
+                <p-chart type="pie" [data]="pieData" [options]="pieOptions" [style]="{ width: '50%' }"></p-chart>
             </div>
         </div>
     </div>
@@ -38,47 +29,27 @@
 <div class="grid" *ngxPermissionsOnly="'ROLE_Demande Credit Client'">
     <div class="col-12">
         <div class="card">
-            <h2>Tableau de bord</h2>
 
-            <p-timeline
-                [value]="historiques"
-                align="alternate"
-                styleClass="customized-timeline"
-            >
+            <p-timeline [value]="historiques" align="alternate" styleClass="customized-timeline">
                 <ng-template pTemplate="marker" let-event>
-                    <span
-                        *ngIf="event.idPhase == 1"
-                        class="custom-marker shadow-2"
-                        style="background-color: rgba(228, 0, 123, 1)"
-                    >
+                    <span *ngIf="event.idPhase == 1" class="custom-marker shadow-2"
+                        style="background-color: rgba(228, 0, 123, 1)">
                         <i class="pi pi-download"></i>
                     </span>
-                    <span
-                        *ngIf="event.idPhase == 2"
-                        class="custom-marker shadow-2"
-                        style="background-color: rgba(2, 217, 7, 0.82)"
-                    >
+                    <span *ngIf="event.idPhase == 2" class="custom-marker shadow-2"
+                        style="background-color: rgba(2, 217, 7, 0.82)">
                         <i class="pi pi-check"></i>
                     </span>
-                    <span
-                        *ngIf="event.idPhase == 3"
-                        class="custom-marker shadow-2"
-                        style="background-color: rgba(255, 0, 0, 1)"
-                    >
+                    <span *ngIf="event.idPhase == 3" class="custom-marker shadow-2"
+                        style="background-color: rgba(255, 0, 0, 1)">
                         <i class="pi pi-times"></i>
                     </span>
-                    <span
-                        *ngIf="event.idPhase == 4"
-                        class="custom-marker shadow-2"
-                        style="background-color: rgba(186, 0, 255, 1)"
-                    >
+                    <span *ngIf="event.idPhase == 4" class="custom-marker shadow-2"
+                        style="background-color: rgba(186, 0, 255, 1)">
                         <i class="pi pi-plus"></i>
                     </span>
-                    <span
-                        *ngIf="event.idPhase == 5"
-                        class="custom-marker shadow-2"
-                        style="background-color: rgba(0, 186, 255, 1)"
-                    >
+                    <span *ngIf="event.idPhase == 5" class="custom-marker shadow-2"
+                        style="background-color: rgba(0, 186, 255, 1)">
                         <i class="pi pi-pencil"></i>
                     </span>
                 </ng-template>
@@ -89,21 +60,18 @@
                             {{ item.idPhase | libPhase | async }}
                         </h5>
 
-                        <span class="subtitle"
-                            >Fait par
+                        <span class="subtitle">Fait par
 
                             {{ item.userId | idUserTOUsername | async }}
                         </span>
                         <br />
                         <br />
                         <span class="subtitle">
-                            <p-chip
-                                icon="pi pi-calendar"
-                                label="{{
+                            <p-chip icon="pi pi-calendar" label="{{
                                     item.datePhase | date: 'dd/MM/yyyy HH:mm:ss'
-                                }}"
-                            >
-                            </p-chip>
+                                }}">
+                            </p-chip><br>
+                            <a class="link" (click)="rdvInvoice(item.idDemande)" *ngIf="item.idPhase==2">Voir info</a>
                         </span>
                     </p-card>
                 </ng-template>
@@ -111,3 +79,11 @@
         </div>
     </div>
 </div>
+<p-dialog [(visible)]="invoiceDialog" [style]="{width: '600px', height:'700px'}" header="Détails Rendez-vous"
+    [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <app-rendez-vous-invoice (closeDialog)="closeDialog($event)" [demId]="demId"></app-rendez-vous-invoice>
+    </ng-template>
+    <ng-template pTemplate="footer">
+    </ng-template>
+</p-dialog>

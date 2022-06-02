@@ -137,6 +137,7 @@ import { ChargeModule } from "./Charge/charge.module";
 import { RendezVousComponent } from "./Charge/Rendez-vous/rendez-vous.component";
 import { LibPhasePipe } from "./pipes/lib-phase.pipe";
 import { IdUserTOUsernamePipe } from './pipes/id-user-to-username.pipe';
+import { RendezVousInvoiceComponent } from './Invoice/rendez-vous-invoice/rendez-vous-invoice.component';
 
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
@@ -270,6 +271,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         RendezVousComponent,
         SimFormComponent,
         IdUserTOUsernamePipe,
+        RendezVousInvoiceComponent,
     ],
     providers: [
         {
