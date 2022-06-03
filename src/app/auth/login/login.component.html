@@ -182,7 +182,11 @@
             <div class="flex align-items-center login-footer-logo-container">
                 <img
                     class="login-footer-logo"
-                    src="assets/layout/images/logo3-light.png"
+                    [src]="
+                        'assets/layout/images/logo3-' +
+                        (app.colorScheme === 'light' ? 'dark' : 'light') +
+                        '.png'
+                    "
                 />
             </div>
             <span>&#169; GTI - 2022</span>

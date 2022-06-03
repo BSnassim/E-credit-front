@@ -240,7 +240,7 @@ export class DashboardComponent implements OnInit {
                     {
                         type: "bar",
                         label: "Admins",
-                        backgroundColor: "rgba(245, 39, 93, 0.91)",
+                        backgroundColor: "rgb(244, 143, 177)",
                         data: [
                             this.adminTu,
                             this.adminAr,
@@ -254,7 +254,7 @@ export class DashboardComponent implements OnInit {
                     {
                         type: "bar",
                         label: "Chargés des demandes de crédit",
-                        backgroundColor: "rgba(39, 217, 245, 1)",
+                        backgroundColor: "rgb(129, 212, 250)",
                         data: [
                             this.chargeTu,
                             this.chargeAr,
@@ -268,7 +268,7 @@ export class DashboardComponent implements OnInit {
                     {
                         type: "bar",
                         label: "Clients",
-                        backgroundColor: "rgba(39, 245, 127, 1)",
+                        backgroundColor: "rgb(197, 225, 165)",
                         data: [
                             this.clientTu,
                             this.clientAr,
