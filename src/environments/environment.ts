@@ -6,8 +6,8 @@
 export const environment = {
     production: false,
     title: "DEV",
-    apiURL: "http://192.168.107.112:8088",
-    adminURL: "http://192.168.107.112:8088/administration",
+    apiURL: "https://ba35-193-95-53-25.eu.ngrok.io",
+    adminURL: "https://ba35-193-95-53-25.eu.ngrok.io/administration",
     dialogFlow: {
         Frank: "",
     },

@@ -8,7 +8,7 @@ export class ChatService {
     chatbot() {
         (function (d, m) {
             var kommunicateSettings = {
-                appId: "25f891fd7d70ad508f7f7132897fb02fc",
+                appId: "72e917ae0b7beca6e76771120c746555",
                 popupWidget: true,
                 automaticChatOpenOnNavigation: true,
             };
