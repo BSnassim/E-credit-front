@@ -38,7 +38,7 @@
 <div class="grid" *ngxPermissionsOnly="'ROLE_Demande Credit Client'">
     <img class="backimg" src="./assets/layout/images/2.jpg" />
     <div class="col-12">
-        <div>
+        <div style="opacity: 80%">
             <p-timeline
                 [value]="historiques"
                 align="alternate"
@@ -55,7 +55,7 @@
                     <span
                         *ngIf="event.idPhase == 2"
                         class="custom-marker shadow-2"
-                        style="background-color: rgba(2, 217, 7, 0.82)"
+                        style="background-color: rgb(2, 217, 7)"
                     >
                         <i class="pi pi-check"></i>
                     </span>
@@ -83,7 +83,7 @@
                 </ng-template>
 
                 <ng-template pTemplate="content" let-item>
-                    <p-card>
+                    <p-card styleClass="dashboard-p-card">
                         <h5>
                             {{ item.idPhase | libPhase | async }}
                         </h5>
