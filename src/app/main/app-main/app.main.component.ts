@@ -37,8 +37,6 @@ export class AppMainComponent {
 
     rightMenuClick: boolean;
 
-    searchActive: boolean;
-
     searchClick: boolean;
 
     activeInlineProfile: boolean;
@@ -68,10 +66,6 @@ export class AppMainComponent {
 
         if (this.rightMenuActive && !this.rightMenuClick) {
             this.rightMenuActive = false;
-        }
-
-        if (this.searchActive && !this.searchClick) {
-            this.searchActive = false;
         }
 
         if (!this.menuClick) {
