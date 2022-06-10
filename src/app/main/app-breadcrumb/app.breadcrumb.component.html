@@ -16,15 +16,10 @@
             styleClass="layout-breadcrumb py-2"
         ></p-breadcrumb>
     </div>
-    <div class="layout-breadcrumb-right-items flex">
-        <a
-            tabindex="0"
-            class="search-icon"
-            (click)="appMain.searchActive = true; appMain.searchClick = true"
-        >
-            <i class="pi pi-search"></i>
-        </a>
-
+    <div
+        class="layout-breadcrumb-right-items flex"
+        *ngxPermissionsOnly="'ROLE_Demande Credit Client'"
+    >
         <button
             pButton
             pRipple

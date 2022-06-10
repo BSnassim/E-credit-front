@@ -127,6 +127,8 @@ export class DashboardComponent implements OnInit {
 
     demId: number;
 
+    // styleOBJ = { background: "rgba(0, 255, 173, 0.45)" };
+
     constructor(
         private breadcrumbService: AppBreadcrumbService,
         private tokenService: TokenService,

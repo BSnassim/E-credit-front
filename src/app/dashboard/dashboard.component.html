@@ -36,17 +36,16 @@
     </div>
 </div>
 <div class="grid" *ngxPermissionsOnly="'ROLE_Demande Credit Client'">
-    <!-- <img class="images" src="./assets/layout/images/finance2-min.gif" /> -->
     <img class="backimg" src="./assets/layout/images/2.jpg" />
     <div class="col-12">
         <div style="opacity: 80%">
-            <p-timeline 
+            <p-timeline
                 [value]="historiques"
                 align="alternate"
                 styleClass="customized-timeline"
             >
-                <ng-template pTemplate="marker" let-event >
-                    <span 
+                <ng-template pTemplate="marker" let-event>
+                    <span
                         *ngIf="event.idPhase == 1"
                         class="custom-marker shadow-2"
                         style="background-color: rgba(228, 0, 123, 1)"
